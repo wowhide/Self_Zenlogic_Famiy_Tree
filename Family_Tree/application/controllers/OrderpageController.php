@@ -14,11 +14,11 @@ require_once 'Zend/Pdf.php';
 
 require_once 'Zend/Paginator/Adapter/Array.php';
 
-require_once '../../Family_Tree/application/models/orderpageModel.php';
-require_once '../../Family_Tree/application/smarty/Zend_View_Smarty.class.php';
-require_once '../../Family_Tree/application/common/comEncryption.php';
-require_once '../../Family_Tree/application/common/comConst.php';
-require_once '../../Family_Tree/application/common/common.php';
+require_once 'application/models/orderpageModel.php';
+require_once 'application/smarty/Zend_View_Smarty.class.php';
+require_once 'application/common/comEncryption.php';
+require_once 'application/common/comConst.php';
+require_once 'application/common/common.php';
 
 
 
@@ -35,7 +35,7 @@ class OrderpageController extends Zend_Controller_Action {
      */
     public function init() {
         /* ========== 設定情報を読み取り ========== */
-        $this->_config = new Zend_Config_Ini('../../Family_Tree/application/configs/application.ini', null);
+        $this->_config = new Zend_Config_Ini('application/configs/application.ini', null);
         // データベース関連の設定をレジストリに登録
         Zend_Registry::set('database', $this->_config->datasource->database->toArray());
 
@@ -2182,7 +2182,7 @@ class OrderpageController extends Zend_Controller_Action {
     public function disAction(){
             // ログインしていない場合、閲覧できません画像を表示
             header('Content-type: image/jpeg');
-            readfile('../../Family_Tree/CanNotBrowse.png');
+            readfile('CanNotBrowse.png');
     }
 
 /** ===============  データ挿入、修正 ======================== */

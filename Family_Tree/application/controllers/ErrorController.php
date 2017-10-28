@@ -5,9 +5,9 @@ require_once 'Zend/Config/Ini.php';
 require_once 'Zend/Registry.php';
 require_once 'Zend/Log.php';
 require_once 'Zend/Log/Writer/Stream.php';
-require_once '../../Family_Tree/application/smarty/Zend_View_Smarty.class.php';
-require_once '../../Family_Tree/application/common/comConst.php';
-require_once '../../Family_Tree/application/controllers/OrderpageController.php';
+require_once 'application/smarty/Zend_View_Smarty.class.php';
+require_once 'application/common/comConst.php';
+require_once 'application/controllers/OrderpageController.php';
 
 
 
@@ -18,7 +18,7 @@ class ErrorController extends Zend_Controller_Action {
 
 	public function init() {
 		/* ========== 設定情報を読み取り ========== */
-        $this->_config = new Zend_Config_Ini('../../Family_Tree/application/configs/application.ini', null);
+        $this->_config = new Zend_Config_Ini('application/configs/application.ini', null);
 
         // データベース関連の設定をレジストリに登録
         Zend_Registry::set('database', $this->_config->datasource->database->toArray());
@@ -51,7 +51,7 @@ class ErrorController extends Zend_Controller_Action {
         $this->_view->customerId = $userid;
 
         //ログファイルに出力
-        $sendLogFile = "../../Family_Tree/FamilyTreeLog/send_log_" . date("Ymd", time()) . ".txt";
+        $sendLogFile = "FamilyTreeLog/send_log_" . date("Ymd", time()) . ".txt";
         clearstatcache();
         //ファイルが存在しない場合は、空のファイルを作成
         if (is_file($sendLogFile) === false) {
