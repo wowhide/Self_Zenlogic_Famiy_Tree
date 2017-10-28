@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css?var=20120829" />
-    <link href="../css/jquery.mobile.datepicker.css" rel="stylesheet">
-    <link href="../css/jquery.mobile.datepicker.theme.css" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/jquery.mobile.datepicker.css" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/jquery.mobile.datepicker.theme.css" rel="stylesheet">
     <link href="http://www.htmlhifive.com/ja/res/lib/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://code.htmlhifive.com/h5.css" rel="stylesheet" >
-    <link href="../css/style.css?var=20120829" rel="stylesheet">
-    <link href="../css/sweetalert.css" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/style.css?var=20120829" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/sweetalert.css" rel="stylesheet">
     <title>家系図_自分情報登録</title>
 
     <meta http-equiv="Pragma" content="no-cache">
@@ -19,13 +19,13 @@
 
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
-    <script src="../js/jquery.mobile.datepicker.js"></script>
+    <script src="../../../../Family_Tree/js/jquery.mobile.datepicker.js"></script>
     <script src="http://www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
     <script src="http://www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
     <script src="http://code.htmlhifive.com/h5.dev.js"></script>
-    <script src="../js/jquery.validate.min.js"></script>
-    <script src="../js/form.js"></script>
-    <script src="../js/sweetalert.min.js"></script>
+    <script src="../../../../Family_Tree/js/jquery.validate.min.js"></script>
+    <script src="../../../../Family_Tree/js/form.js"></script>
+    <script src="../../../../Family_Tree/js/sweetalert.min.js"></script>
 
 
     <style type="text/css">
@@ -1893,7 +1893,7 @@ $(function() {
                             <img src="{$urlocalgrandfatherfather}?{$urlquery_img_thumb_grandfatherfather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandfatherfather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandfatherfather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -1905,6 +1905,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandfatherfather_img_name" value="" size="24" placeholder="" id="grandfatherfather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -2040,7 +2053,7 @@ $(function() {
                             <img src="{$urlocalgrandfathermather}?{$urlquery_img_thumb_grandfathermather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandfathermather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandfathermather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -2052,6 +2065,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandfathermather_img_name" value="" size="24" placeholder="" id="grandfathermather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -2187,7 +2213,7 @@ $(function() {
                             <img src="{$urlocalgrandmatherfather}?{$urlquery_img_thumb_grandmatherfather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandmatherfather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandmatherfather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -2199,6 +2225,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandmatherfather_img_name" value="" size="24" placeholder="" id="grandmatherfather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:10px;">
@@ -2335,7 +2374,7 @@ $(function() {
                             <img src="{$urlocalgrandmathermather}?{$urlquery_img_thumb_grandmathermather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandmathermather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandmathermather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -2347,6 +2386,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandmathermather_img_name" value="" size="24" placeholder="" id="grandmathermather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">

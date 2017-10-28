@@ -417,7 +417,7 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_view->selfMemo              = $this->_session->self_memo;
 
             //画像リンク生成
-            $url_local_self = $this->readimage($customer_id);
+            $url_local_self                     = $this->readimage($customer_id);
             $this->_view->urlocalself           = $url_local_self;
 
             //画像があるか確認
@@ -467,12 +467,25 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->father_memo            = $father_memo;
             $this->_view->fatherMemo                = $this->_session->father_memo;
 
-            $url_local_father = $this->readimagefather($customer_id);
-            $this->_view->urlocalfather         = $url_local_father;
+            $url_local_father                       = $this->readimagefather($customer_id);
+            $this->_view->urlocalfather             = $url_local_father;
+
+            //故人名文字カウント
+            $father_family_name_count = mb_strlen($father_family_name);
+            if ($father_family_name_count > 6) {
+                $this->_view->fatherFontSize = 6;
+            }else{
+                $this->_view->fatherFontSize = 8;
+            }
 
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_FATHER_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $father_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$father_family_id&deceasedlist_img_name=$father_img_name");
+            // $father_deceasedlist_img_info["0"]; //横幅の出力
+            // $father_deceasedlist_img_info["1"]; //縦高さの出力
 
             if(file_exists($uploadFile)){
                 $this->_view->father_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -481,7 +494,12 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_thumb_father     = $this->urlquery();
             }else{
                 if (!empty($father_img_name)) {
-                    $this->_view->father_img                = 2;
+                    if($father_deceasedlist_img_info["0"] > $father_deceasedlist_img_info["1"]){
+                        $this->_view->father_img                = 3;
+                    }else{
+                        $this->_view->father_img                = 2;
+                    }
+                    
                 }else{
                     $this->_view->father_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
                 }
@@ -495,11 +513,12 @@ class OrderpageController extends Zend_Controller_Action {
             $mather_family_name   = $result_mather['mather_family_name'];
             $mather_birthday      = $result_mather['mather_birthday'];
             $mather_deathday      = $result_mather['mather_deathday'];
+            $mather_img_name      = $result_mather['mather_img_name'];
             $mather_profession    = $result_mather['mather_profession'];
             $mather_memo          = $result_mather['mather_memo'];
 
-            $this->_session->mather_family_id       = $mather_family_id;
-            $this->_view->matherFamilyId            = $this->_session->mather_family_id;
+            $this->_session->mather_family_id   = $mather_family_id;
+            $this->_view->matherFamilyId        = $this->_session->mather_family_id;
 
             $this->_session->mather_family_name = $mather_family_name;
             $this->_view->matherFamilyName      = $this->_session->mather_family_name;
@@ -510,8 +529,8 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->mather_deathday    = $mather_deathday;
             $this->_view->matherDeathday        = $this->_session->mather_deathday;
 
-            $this->_session->mather_img_name        = $mather_img_name;
-            $this->_view->matherImgName             = $this->_session->mather_img_name;
+            $this->_session->mather_img_name    = $mather_img_name;
+            $this->_view->matherImgName         = $this->_session->mather_img_name;
 
             $this->_session->mather_profession  = $mather_profession;
             $this->_view->matherProfession      = $this->_session->mather_profession;
@@ -519,12 +538,23 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->mather_memo        = $mather_memo;
             $this->_view->matherMemo            = $this->_session->mather_memo;
 
-            $url_local_mather = $this->readimagemather($customer_id);
+            $url_local_mather                   = $this->readimagemather($customer_id);
             $this->_view->urlocalmather         = $url_local_mather;
+
+            //故人名文字カウント
+            $mather_family_name_count = mb_strlen($mather_family_name);
+            if ($mather_family_name_count > 6) {
+                $this->_view->matherFontSize = 6;
+            }else{
+                $this->_view->matherFontSize = 8;
+            }
 
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_MATHER_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $mather_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$mather_family_id&deceasedlist_img_name=$mather_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->mather_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -533,7 +563,11 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_thumb_mather     = $this->urlquery();
             }else{
                 if (!empty($mather_img_name)) {
-                    $this->_view->mather_img                = 2;
+                    if($mather_deceasedlist_img_info["0"] > $mather_deceasedlist_img_info["1"]){
+                        $this->_view->mather_img                = 3;
+                    }else{
+                        $this->_view->mather_img                = 2;
+                    }
                 }else{
                     $this->_view->mather_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
                 }
@@ -547,11 +581,12 @@ class OrderpageController extends Zend_Controller_Action {
             $spouse_family_name   = $result_spouse['spouse_family_name'];
             $spouse_birthday      = $result_spouse['spouse_birthday'];
             $spouse_deathday      = $result_spouse['spouse_deathday'];
+            $spouse_img_name      = $result_spouse['spouse_img_name'];
             $spouse_profession    = $result_spouse['spouse_profession'];
             $spouse_memo          = $result_spouse['spouse_memo'];
 
-            $this->_session->spouse_family_id       = $spouse_family_id;
-            $this->_view->spouseFamilyId            = $this->_session->spouse_family_id;
+            $this->_session->spouse_family_id   = $spouse_family_id;
+            $this->_view->spouseFamilyId        = $this->_session->spouse_family_id;
 
             $this->_session->spouse_family_name = $spouse_family_name;
             $this->_view->spouseFamilyName      = $this->_session->spouse_family_name;
@@ -562,18 +597,32 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->spouse_deathday    = $spouse_deathday;
             $this->_view->spouseDeathday        = $this->_session->spouse_deathday;
 
+            $this->_session->spouse_img_name    = $spouse_img_name;
+            $this->_view->spouseImgName         = $this->_session->spouse_img_name;
+
             $this->_session->spouse_profession  = $spouse_profession;
             $this->_view->spouseProfession      = $this->_session->spouse_profession;
 
             $this->_session->spouse_memo        = $spouse_memo;
             $this->_view->spouseMemo            = $this->_session->spouse_memo;
 
-            $url_local_spouse = $this->readimagespouse($customer_id);
+            $url_local_spouse                   = $this->readimagespouse($customer_id);
             $this->_view->urlocalspouse         = $url_local_spouse;
+
+            //故人名文字カウント
+            $spouse_family_name_count = mb_strlen($spouse_family_name);
+            if ($spouse_family_name_count > 6) {
+                $this->_view->spouseFontSize = 6;
+            }else{
+                $this->_view->spouseFontSize = 8;
+            }
 
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_SPOUSE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $spouse_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$spouse_family_id&deceasedlist_img_name=$spouse_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->spouse_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -581,7 +630,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_spouse           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_spouse     = $this->urlquery();
             }else{
-                $this->_view->spouse_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($spouse_img_name)) {
+                    if($spouse_deceasedlist_img_info["0"] > $spouse_deceasedlist_img_info["1"]){
+                        $this->_view->spouse_img                = 3;
+                    }else{
+                        $this->_view->spouse_img                = 2;
+                    }
+                }else{
+                    $this->_view->spouse_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -593,6 +650,7 @@ class OrderpageController extends Zend_Controller_Action {
             $brotherone_sex             = $result_brotherone['brother_one_sex'];
             $brotherone_birthday        = $result_brotherone['brother_one_birthday'];
             $brotherone_deathday        = $result_brotherone['brother_one_deathday'];
+            $brotherone_img_name        = $result_brotherone['brother_one_img_name'];
             $brotherone_profession      = $result_brotherone['brother_one_profession'];
             $brotherone_memo            = $result_brotherone['brother_one_memo'];
 
@@ -623,6 +681,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->brotherone_deathday        = $brotherone_deathday;
             $this->_view->brotheroneDeathday            = $this->_session->brotherone_deathday;
 
+            $this->_session->brotherone_img_name        = $brotherone_img_name;
+            $this->_view->brotheroneImgName             = $this->_session->brotherone_img_name;
+
             $this->_session->brotherone_profession      = $brotherone_profession;
             $this->_view->brotheroneProfession          = $this->_session->brotherone_profession;
 
@@ -632,9 +693,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_brotherone = $this->readimagebrotherone($customer_id);
             $this->_view->urlocalbrotherone             = $url_local_brotherone;
 
+            //故人名文字カウント
+            $brotherone_family_name_count = mb_strlen($brotherone_family_name);
+            if ($brotherone_family_name_count > 6) {
+                $this->_view->brotheroneFontSize = 6;
+            }else{
+                $this->_view->brotheroneFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_BROTHERONE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $brotherone_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$brotherone_family_id&deceasedlist_img_name=$brotherone_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->brotherone_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -642,7 +714,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_brotherone           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_brotherone     = $this->urlquery();
             }else{
-                $this->_view->brotherone_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($brotherone_img_name)) {
+                    if($brotherone_deceasedlist_img_info["0"] > $brotherone_deceasedlist_img_info["1"]){
+                        $this->_view->brotherone_img                = 3;
+                    }else{
+                        $this->_view->brotherone_img                = 2;
+                    }
+                }else{
+                    $this->_view->brotherone_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -654,6 +734,7 @@ class OrderpageController extends Zend_Controller_Action {
             $brothertwo_sex             = $result_brothertwo['brother_two_sex'];
             $brothertwo_birthday        = $result_brothertwo['brother_two_birthday'];
             $brothertwo_deathday        = $result_brothertwo['brother_two_deathday'];
+            $brothertwo_img_name        = $result_brothertwo['brother_two_img_name'];
             $brothertwo_profession      = $result_brothertwo['brother_two_profession'];
             $brothertwo_memo            = $result_brothertwo['brother_two_memo'];
 
@@ -684,18 +765,32 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->brothertwo_deathday        = $brothertwo_deathday;
             $this->_view->brothertwoDeathday            = $this->_session->brothertwo_deathday;
 
+            $this->_session->brothertwo_img_name        = $brothertwo_img_name;
+            $this->_view->brothertwoImgName             = $this->_session->brothertwo_img_name;
+
             $this->_session->brothertwo_profession      = $brothertwo_profession;
             $this->_view->brothertwoProfession          = $this->_session->brothertwo_profession;
 
             $this->_session->brothertwo_memo            = $brothertwo_memo;
             $this->_view->brothertwoMemo                = $this->_session->brothertwo_memo;
 
-            $url_local_brothertwo = $this->readimagebrothertwo($customer_id);
+            $url_local_brothertwo                       = $this->readimagebrothertwo($customer_id);
             $this->_view->urlocalbrothertwo             = $url_local_brothertwo;
+
+             //故人名文字カウント
+            $brothertwo_family_name_count = mb_strlen($brothertwo_family_name);
+            if ($brothertwo_family_name_count > 6) {
+                $this->_view->brothertwoFontSize = 6;
+            }else{
+                $this->_view->brothertwoFontSize = 8;
+            }
 
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_BROTHERTWO_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $brothertwo_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$brothertwo_family_id&deceasedlist_img_name=$brothertwo_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->brothertwo_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -703,7 +798,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_brothertwo           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_brothertwo     = $this->urlquery();
             }else{
-                $this->_view->brothertwo_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($brothertwo_img_name)) {
+                    if($brothertwo_deceasedlist_img_info["0"] > $brothertwo_deceasedlist_img_info["1"]){
+                        $this->_view->brothertwo_img                = 3;
+                    }else{
+                        $this->_view->brothertwo_img                = 2;
+                    }
+                }else{
+                    $this->_view->brothertwo_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -715,6 +818,7 @@ class OrderpageController extends Zend_Controller_Action {
             $brotherthree_sex             = $result_brotherthree['brother_three_sex'];
             $brotherthree_birthday        = $result_brotherthree['brother_three_birthday'];
             $brotherthree_deathday        = $result_brotherthree['brother_three_deathday'];
+            $brotherthree_img_name        = $result_brotherthree['brother_three_img_name'];
             $brotherthree_profession      = $result_brotherthree['brother_three_profession'];
             $brotherthree_memo            = $result_brotherthree['brother_three_memo'];
 
@@ -745,18 +849,32 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->brotherthree_deathday        = $brotherthree_deathday;
             $this->_view->brotherthreeDeathday            = $this->_session->brotherthree_deathday;
 
+            $this->_session->brotherthree_img_name        = $brotherthree_img_name;
+            $this->_view->brotherthreeImgName             = $this->_session->brotherthree_img_name;
+
             $this->_session->brotherthree_profession      = $brotherthree_profession;
             $this->_view->brotherthreeProfession          = $this->_session->brotherthree_profession;
 
             $this->_session->brotherthree_memo            = $brotherthree_memo;
             $this->_view->brotherthreeMemo                = $this->_session->brotherthree_memo;
 
-            $url_local_brotherthree = $this->readimagebrotherthree($customer_id);
+            $url_local_brotherthree                       = $this->readimagebrotherthree($customer_id);
             $this->_view->urlocalbrotherthree             = $url_local_brotherthree;
+
+            //故人名文字カウント
+            $brotherthree_family_name_count = mb_strlen($brotherthree_family_name);
+            if ($brotherthree_family_name_count > 6) {
+                $this->_view->brotherthreeFontSize = 6;
+            }else{
+                $this->_view->brotherthreeFontSize = 8;
+            }
 
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_BROTHERTHREE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $brotherthree_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$brotherthree_family_id&deceasedlist_img_name=$brotherthree_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->brotherthree_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -764,7 +882,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_brotherthree           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_brotherthree     = $this->urlquery();
             }else{
-                $this->_view->brotherthree_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($brotherthree_img_name)) {
+                    if($brotherthree_deceasedlist_img_info["0"] > $brotherthree_deceasedlist_img_info["1"]){
+                        $this->_view->brotherthree_img                = 3;
+                    }else{
+                        $this->_view->brotherthree_img                = 2;
+                    }
+                }else{
+                    $this->_view->brotherthree_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -777,6 +903,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childone_spouse_name     = $result_childone['child_one_spouse_name'];
             $childone_birthday        = $result_childone['child_one_birthday'];
             $childone_deathday        = $result_childone['child_one_deathday'];
+            $childone_img_name        = $result_childone['child_one_img_name'];
             $childone_profession      = $result_childone['child_one_profession'];
             $childone_memo            = $result_childone['child_one_memo'];
 
@@ -810,6 +937,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childone_deathday        = $childone_deathday;
             $this->_view->childoneDeathday            = $this->_session->childone_deathday;
 
+            $this->_session->childone_img_name        = $childone_img_name;
+            $this->_view->childoneImgName             = $this->_session->childone_img_name;
+
             $this->_session->childone_profession      = $childone_profession;
             $this->_view->childoneProfession          = $this->_session->childone_profession;
 
@@ -819,9 +949,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childone = $this->readimagechildone($customer_id);
             $this->_view->urlocalchildone         = $url_local_childone;
 
+            //故人名文字カウント
+            $childone_family_name_count = mb_strlen($childone_family_name);
+            if ($childone_family_name_count > 6) {
+                $this->_view->childoneFontSize = 6;
+            }else{
+                $this->_view->childoneFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDONE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childone_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childone_family_id&deceasedlist_img_name=$childone_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childone_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -829,7 +970,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childone           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childone     = $this->urlquery();
             }else{
-                $this->_view->childone_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childone_img_name)) {
+                    if($childone_deceasedlist_img_info["0"] > $childone_deceasedlist_img_info["1"]){
+                        $this->_view->childone_img                = 3;
+                    }else{
+                        $this->_view->childone_img                = 2;
+                    }
+                }else{
+                    $this->_view->childone_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -842,6 +991,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childtwo_spouse_name     = $result_childtwo['child_two_spouse_name'];
             $childtwo_birthday        = $result_childtwo['child_two_birthday'];
             $childtwo_deathday        = $result_childtwo['child_two_deathday'];
+            $childtwo_img_name        = $result_childtwo['child_two_img_name'];
             $childtwo_profession      = $result_childtwo['child_two_profession'];
             $childtwo_memo            = $result_childtwo['child_two_memo'];
 
@@ -875,6 +1025,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childtwo_deathday        = $childtwo_deathday;
             $this->_view->childtwoDeathday            = $this->_session->childtwo_deathday;
 
+            $this->_session->childtwo_img_name        = $childtwo_img_name;
+            $this->_view->childtwoImgName             = $this->_session->childtwo_img_name;
+
             $this->_session->childtwo_profession      = $childtwo_profession;
             $this->_view->childtwoProfession          = $this->_session->childtwo_profession;
 
@@ -884,9 +1037,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childtwo = $this->readimagechildtwo($customer_id);
             $this->_view->urlocalchildtwo         = $url_local_childtwo;
 
+            //故人名文字カウント
+            $childtwo_family_name_count = mb_strlen($childtwo_family_name);
+            if ($childtwo_family_name_count > 6) {
+                $this->_view->childtwoFontSize = 6;
+            }else{
+                $this->_view->childtwoFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTWO_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childtwo_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childtwo_family_id&deceasedlist_img_name=$childtwo_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childtwo_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -894,7 +1058,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childtwo           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childtwo     = $this->urlquery();
             }else{
-                $this->_view->childtwo_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childtwo_img_name)) {
+                    if($childtwo_deceasedlist_img_info["0"] > $childtwo_deceasedlist_img_info["1"]){
+                        $this->_view->childtwo_img                = 3;
+                    }else{
+                        $this->_view->childtwo_img                = 2;
+                    }
+                }else{
+                    $this->_view->childtwo_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -907,6 +1079,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childthree_spouse_name     = $result_childthree['child_three_spouse_name'];
             $childthree_birthday        = $result_childthree['child_three_birthday'];
             $childthree_deathday        = $result_childthree['child_three_deathday'];
+            $childthree_img_name        = $result_childthree['child_three_img_name'];
             $childthree_profession      = $result_childthree['child_three_profession'];
             $childthree_memo            = $result_childthree['child_three_memo'];
 
@@ -940,6 +1113,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childthree_deathday        = $childthree_deathday;
             $this->_view->childthreeDeathday            = $this->_session->childthree_deathday;
 
+            $this->_session->childthree_img_name        = $childthree_img_name;
+            $this->_view->childthreeImgName             = $this->_session->childthree_img_name;
+
             $this->_session->childthree_profession      = $childthree_profession;
             $this->_view->childthreeProfession          = $this->_session->childthree_profession;
 
@@ -949,9 +1125,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childthree = $this->readimagechildthree($customer_id);
             $this->_view->urlocalchildthree         = $url_local_childthree;
 
+            //故人名文字カウント
+            $childthree_family_name_count = mb_strlen($childthree_family_name);
+            if ($childthree_family_name_count > 6) {
+                $this->_view->childthreeFontSize = 6;
+            }else{
+                $this->_view->childthreeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTHREE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childthree_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childthree_family_id&deceasedlist_img_name=$childthree_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childthree_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -959,7 +1146,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childthree           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childthree     = $this->urlquery();
             }else{
-                $this->_view->childthree_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childthree_img_name)) {
+                    if($childthree_deceasedlist_img_info["0"] > $childthree_deceasedlist_img_info["1"]){
+                        $this->_view->childthree_img                = 3;
+                    }else{
+                        $this->_view->childthree_img                = 2;
+                    }
+                }else{
+                    $this->_view->childthree_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -972,6 +1167,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childfour_spouse_name     = $result_childfour['child_four_spouse_name'];
             $childfour_birthday        = $result_childfour['child_four_birthday'];
             $childfour_deathday        = $result_childfour['child_four_deathday'];
+            $childfour_img_name        = $result_childfour['child_four_img_name'];
             $childfour_profession      = $result_childfour['child_four_profession'];
             $childfour_memo            = $result_childfour['child_four_memo'];
 
@@ -1005,6 +1201,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childfour_deathday        = $childfour_deathday;
             $this->_view->childfourDeathday            = $this->_session->childfour_deathday;
 
+            $this->_session->childfour_img_name        = $childfour_img_name;
+            $this->_view->childfourImgName             = $this->_session->childfour_img_name;
+
             $this->_session->childfour_profession      = $childfour_profession;
             $this->_view->childfourProfession          = $this->_session->childfour_profession;
 
@@ -1014,9 +1213,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childfour = $this->readimagechildfour($customer_id);
             $this->_view->urlocalchildfour         = $url_local_childfour;
 
+            //故人名文字カウント
+            $childfour_family_name_count = mb_strlen($childfour_family_name);
+            if ($childfour_family_name_count > 6) {
+                $this->_view->childfourFontSize = 6;
+            }else{
+                $this->_view->childfourFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDFOUR_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childfour_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childfour_family_id&deceasedlist_img_name=$childfour_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childfour_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1024,7 +1234,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childfour           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childfour     = $this->urlquery();
             }else{
-                $this->_view->childfour_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childfour_img_name)) {
+                    if($childfour_deceasedlist_img_info["0"] > $childfour_deceasedlist_img_info["1"]){
+                        $this->_view->childfour_img                = 3;
+                    }else{
+                        $this->_view->childfour_img                = 2;
+                    }
+                }else{
+                    $this->_view->childfour_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1037,6 +1255,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childonegrandsonone_sex             = $result_childonegrandsonone['child_one_grandson_one_sex'];
             $childonegrandsonone_birthday        = $result_childonegrandsonone['child_one_grandson_one_birthday'];
             $childonegrandsonone_deathday        = $result_childonegrandsonone['child_one_grandson_one_deathday'];
+            $childonegrandsonone_img_name        = $result_childonegrandsonone['child_one_grandson_one_img_name'];
             $childonegrandsonone_profession      = $result_childonegrandsonone['child_one_grandson_one_profession'];
             $childonegrandsonone_memo            = $result_childonegrandsonone['child_one_grandson_one_memo'];
 
@@ -1067,6 +1286,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childonegrandsonone_deathday        = $childonegrandsonone_deathday;
             $this->_view->childonegrandsononeDeathday            = $this->_session->childonegrandsonone_deathday;
 
+            $this->_session->childonegrandsonone_img_name        = $childonegrandsonone_img_name;
+            $this->_view->childonegrandsononeImgName             = $this->_session->childonegrandsonone_img_name;
+
             $this->_session->childonegrandsonone_profession      = $childonegrandsonone_profession;
             $this->_view->childonegrandsononeProfession          = $this->_session->childonegrandsonone_profession;
 
@@ -1076,9 +1298,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childonegrandsonone = $this->readimagechildonegrandsonone($customer_id);
             $this->_view->urlocalchildonegrandsonone         = $url_local_childonegrandsonone;
 
+            //故人名文字カウント
+            $childonegrandsonone_family_name_count = mb_strlen($childonegrandsonone_family_name);
+            if ($childonegrandsonone_family_name_count > 6) {
+                $this->_view->childonegrandsononeFontSize = 6;
+            }else{
+                $this->_view->childonegrandsononeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDONEGRANDSONONE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childonegrandsonone_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childonegrandsonone_family_id&deceasedlist_img_name=$childonegrandsonone_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childonegrandsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1086,7 +1319,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childonegrandsonone           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childonegrandsonone     = $this->urlquery();
             }else{
-                $this->_view->childonegrandsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childonegrandsonone_img_name)) {
+                    if($childonegrandsonone_deceasedlist_img_info["0"] > $childonegrandsonone_deceasedlist_img_info["1"]){
+                        $this->_view->childonegrandsonone_img                = 3;
+                    }else{
+                        $this->_view->childonegrandsonone_img                = 2;
+                    }
+                }else{
+                    $this->_view->childonegrandsonone_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1098,6 +1339,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childonegrandsontwo_sex             = $result_childonegrandsontwo['child_one_grandson_two_sex'];
             $childonegrandsontwo_birthday        = $result_childonegrandsontwo['child_one_grandson_two_birthday'];
             $childonegrandsontwo_deathday        = $result_childonegrandsontwo['child_one_grandson_two_deathday'];
+            $childonegrandsontwo_img_name        = $result_childonegrandsontwo['child_one_grandson_two_img_name'];
             $childonegrandsontwo_profession      = $result_childonegrandsontwo['child_one_grandson_two_profession'];
             $childonegrandsontwo_memo            = $result_childonegrandsontwo['child_one_grandson_two_memo'];
 
@@ -1128,6 +1370,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childonegrandsontwo_deathday        = $childonegrandsontwo_deathday;
             $this->_view->childonegrandsontwoDeathday            = $this->_session->childonegrandsontwo_deathday;
 
+            $this->_session->childonegrandsontwo_img_name        = $childonegrandsontwo_img_name;
+            $this->_view->childonegrandsontwoImgName             = $this->_session->childonegrandsontwo_img_name;
+
             $this->_session->childonegrandsontwo_profession      = $childonegrandsontwo_profession;
             $this->_view->childonegrandsontwoProfession          = $this->_session->childonegrandsontwo_profession;
 
@@ -1137,9 +1382,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childonegrandsontwo = $this->readimagechildonegrandsontwo($customer_id);
             $this->_view->urlocalchildonegrandsontwo         = $url_local_childonegrandsontwo;
 
+            //故人名文字カウント
+            $childonegrandsontwo_family_name_count = mb_strlen($childonegrandsontwo_family_name);
+            if ($childonegrandsontwo_family_name_count > 6) {
+                $this->_view->childonegrandsontwoFontSize = 6;
+            }else{
+                $this->_view->childonegrandsontwoFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDONEGRANDSONTWO_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childonegrandsontwo_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childonegrandsontwo_family_id&deceasedlist_img_name=$childonegrandsontwo_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childonegrandsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1147,7 +1403,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childonegrandsontwo           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childonegrandsontwo     = $this->urlquery();
             }else{
-                $this->_view->childonegrandsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childonegrandsontwo_img_name)) {
+                    if($childonegrandsontwo_deceasedlist_img_info["0"] > $childonegrandsontwo_deceasedlist_img_info["1"]){
+                        $this->_view->childonegrandsontwo_img                = 3;
+                    }else{
+                        $this->_view->childonegrandsontwo_img                = 2;
+                    }
+                }else{
+                    $this->_view->childonegrandsontwo_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1159,6 +1423,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childonegrandsonthree_sex             = $result_childonegrandsonthree['child_one_grandson_three_sex'];
             $childonegrandsonthree_birthday        = $result_childonegrandsonthree['child_one_grandson_three_birthday'];
             $childonegrandsonthree_deathday        = $result_childonegrandsonthree['child_one_grandson_three_deathday'];
+            $childonegrandsonthree_img_name        = $result_childonegrandsonthree['child_one_grandson_three_img_name'];
             $childonegrandsonthree_profession      = $result_childonegrandsonthree['child_one_grandson_three_profession'];
             $childonegrandsonthree_memo            = $result_childonegrandsonthree['child_one_grandson_three_memo'];
 
@@ -1189,6 +1454,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childonegrandsonthree_deathday        = $childonegrandsonthree_deathday;
             $this->_view->childonegrandsonthreeDeathday            = $this->_session->childonegrandsonthree_deathday;
 
+            $this->_session->childonegrandsonthree_img_name        = $childonegrandsonthree_img_name;
+            $this->_view->childonegrandsonthreeImgName             = $this->_session->childonegrandsonthree_img_name;
+
             $this->_session->childonegrandsonthree_profession      = $childonegrandsonthree_profession;
             $this->_view->childonegrandsonthreeProfession          = $this->_session->childonegrandsonthree_profession;
 
@@ -1198,9 +1466,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childonegrandsonthree = $this->readimagechildonegrandsonthree($customer_id);
             $this->_view->urlocalchildonegrandsonthree         = $url_local_childonegrandsonthree;
 
+            //故人名文字カウント
+            $childonegrandsonthree_family_name_count = mb_strlen($childonegrandsonthree_family_name);
+            if ($childonegrandsonthree_family_name_count > 6) {
+                $this->_view->childonegrandsonthreeFontSize = 6;
+            }else{
+                $this->_view->childonegrandsonthreeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDONEGRANDSONTHREE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childonegrandsonthree_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childonegrandsonthree_family_id&deceasedlist_img_name=$childonegrandsonthree_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childonegrandsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1208,7 +1487,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childonegrandsonthree           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childonegrandsonthree     = $this->urlquery();
             }else{
-                $this->_view->childonegrandsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childonegrandsonthree_img_name)) {
+                    if($childonegrandsonthree_deceasedlist_img_info["0"] > $childonegrandsonthree_deceasedlist_img_info["1"]){
+                        $this->_view->childonegrandsonthree_img                = 3;
+                    }else{
+                        $this->_view->childonegrandsonthree_img                = 2;
+                    }
+                }else{
+                    $this->_view->childonegrandsonthree_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1220,6 +1507,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childtwograndsonone_sex             = $result_childtwograndsonone['child_two_grandson_one_sex'];
             $childtwograndsonone_birthday        = $result_childtwograndsonone['child_two_grandson_one_birthday'];
             $childtwograndsonone_deathday        = $result_childtwograndsonone['child_two_grandson_one_deathday'];
+            $childtwograndsonone_img_name        = $result_childtwograndsonone['child_two_grandson_one_img_name'];
             $childtwograndsonone_profession      = $result_childtwograndsonone['child_two_grandson_one_profession'];
             $childtwograndsonone_memo            = $result_childtwograndsonone['child_two_grandson_one_memo'];
 
@@ -1250,6 +1538,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childtwograndsonone_deathday        = $childtwograndsonone_deathday;
             $this->_view->childtwograndsononeDeathday            = $this->_session->childtwograndsonone_deathday;
 
+            $this->_session->childtwograndsonone_img_name        = $childtwograndsonone_img_name;
+            $this->_view->childtwograndsononeImgName             = $this->_session->childtwograndsonone_img_name;
+
             $this->_session->childtwograndsonone_profession      = $childtwograndsonone_profession;
             $this->_view->childtwograndsononeProfession          = $this->_session->childtwograndsonone_profession;
 
@@ -1259,9 +1550,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childtwograndsonone = $this->readimagechildtwograndsonone($customer_id);
             $this->_view->urlocalchildtwograndsonone         = $url_local_childtwograndsonone;
 
+            //故人名文字カウント
+            $childtwograndsonone_family_name_count = mb_strlen($childtwograndsonone_family_name);
+            if ($childtwograndsonone_family_name_count > 6) {
+                $this->_view->childtwograndsononeFontSize = 6;
+            }else{
+                $this->_view->childtwograndsononeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTWOGRANDSONONE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childtwograndsonone_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childtwograndsonone_family_id&deceasedlist_img_name=$childtwograndsonone_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childtwograndsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1269,7 +1571,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childtwograndsonone           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childtwograndsonone     = $this->urlquery();
             }else{
-                $this->_view->childtwograndsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childtwograndsonone_img_name)) {
+                    if($childtwograndsonone_deceasedlist_img_info["0"] > $childtwograndsonone_deceasedlist_img_info["1"]){
+                        $this->_view->childtwograndsonone_img                = 3;
+                    }else{
+                        $this->_view->childtwograndsonone_img                = 2;
+                    }
+                }else{
+                    $this->_view->childtwograndsonone_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1281,6 +1591,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childtwograndsontwo_sex             = $result_childtwograndsontwo['child_two_grandson_two_sex'];
             $childtwograndsontwo_birthday        = $result_childtwograndsontwo['child_two_grandson_two_birthday'];
             $childtwograndsontwo_deathday        = $result_childtwograndsontwo['child_two_grandson_two_deathday'];
+            $childtwograndsontwo_img_name        = $result_childtwograndsontwo['child_two_grandson_two_img_name'];
             $childtwograndsontwo_profession      = $result_childtwograndsontwo['child_two_grandson_two_profession'];
             $childtwograndsontwo_memo            = $result_childtwograndsontwo['child_two_grandson_two_memo'];
 
@@ -1311,6 +1622,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childtwograndsontwo_deathday        = $childtwograndsontwo_deathday;
             $this->_view->childtwograndsontwoDeathday            = $this->_session->childtwograndsontwo_deathday;
 
+            $this->_session->childtwograndsontwo_img_name        = $childtwograndsontwo_img_name;
+            $this->_view->childtwograndsontwoImgName             = $this->_session->childtwograndsontwo_img_name;
+
             $this->_session->childtwograndsontwo_profession      = $childtwograndsontwo_profession;
             $this->_view->childtwograndsontwoProfession          = $this->_session->childtwograndsontwo_profession;
 
@@ -1320,9 +1634,21 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childtwograndsontwo = $this->readimagechildtwograndsontwo($customer_id);
             $this->_view->urlocalchildtwograndsontwo             = $url_local_childtwograndsontwo;
 
+            //故人名文字カウント
+            $childtwograndsontwo_family_name_count = mb_strlen($childtwograndsontwo_family_name);
+            if ($childtwograndsontwo_family_name_count > 6) {
+                $this->_view->childtwograndsontwoFontSize = 6;
+            }else{
+                $this->_view->childtwograndsontwoFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTWOGRANDSONTWO_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childtwograndsontwo_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childtwograndsontwo_family_id&deceasedlist_img_name=$childtwograndsontwo_img_name");
+
 
             if(file_exists($uploadFile)){
                 $this->_view->childtwograndsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1330,7 +1656,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childtwograndsontwo           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childtwograndsontwo     = $this->urlquery();
             }else{
-                $this->_view->childtwograndsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childtwograndsontwo_img_name)) {
+                    if($childtwograndsontwo_deceasedlist_img_info["0"] > $childtwograndsontwo_deceasedlist_img_info["1"]){
+                        $this->_view->childtwograndsontwo_img                = 3;
+                    }else{
+                        $this->_view->childtwograndsontwo_img                = 2;
+                    }
+                }else{
+                    $this->_view->childtwograndsontwo_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1342,6 +1676,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childtwograndsonthree_sex             = $result_childtwograndsonthree['child_two_grandson_three_sex'];
             $childtwograndsonthree_birthday        = $result_childtwograndsonthree['child_two_grandson_three_birthday'];
             $childtwograndsonthree_deathday        = $result_childtwograndsonthree['child_two_grandson_three_deathday'];
+            $childtwograndsonthree_img_name        = $result_childtwograndsonthree['child_two_grandson_three_img_name'];
             $childtwograndsonthree_profession      = $result_childtwograndsonthree['child_two_grandson_three_profession'];
             $childtwograndsonthree_memo            = $result_childtwograndsonthree['child_two_grandson_three_memo'];
 
@@ -1372,6 +1707,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childtwograndsonthree_deathday        = $childtwograndsonthree_deathday;
             $this->_view->childtwograndsonthreeDeathday            = $this->_session->childtwograndsonthree_deathday;
 
+            $this->_session->childtwograndsonthree_img_name        = $childtwograndsonthree_img_name;
+            $this->_view->childtwograndsonthreeImgName             = $this->_session->childtwograndsonthree_img_name;
+
             $this->_session->childtwograndsonthree_profession      = $childtwograndsonthree_profession;
             $this->_view->childtwograndsonthreeProfession          = $this->_session->childtwograndsonthree_profession;
 
@@ -1381,9 +1719,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childtwograndsonthree = $this->readimagechildtwograndsonthree($customer_id);
             $this->_view->urlocalchildtwograndsonthree             = $url_local_childtwograndsonthree;
 
+            //故人名文字カウント
+            $childtwograndsonthree_family_name_count = mb_strlen($childtwograndsonthree_family_name);
+            if ($childtwograndsonthree_family_name_count > 6) {
+                $this->_view->childtwograndsonthreeFontSize = 6;
+            }else{
+                $this->_view->childtwograndsonthreeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTWOGRANDSONTHREE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childtwograndsonthree_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childtwograndsonthree_family_id&deceasedlist_img_name=$childtwograndsonthree_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childtwograndsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1391,7 +1740,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childtwograndsonthree           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childtwograndsonthree     = $this->urlquery();
             }else{
-                $this->_view->childtwograndsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childtwograndsonthree_img_name)) {
+                    if($childtwograndsonthree_deceasedlist_img_info["0"] > $childtwograndsonthree_deceasedlist_img_info["1"]){
+                        $this->_view->childtwograndsonthree_img                = 3;
+                    }else{
+                        $this->_view->childtwograndsonthree_img                = 2;
+                    }
+                }else{
+                    $this->_view->childtwograndsonthree_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1403,6 +1760,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childthreegrandsonone_sex             = $result_childthreegrandsonone['child_three_grandson_one_sex'];
             $childthreegrandsonone_birthday        = $result_childthreegrandsonone['child_three_grandson_one_birthday'];
             $childthreegrandsonone_deathday        = $result_childthreegrandsonone['child_three_grandson_one_deathday'];
+            $childthreegrandsonone_img_name        = $result_childthreegrandsonone['child_three_grandson_one_img_name'];
             $childthreegrandsonone_profession      = $result_childthreegrandsonone['child_three_grandson_one_profession'];
             $childthreegrandsonone_memo            = $result_childthreegrandsonone['child_three_grandson_one_memo'];
 
@@ -1433,6 +1791,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childthreegrandsonone_deathday        = $childthreegrandsonone_deathday;
             $this->_view->childthreegrandsononeDeathday            = $this->_session->childthreegrandsonone_deathday;
 
+            $this->_session->childthreegrandsonone_img_name        = $childthreegrandsonone_img_name;
+            $this->_view->childthreegrandsononeImgName             = $this->_session->childthreegrandsonone_img_name;
+
             $this->_session->childthreegrandsonone_profession      = $childthreegrandsonone_profession;
             $this->_view->childthreegrandsononeProfession          = $this->_session->childthreegrandsonone_profession;
 
@@ -1442,9 +1803,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childthreegrandsonone = $this->readimagechildthreegrandsonone($customer_id);
             $this->_view->urlocalchildthreegrandsonone         = $url_local_childthreegrandsonone;
 
+            //故人名文字カウント
+            $childthreegrandsonone_family_name_count = mb_strlen($childthreegrandsonone_family_name);
+            if ($childthreegrandsonone_family_name_count > 6) {
+                $this->_view->childthreegrandsononeFontSize = 6;
+            }else{
+                $this->_view->childthreegrandsononeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTHREEGRANDSONONE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childthreegrandsonone_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childthreegrandsonone_family_id&deceasedlist_img_name=$childthreegrandsonone_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childthreegrandsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1452,7 +1824,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childthreegrandsonone           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childthreegrandsonone     = $this->urlquery();
             }else{
-                $this->_view->childthreegrandsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childthreegrandsonone_img_name)) {
+                   if($childthreegrandsonone_deceasedlist_img_info["0"] > $childthreegrandsonone_deceasedlist_img_info["1"]){
+                        $this->_view->childthreegrandsonone_img                = 3;
+                    }else{
+                        $this->_view->childthreegrandsonone_img                = 2;
+                    }
+                }else{
+                    $this->_view->childthreegrandsonone_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1464,6 +1844,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childthreegrandsontwo_sex             = $result_childthreegrandsontwo['child_three_grandson_two_sex'];
             $childthreegrandsontwo_birthday        = $result_childthreegrandsontwo['child_three_grandson_two_birthday'];
             $childthreegrandsontwo_deathday        = $result_childthreegrandsontwo['child_three_grandson_two_deathday'];
+            $childthreegrandsontwo_img_name        = $result_childthreegrandsontwo['child_three_grandson_two_img_name'];
             $childthreegrandsontwo_profession      = $result_childthreegrandsontwo['child_three_grandson_two_profession'];
             $childthreegrandsontwo_memo            = $result_childthreegrandsontwo['child_three_grandson_two_memo'];
 
@@ -1494,6 +1875,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childthreegrandsontwo_deathday        = $childthreegrandsontwo_deathday;
             $this->_view->childthreegrandsontwoDeathday            = $this->_session->childthreegrandsontwo_deathday;
 
+            $this->_session->childthreegrandsontwo_img_name        = $childthreegrandsontwo_img_name;
+            $this->_view->childthreegrandsontwoImgName             = $this->_session->childthreegrandsontwo_img_name;
+
             $this->_session->childthreegrandsontwo_profession      = $childthreegrandsontwo_profession;
             $this->_view->childthreegrandsontwoProfession          = $this->_session->childthreegrandsontwo_profession;
 
@@ -1503,9 +1887,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childthreegrandsontwo = $this->readimagechildthreegrandsontwo($customer_id);
             $this->_view->urlocalchildthreegrandsontwo         = $url_local_childthreegrandsontwo;
 
+            //故人名文字カウント
+            $childthreegrandsontwo_family_name_count = mb_strlen($childthreegrandsontwo_family_name);
+            if ($childthreegrandsontwo_family_name_count > 6) {
+                $this->_view->childthreegrandsontwoFontSize = 6;
+            }else{
+                $this->_view->childthreegrandsontwoFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTHREEGRANDSONTWO_DIR . $fileName;
+
+             //大切な故人＿選択写真サイズ取得
+            $childthreegrandsontwo_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childthreegrandsontwo_family_id&deceasedlist_img_name=$childthreegrandsontwo_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childthreegrandsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1513,7 +1908,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childthreegrandsontwo           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childthreegrandsontwo     = $this->urlquery();
             }else{
-                $this->_view->childthreegrandsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childthreegrandsontwo_img_name)) {
+                    if($childthreegrandsontwo_deceasedlist_img_info["0"] > $childthreegrandsontwo_deceasedlist_img_info["1"]){
+                        $this->_view->childthreegrandsontwo_img                = 3;
+                    }else{
+                        $this->_view->childthreegrandsontwo_img                = 2;
+                    }
+                }else{
+                    $this->_view->childthreegrandsontwo_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1525,6 +1928,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childthreegrandsonthree_sex             = $result_childthreegrandsonthree['child_three_grandson_three_sex'];
             $childthreegrandsonthree_birthday        = $result_childthreegrandsonthree['child_three_grandson_three_birthday'];
             $childthreegrandsonthree_deathday        = $result_childthreegrandsonthree['child_three_grandson_three_deathday'];
+            $childthreegrandsonthree_img_name        = $result_childthreegrandsonthree['child_three_grandson_three_img_name'];
             $childthreegrandsonthree_profession      = $result_childthreegrandsonthree['child_three_grandson_three_profession'];
             $childthreegrandsonthree_memo            = $result_childthreegrandsonthree['child_three_grandson_three_memo'];
 
@@ -1555,6 +1959,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childthreegrandsonthree_deathday        = $childthreegrandsonthree_deathday;
             $this->_view->childthreegrandsonthreeDeathday            = $this->_session->childthreegrandsonthree_deathday;
 
+            $this->_session->childthreegrandsonthree_img_name        = $childthreegrandsonthree_img_name;
+            $this->_view->childthreegrandsonthreeImgName             = $this->_session->childthreegrandsonthree_img_name;
+
             $this->_session->childthreegrandsonthree_profession      = $childthreegrandsonthree_profession;
             $this->_view->childthreegrandsonthreeProfession          = $this->_session->childthreegrandsonthree_profession;
 
@@ -1564,9 +1971,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childthreegrandsonthree = $this->readimagechildthreegrandsonthree($customer_id);
             $this->_view->urlocalchildthreegrandsonthree         = $url_local_childthreegrandsonthree;
 
+            //故人名文字カウント
+            $childthreegrandsonthree_family_name_count = mb_strlen($childthreegrandsonthree_family_name);
+            if ($childthreegrandsonthree_family_name_count > 6) {
+                $this->_view->childthreegrandsonthreeFontSize = 6;
+            }else{
+                $this->_view->childthreegrandsonthreeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDTHREEGRANDSONTHREE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childthreegrandsonthree_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childthreegrandsonthree_family_id&deceasedlist_img_name=$childthreegrandsonthree_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childthreegrandsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1574,7 +1992,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childthreegrandsonthree           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childthreegrandsonthree     = $this->urlquery();
             }else{
-                $this->_view->childthreegrandsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childthreegrandsonthree_img_name)) {
+                    if($childthreegrandsonthree_deceasedlist_img_info["0"] > $childthreegrandsonthree_deceasedlist_img_info["1"]){
+                        $this->_view->childthreegrandsonthree_img                = 3;
+                    }else{
+                        $this->_view->childthreegrandsonthree_img                = 2;
+                    }
+                }else{
+                    $this->_view->childthreegrandsonthree_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1586,6 +2012,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childfourgrandsonone_sex             = $result_childfourgrandsonone['child_four_grandson_one_sex'];
             $childfourgrandsonone_birthday        = $result_childfourgrandsonone['child_four_grandson_one_birthday'];
             $childfourgrandsonone_deathday        = $result_childfourgrandsonone['child_four_grandson_one_deathday'];
+            $childfourgrandsonone_img_name        = $result_childfourgrandsonone['child_four_grandson_one_img_name'];
             $childfourgrandsonone_profession      = $result_childfourgrandsonone['child_four_grandson_one_profession'];
             $childfourgrandsonone_memo            = $result_childfourgrandsonone['child_four_grandson_one_memo'];
 
@@ -1616,6 +2043,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childfourgrandsonone_deathday        = $childfourgrandsonone_deathday;
             $this->_view->childfourgrandsononeDeathday            = $this->_session->childfourgrandsonone_deathday;
 
+            $this->_session->childfourgrandsonone_img_name        = $childfourgrandsonone_img_name;
+            $this->_view->childfourgrandsononeImgName             = $this->_session->childfourgrandsonone_img_name;
+
             $this->_session->childfourgrandsonone_profession      = $childfourgrandsonone_profession;
             $this->_view->childfourgrandsononeProfession          = $this->_session->childfourgrandsonone_profession;
 
@@ -1625,9 +2055,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childfourgrandsonone = $this->readimagechildfourgrandsonone($customer_id);
             $this->_view->urlocalchildfourgrandsonone         = $url_local_childfourgrandsonone;
 
+            //故人名文字カウント
+            $childfourgrandsonone_family_name_count = mb_strlen($childfourgrandsonone_family_name);
+            if ($childfourgrandsonone_family_name_count > 6) {
+                $this->_view->childfourgrandsononeFontSize = 6;
+            }else{
+                $this->_view->childfourgrandsononeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDFOURGRANDSONONE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childfourgrandsonone_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childfourgrandsonone_family_id&deceasedlist_img_name=$childfourgrandsonone_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childfourgrandsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1635,7 +2076,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childfourgrandsonone           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childfourgrandsonone     = $this->urlquery();
             }else{
-                $this->_view->childfourgrandsonone_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childfourgrandsonone_img_name)) {
+                    if($childfourgrandsonone_deceasedlist_img_info["0"] > $childfourgrandsonone_deceasedlist_img_info["1"]){
+                        $this->_view->childfourgrandsonone_img                = 3;
+                    }else{
+                        $this->_view->childfourgrandsonone_img                = 2;
+                    }
+                }else{
+                    $this->_view->childfourgrandsonone_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1647,6 +2096,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childfourgrandsontwo_sex             = $result_childfourgrandsontwo['child_four_grandson_two_sex'];
             $childfourgrandsontwo_birthday        = $result_childfourgrandsontwo['child_four_grandson_two_birthday'];
             $childfourgrandsontwo_deathday        = $result_childfourgrandsontwo['child_four_grandson_two_deathday'];
+            $childfourgrandsontwo_img_name        = $result_childfourgrandsontwo['child_four_grandson_two_img_name'];
             $childfourgrandsontwo_profession      = $result_childfourgrandsontwo['child_four_grandson_two_profession'];
             $childfourgrandsontwo_memo            = $result_childfourgrandsontwo['child_four_grandson_two_memo'];
 
@@ -1677,6 +2127,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childfourgrandsontwo_deathday        = $childfourgrandsontwo_deathday;
             $this->_view->childfourgrandsontwoDeathday            = $this->_session->childfourgrandsontwo_deathday;
 
+            $this->_session->childfourgrandsontwo_img_name        = $childfourgrandsontwo_img_name;
+            $this->_view->childfourgrandsontwoImgName             = $this->_session->childfourgrandsontwo_img_name;
+
             $this->_session->childfourgrandsontwo_profession      = $childfourgrandsontwo_profession;
             $this->_view->childfourgrandsontwoProfession          = $this->_session->childfourgrandsontwo_profession;
 
@@ -1686,9 +2139,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childfourgrandsontwo = $this->readimagechildfourgrandsontwo($customer_id);
             $this->_view->urlocalchildfourgrandsontwo         = $url_local_childfourgrandsontwo;
 
+            //故人名文字カウント
+            $childfourgrandsontwo_family_name_count = mb_strlen($childfourgrandsontwo_family_name);
+            if ($childfourgrandsontwo_family_name_count > 6) {
+                $this->_view->childfourgrandsontwoFontSize = 6;
+            }else{
+                $this->_view->childfourgrandsontwoFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDFOURGRANDSONTWO_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childfourgrandsontwo_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childfourgrandsontwo_family_id&deceasedlist_img_name=$childfourgrandsontwo_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childfourgrandsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1696,7 +2160,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childfourgrandsontwo           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childfourgrandsontwo     = $this->urlquery();
             }else{
-                $this->_view->childfourgrandsontwo_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childfourgrandsontwo_img_name)) {
+                    if($childfourgrandsontwo_deceasedlist_img_info["0"] > $childfourgrandsontwo_deceasedlist_img_info["1"]){
+                        $this->_view->childfourgrandsontwo_img                = 3;
+                    }else{
+                        $this->_view->childfourgrandsontwo_img                = 2;
+                    }
+                }else{
+                    $this->_view->childfourgrandsontwo_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1708,6 +2180,7 @@ class OrderpageController extends Zend_Controller_Action {
             $childfourgrandsonthree_sex             = $result_childfourgrandsonthree['child_four_grandson_three_sex'];
             $childfourgrandsonthree_birthday        = $result_childfourgrandsonthree['child_four_grandson_three_birthday'];
             $childfourgrandsonthree_deathday        = $result_childfourgrandsonthree['child_four_grandson_three_deathday'];
+            $childfourgrandsonthree_img_name        = $result_childfourgrandsonthree['child_four_grandson_three_img_name'];
             $childfourgrandsonthree_profession      = $result_childfourgrandsonthree['child_four_grandson_three_profession'];
             $childfourgrandsonthree_memo            = $result_childfourgrandsonthree['child_four_grandson_three_memo'];
 
@@ -1738,6 +2211,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->childfourgrandsonthree_deathday        = $childfourgrandsonthree_deathday;
             $this->_view->childfourgrandsonthreeDeathday            = $this->_session->childfourgrandsonthree_deathday;
 
+            $this->_session->childfourgrandsonthree_img_name        = $childfourgrandsonthree_img_name;
+            $this->_view->childfourgrandsonthreeImgName             = $this->_session->childfourgrandsonthree_img_name;
+
             $this->_session->childfourgrandsonthree_profession      = $childfourgrandsonthree_profession;
             $this->_view->childfourgrandsonthreeProfession          = $this->_session->childfourgrandsonthree_profession;
 
@@ -1747,9 +2223,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_childfourgrandsonthree = $this->readimagechildfourgrandsonthree($customer_id);
             $this->_view->urlocalchildfourgrandsonthree         = $url_local_childfourgrandsonthree;
 
+            //故人名文字カウント
+            $childfourgrandsonthree_family_name_count = mb_strlen($childfourgrandsonthree_family_name);
+            if ($childfourgrandsonthree_family_name_count > 6) {
+                $this->_view->childfourgrandsonthreeFontSize = 6;
+            }else{
+                $this->_view->childfourgrandsonthreeFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_CHILDFOURGRANDSONTHREE_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $childfourgrandsonthree_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$childfourgrandsonthree_family_id&deceasedlist_img_name=$childfourgrandsonthree_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->childfourgrandsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1757,7 +2244,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_childfourgrandsonthree           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_childfourgrandsonthree     = $this->urlquery();
             }else{
-                $this->_view->childfourgrandsonthree_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($childfourgrandsonthree_img_name)) {
+                    if($childfourgrandsonthree_deceasedlist_img_info["0"] > $childfourgrandsonthree_deceasedlist_img_info["1"]){
+                        $this->_view->childfourgrandsonthree_img                = 3;
+                    }else{
+                        $this->_view->childfourgrandsonthree_img                = 2;
+                    }
+                }else{
+                    $this->_view->childfourgrandsonthree_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1768,6 +2263,7 @@ class OrderpageController extends Zend_Controller_Action {
             $grandfatherfather_family_name     = $result_grandfatherfather['grandfather_father_family_name'];
             $grandfatherfather_birthday        = $result_grandfatherfather['grandfather_father_birthday'];
             $grandfatherfather_deathday        = $result_grandfatherfather['grandfather_father_deathday'];
+            $grandfatherfather_img_name        = $result_grandfatherfather['grandfather_father_img_name'];
             $grandfatherfather_profession      = $result_grandfatherfather['grandfather_father_profession'];
             $grandfatherfather_memo            = $result_grandfatherfather['grandfather_father_memo'];
 
@@ -1783,6 +2279,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->grandfatherfather_deathday        = $grandfatherfather_deathday;
             $this->_view->grandfatherfatherDeathday            = $this->_session->grandfatherfather_deathday;
 
+            $this->_session->grandfatherfather_img_name        = $grandfatherfather_img_name;
+            $this->_view->grandfatherfatherImgName             = $this->_session->grandfatherfather_img_name;
+
             $this->_session->grandfatherfather_profession      = $grandfatherfather_profession;
             $this->_view->grandfatherfatherProfession          = $this->_session->grandfatherfather_profession;
 
@@ -1792,9 +2291,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_grandfatherfather = $this->readimagegrandfatherfather($customer_id);
             $this->_view->urlocalgrandfatherfather             = $url_local_grandfatherfather;
 
+            //故人名文字カウント
+            $grandfatherfather_family_name_count = mb_strlen($grandfatherfather_family_name);
+            if ($grandfatherfather_family_name_count > 6) {
+                $this->_view->grandfatherfatherFontSize = 6;
+            }else{
+                $this->_view->grandfatherfatherFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_GRANDFATHERFATHER_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $grandfatherfather_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$grandfatherfather_family_id&deceasedlist_img_name=$grandfatherfather_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->grandfatherfather_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1802,7 +2312,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_grandfatherfather           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_grandfatherfather     = $this->urlquery();
             }else{
-                $this->_view->grandfatherfather_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($grandfatherfather_img_name)) {
+                    if($grandfatherfather_deceasedlist_img_info["0"] > $grandfatherfather_deceasedlist_img_info["1"]){
+                        $this->_view->grandfatherfather_img                = 3;
+                    }else{
+                        $this->_view->grandfatherfather_img                = 2;
+                    }
+                }else{
+                    $this->_view->grandfatherfather_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1813,6 +2331,7 @@ class OrderpageController extends Zend_Controller_Action {
             $grandfathermather_family_name     = $result_grandfathermather['grandfather_mather_family_name'];
             $grandfathermather_birthday        = $result_grandfathermather['grandfather_mather_birthday'];
             $grandfathermather_deathday        = $result_grandfathermather['grandfather_mather_deathday'];
+            $grandfathermather_img_name        = $result_grandfathermather['grandfather_mather_img_name'];
             $grandfathermather_profession      = $result_grandfathermather['grandfather_mather_profession'];
             $grandfathermather_memo            = $result_grandfathermather['grandfather_mather_memo'];
 
@@ -1828,6 +2347,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->grandfathermather_deathday        = $grandfathermather_deathday;
             $this->_view->grandfathermatherDeathday            = $this->_session->grandfathermather_deathday;
 
+            $this->_session->grandfathermather_img_name        = $grandfathermather_img_name;
+            $this->_view->grandfathermatherImgName             = $this->_session->grandfathermather_img_name;
+
             $this->_session->grandfathermather_profession      = $grandfathermather_profession;
             $this->_view->grandfathermatherProfession          = $this->_session->grandfathermather_profession;
 
@@ -1837,9 +2359,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_grandfathermather = $this->readimagegrandfathermather($customer_id);
             $this->_view->urlocalgrandfathermather             = $url_local_grandfathermather;
 
+            //故人名文字カウント
+            $grandfathermather_family_name_count = mb_strlen($grandfathermather_family_name);
+            if ($grandfathermather_family_name_count > 6) {
+                $this->_view->grandfathermatherFontSize = 6;
+            }else{
+                $this->_view->grandfathermatherFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_GRANDFATHERMATHER_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $grandfathermather_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$grandfathermather_family_id&deceasedlist_img_name=$grandfathermather_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->grandfathermather_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1847,7 +2380,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_grandfathermather           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_grandfathermather     = $this->urlquery();
             }else{
-                $this->_view->grandfathermather_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($grandfathermather_img_name)) {
+                    if($grandfathermather_deceasedlist_img_info["0"] > $grandfathermather_deceasedlist_img_info["1"]){
+                        $this->_view->grandfathermather_img                = 3;
+                    }else{
+                        $this->_view->grandfathermather_img                = 2;
+                    }
+                }else{
+                    $this->_view->grandfathermather_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1858,6 +2399,7 @@ class OrderpageController extends Zend_Controller_Action {
             $grandmatherfather_family_name     = $result_grandmatherfather['grandmather_father_family_name'];
             $grandmatherfather_birthday        = $result_grandmatherfather['grandmather_father_birthday'];
             $grandmatherfather_deathday        = $result_grandmatherfather['grandmather_father_deathday'];
+            $grandmatherfather_img_name        = $result_grandmatherfather['grandmather_father_img_name'];
             $grandmatherfather_profession      = $result_grandmatherfather['grandmather_father_profession'];
             $grandmatherfather_memo            = $result_grandmatherfather['grandmather_father_memo'];
 
@@ -1873,6 +2415,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->grandmatherfather_deathday        = $grandmatherfather_deathday;
             $this->_view->grandmatherfatherDeathday            = $this->_session->grandmatherfather_deathday;
 
+            $this->_session->grandmatherfather_img_name        = $grandmatherfather_img_name;
+            $this->_view->grandmatherfatherImgName             = $this->_session->grandmatherfather_img_name;
+
             $this->_session->grandmatherfather_profession      = $grandmatherfather_profession;
             $this->_view->grandmatherfatherProfession          = $this->_session->grandmatherfather_profession;
 
@@ -1882,9 +2427,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_grandmatherfather = $this->readimagegrandmatherfather($customer_id);
             $this->_view->urlocalgrandmatherfather             = $url_local_grandmatherfather;
 
+            //故人名文字カウント
+            $grandmatherfather_family_name_count = mb_strlen($grandmatherfather_family_name);
+            if ($grandmatherfather_family_name_count > 6) {
+                $this->_view->grandmatherfatherFontSize = 6;
+            }else{
+                $this->_view->grandmatherfatherFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_GRANDMATHERFATHER_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $grandmatherfather_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$grandmatherfather_family_id&deceasedlist_img_name=$grandmatherfather_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->grandmatherfather_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1892,7 +2448,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_grandmatherfather           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_grandmatherfather     = $this->urlquery();
             }else{
-                $this->_view->grandmatherfather_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($grandmatherfather_img_name)) {
+                    if($grandmatherfather_deceasedlist_img_info["0"] > $grandmatherfather_deceasedlist_img_info["1"]){
+                        $this->_view->grandmatherfather_img                = 3;
+                    }else{
+                        $this->_view->grandmatherfather_img                = 2;
+                    }
+                }else{
+                    $this->_view->grandmatherfather_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -1903,6 +2467,7 @@ class OrderpageController extends Zend_Controller_Action {
             $grandmathermather_family_name     = $result_grandmathermather['grandmather_mather_family_name'];
             $grandmathermather_birthday        = $result_grandmathermather['grandmather_mather_birthday'];
             $grandmathermather_deathday        = $result_grandmathermather['grandmather_mather_deathday'];
+            $grandmathermather_img_name        = $result_grandmathermather['grandmather_mather_img_name'];
             $grandmathermather_profession      = $result_grandmathermather['grandmather_mather_profession'];
             $grandmathermather_memo            = $result_grandmathermather['grandmather_mather_memo'];
 
@@ -1918,6 +2483,9 @@ class OrderpageController extends Zend_Controller_Action {
             $this->_session->grandmathermather_deathday        = $grandmathermather_deathday;
             $this->_view->grandmathermatherDeathday            = $this->_session->grandmathermather_deathday;
 
+            $this->_session->grandmathermather_img_name        = $grandmathermather_img_name;
+            $this->_view->grandmathermatherImgName             = $this->_session->grandmathermather_img_name;
+
             $this->_session->grandmathermather_profession      = $grandmathermather_profession;
             $this->_view->grandmathermatherProfession          = $this->_session->grandmathermather_profession;
 
@@ -1927,9 +2495,20 @@ class OrderpageController extends Zend_Controller_Action {
             $url_local_grandmathermather = $this->readimagegrandmathermather($customer_id);
             $this->_view->urlocalgrandmathermather             = $url_local_grandmathermather;
 
+            //故人名文字カウント
+            $grandmathermather_family_name_count = mb_strlen($grandmathermather_family_name);
+            if ($grandmathermather_family_name_count > 6) {
+                $this->_view->grandmathermatherFontSize = 6;
+            }else{
+                $this->_view->grandmathermatherFontSize = 8;
+            }
+
             //画像があるか確認
             $fileName = $customer_id . ".jpg";
             $uploadFile = comConst::TEMP_GRANDMATHERMATHER_DIR . $fileName;
+
+            //大切な故人＿選択写真サイズ取得
+            $grandmathermather_deceasedlist_img_info = getimagesize("http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id=$grandmathermather_family_id&deceasedlist_img_name=$grandmathermather_img_name");
 
             if(file_exists($uploadFile)){
                 $this->_view->grandmathermather_img                    = comConst::IMAGE_EXISTENCE_FLG_YES;
@@ -1937,7 +2516,15 @@ class OrderpageController extends Zend_Controller_Action {
                 $this->_view->urlquery_img_grandmathermather           = $this->urlquery();
                 $this->_view->urlquery_img_thumb_grandmathermather     = $this->urlquery();
             }else{
-                $this->_view->grandmathermather_img                    = comConst::IMAGE_EXISTENCE_FLG_NO;
+                if (!empty($grandmathermather_img_name)) {
+                    if($grandmathermather_deceasedlist_img_info["0"] > $grandmathermather_deceasedlist_img_info["1"]){
+                        $this->_view->grandmathermather_img                = 3;
+                    }else{
+                        $this->_view->grandmathermather_img                = 2;
+                    }
+                }else{
+                    $this->_view->grandmathermather_img                = comConst::IMAGE_EXISTENCE_FLG_NO;
+                }
             }
 
             }
@@ -2736,20 +3323,22 @@ class OrderpageController extends Zend_Controller_Action {
         $spouse_family_name = $this->getRequest()->getPost('spouse_family_name');                   //お名前
         $spouse_birthday    = $this->getRequest()->getPost('spouse_birthday');                      //生年月日
         $spouse_deathday    = $this->getRequest()->getPost('spouse_deathday');                      //没年月日
+        $spouse_img_name    = $this->getRequest()->getPost('spouse_img_name');                      //画像名
         $spouse_profession  = $this->getRequest()->getPost('spouse_profession');                    //職業
         $spouse_memo        = $this->getRequest()->getPost('spouse_memo');                          //メモ
 
         //文字中の半角・全角空白を削除
         $spouse_family_name_r = str_replace(array(" ", "　"), "", $spouse_family_name);
 
-        //母親データをインサート
-        $orderpageModel->insertspousedata(  $customer_id,
-                                            $spouse_family_name_r,
-                                            $spouse_birthday,
-                                            $spouse_deathday,
-                                            $spouse_profession,
-                                            $spouse_memo
-                                        );
+        //配偶者データをインサート
+        $orderpageModel->insertspousedeceaseddata(  $customer_id,
+                                                    $spouse_family_name_r,
+                                                    $spouse_birthday,
+                                                    $spouse_deathday,
+                                                    $spouse_img_name,
+                                                    $spouse_profession,
+                                                    $spouse_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -2950,26 +3539,27 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
-        $brotherone_family_name = $this->getRequest()->getPost('brotherone_deceased_family_name');                   //お名前
-        $brotherone_sex         = $this->getRequest()->getPost('brotherone_deceased_sex');                           //性別
-        $brotherone_birthday    = $this->getRequest()->getPost('brotherone_deceased_birthday');                      //生年月日
-        $brotherone_deathday    = $this->getRequest()->getPost('brotherone_deceased_deathday');                      //没年月日
-        $brotherone_profession  = $this->getRequest()->getPost('brotherone_deceased_profession');                    //職業
-        $brotherone_memo        = $this->getRequest()->getPost('brotherone_deceased_memo');                          //メモ
+        $customer_id            = $this->getRequest()->getPost('customer_id');                                          //ユーザーID
+        $brotherone_family_name = $this->getRequest()->getPost('brotherone_deceased_family_name');                      //お名前
+        $brotherone_sex         = $this->getRequest()->getPost('brotherone_deceased_sex');                              //性別
+        $brotherone_birthday    = $this->getRequest()->getPost('brotherone_deceased_birthday');                         //生年月日
+        $brotherone_deathday    = $this->getRequest()->getPost('brotherone_deceased_deathday');                         //没年月日
+        $brotherone_img_name    = $this->getRequest()->getPost('brotherone_img_name');                                  //画像名
+        $brotherone_profession  = $this->getRequest()->getPost('brotherone_deceased_profession');                       //職業
+        $brotherone_memo        = $this->getRequest()->getPost('brotherone_deceased_memo');                             //メモ
 
         //文字中の半角・全角空白を削除
         $brotherone_family_name_r = str_replace(array(" ", "　"), "", $brotherone_family_name);
 
         //兄弟姉妹１データをインサート
-        $orderpageModel->insertbrotheronedata(  $customer_id,
-                                            $brotherone_family_name_r,
-                                            $brotherone_sex,
-                                            $brotherone_birthday,
-                                            $brotherone_deathday,
-                                            $brotherone_profession,
-                                            $brotherone_memo
-                                        );
+        $orderpageModel->insertbrotheronedeceaseddata(  $customer_id,
+                                                        $brotherone_family_name_r,
+                                                        $brotherone_birthday,
+                                                        $brotherone_deathday,
+                                                        $brotherone_img_name,
+                                                        $brotherone_profession,
+                                                        $brotherone_memo
+                                                    );
 
         $this->_view->customerId = $customer_id;
 
@@ -3171,11 +3761,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id            = $this->getRequest()->getPost('customer_id');                              //ユーザーID
         $brothertwo_family_name = $this->getRequest()->getPost('brothertwo_family_name');                   //お名前
         $brothertwo_sex         = $this->getRequest()->getPost('brothertwo_sex');                           //性別
         $brothertwo_birthday    = $this->getRequest()->getPost('brothertwo_birthday');                      //生年月日
         $brothertwo_deathday    = $this->getRequest()->getPost('brothertwo_deathday');                      //没年月日
+        $brothertwo_img_name    = $this->getRequest()->getPost('brothertwo_img_name');                      //画像名
         $brothertwo_profession  = $this->getRequest()->getPost('brothertwo_profession');                    //職業
         $brothertwo_memo        = $this->getRequest()->getPost('brothertwo_memo');                          //メモ
 
@@ -3183,14 +3774,14 @@ class OrderpageController extends Zend_Controller_Action {
         $brothertwo_family_name_r = str_replace(array(" ", "　"), "", $brothertwo_family_name);
 
         //兄弟姉妹２データをインサート
-        $orderpageModel->insertbrothertwodata(  $customer_id,
-                                            $brothertwo_family_name_r,
-                                            $brothertwo_sex,
-                                            $brothertwo_birthday,
-                                            $brothertwo_deathday,
-                                            $brothertwo_profession,
-                                            $brothertwo_memo
-                                        );
+        $orderpageModel->insertbrothertwodeceaseddata(  $customer_id,
+                                                        $brothertwo_family_name_r,
+                                                        $brothertwo_birthday,
+                                                        $brothertwo_deathday,
+                                                        $brothertwo_img_name,
+                                                        $brothertwo_profession,
+                                                        $brothertwo_memo
+                                                    );
 
         $this->_view->customerId = $customer_id;
 
@@ -3391,26 +3982,27 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
-        $brotherthree_family_name = $this->getRequest()->getPost('brotherthree_family_name');                   //お名前
-        $brotherthree_sex         = $this->getRequest()->getPost('brotherthree_sex');                           //性別
-        $brotherthree_birthday    = $this->getRequest()->getPost('brotherthree_birthday');                      //生年月日
-        $brotherthree_deathday    = $this->getRequest()->getPost('brotherthree_deathday');                      //没年月日
-        $brotherthree_profession  = $this->getRequest()->getPost('brotherthree_profession');                    //職業
-        $brotherthree_memo        = $this->getRequest()->getPost('brotherthree_memo');                          //メモ
+        $customer_id                = $this->getRequest()->getPost('customer_id');                                  //ユーザーID
+        $brotherthree_family_name   = $this->getRequest()->getPost('brotherthree_family_name');                     //お名前
+        $brotherthree_sex           = $this->getRequest()->getPost('brotherthree_sex');                             //性別
+        $brotherthree_birthday      = $this->getRequest()->getPost('brotherthree_birthday');                        //生年月日
+        $brotherthree_deathday      = $this->getRequest()->getPost('brotherthree_deathday');                        //没年月日
+        $brotherthree_img_name      = $this->getRequest()->getPost('brotherthree_img_name');                        //画像名
+        $brotherthree_profession    = $this->getRequest()->getPost('brotherthree_profession');                      //職業
+        $brotherthree_memo          = $this->getRequest()->getPost('brotherthree_memo');                            //メモ
 
         //文字中の半角・全角空白を削除
         $brotherthree_family_name_r = str_replace(array(" ", "　"), "", $brotherthree_family_name);
 
         //兄弟姉妹３データをインサート
-        $orderpageModel->insertbrotherthreedata(  $customer_id,
-                                            $brotherthree_family_name_r,
-                                            $brotherthree_sex,
-                                            $brotherthree_birthday,
-                                            $brotherthree_deathday,
-                                            $brotherthree_profession,
-                                            $brotherthree_memo
-                                        );
+        $orderpageModel->insertbrotherthreedeceaseddata(    $customer_id,
+                                                            $brotherthree_family_name_r,
+                                                            $brotherthree_birthday,
+                                                            $brotherthree_deathday,
+                                                            $brotherthree_img_name,
+                                                            $brotherthree_profession,
+                                                            $brotherthree_memo
+                                                        );
 
         $this->_view->customerId = $customer_id;
 
@@ -3612,12 +4204,13 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                              //ユーザーID
+        $customer_id          = $this->getRequest()->getPost('customer_id');                            //ユーザーID
         $childone_family_name = $this->getRequest()->getPost('childone_family_name');                   //お名前
         $childone_sex         = $this->getRequest()->getPost('childone_sex');                           //性別
         $childone_spouse_name = $this->getRequest()->getPost('childone_spouse_name');                   //配偶者名
         $childone_birthday    = $this->getRequest()->getPost('childone_birthday');                      //生年月日
         $childone_deathday    = $this->getRequest()->getPost('childone_deathday');                      //没年月日
+        $childone_img_name    = $this->getRequest()->getPost('childone_img_name');                      //画像名
         $childone_profession  = $this->getRequest()->getPost('childone_profession');                    //職業
         $childone_memo        = $this->getRequest()->getPost('childone_memo');                          //メモ
 
@@ -3625,18 +4218,16 @@ class OrderpageController extends Zend_Controller_Action {
         $childone_family_name_r = str_replace(array(" ", "　"), "", $childone_family_name);
 
         //子供１データをインサート
-        $orderpageModel->insertchildonedata(  $customer_id,
-                                            $childone_family_name_r,
-                                            $childone_sex,
-                                            $childone_spouse_name,
-                                            $childone_birthday,
-                                            $childone_deathday,
-                                            $childone_profession,
-                                            $childone_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childone_family_name);
+        $orderpageModel->insertchildonedeceaseddata(    $customer_id,
+                                                        $childone_family_name_r,
+                                                        $childone_sex,
+                                                        $childone_spouse_name,
+                                                        $childone_birthday,
+                                                        $childone_deathday,
+                                                        $childone_img_name,
+                                                        $childone_profession,
+                                                        $childone_memo
+                                                    );
 
         $this->_view->customerId = $customer_id;
 
@@ -3848,12 +4439,13 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                              //ユーザーID
+        $customer_id          = $this->getRequest()->getPost('customer_id');                            //ユーザーID
         $childtwo_family_name = $this->getRequest()->getPost('childtwo_family_name');                   //お名前
         $childtwo_sex         = $this->getRequest()->getPost('childtwo_sex');                           //性別
         $childtwo_spouse_name = $this->getRequest()->getPost('childtwo_spouse_name');                   //配偶者名
         $childtwo_birthday    = $this->getRequest()->getPost('childtwo_birthday');                      //生年月日
         $childtwo_deathday    = $this->getRequest()->getPost('childtwo_deathday');                      //没年月日
+        $childtwo_img_name    = $this->getRequest()->getPost('childtwo_img_name');                      //画像名
         $childtwo_profession  = $this->getRequest()->getPost('childtwo_profession');                    //職業
         $childtwo_memo        = $this->getRequest()->getPost('childtwo_memo');                          //メモ
 
@@ -3861,15 +4453,16 @@ class OrderpageController extends Zend_Controller_Action {
         $childtwo_family_name_r = str_replace(array(" ", "　"), "", $childtwo_family_name);
 
         //子供２データをインサート
-        $orderpageModel->insertchildtwodata(  $customer_id,
-                                            $childtwo_family_name_r,
-                                            $childtwo_sex,
-                                            $childtwo_spouse_name,
-                                            $childtwo_birthday,
-                                            $childtwo_deathday,
-                                            $childtwo_profession,
-                                            $childtwo_memo
-                                        );
+        $orderpageModel->insertchildtwodeceaseddata(  $customer_id,
+                                                    $childtwo_family_name_r,
+                                                    $childtwo_sex,
+                                                    $childtwo_spouse_name,
+                                                    $childtwo_birthday,
+                                                    $childtwo_deathday,
+                                                    $childtwo_img_name,
+                                                    $childtwo_profession,
+                                                    $childtwo_memo
+                                                );
 
         //フラグを１にする
         // $orderpageModel->updateflag($customer_id,$childtwo_family_name);
@@ -4082,12 +4675,13 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                                  //ユーザーID
+        $customer_id            = $this->getRequest()->getPost('customer_id');                              //ユーザーID
         $childthree_family_name = $this->getRequest()->getPost('childthree_family_name');                   //お名前
         $childthree_sex         = $this->getRequest()->getPost('childthree_sex');                           //性別
         $childthree_spouse_name = $this->getRequest()->getPost('childthree_spouse_name');                   //配偶者名
         $childthree_birthday    = $this->getRequest()->getPost('childthree_birthday');                      //生年月日
         $childthree_deathday    = $this->getRequest()->getPost('childthree_deathday');                      //没年月日
+        $childthree_img_name    = $this->getRequest()->getPost('childthree_img_name');                      //画像名
         $childthree_profession  = $this->getRequest()->getPost('childthree_profession');                    //職業
         $childthree_memo        = $this->getRequest()->getPost('childthree_memo');                          //メモ
 
@@ -4095,18 +4689,16 @@ class OrderpageController extends Zend_Controller_Action {
         $childthree_family_name_r = str_replace(array(" ", "　"), "", $childthree_family_name);
 
         //子供３データをインサート
-        $orderpageModel->insertchildthreedata(  $customer_id,
-                                            $childthree_family_name_r,
-                                            $childthree_sex,
-                                            $childthree_spouse_name,
-                                            $childthree_birthday,
-                                            $childthree_deathday,
-                                            $childthree_profession,
-                                            $childthree_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childthree_family_name);
+        $orderpageModel->insertchildthreedeceaseddata(      $customer_id,
+                                                            $childthree_family_name_r,
+                                                            $childthree_sex,
+                                                            $childthree_spouse_name,
+                                                            $childthree_birthday,
+                                                            $childthree_deathday,
+                                                            $childthree_img_name,
+                                                            $childthree_profession,
+                                                            $childthree_memo
+                                                        );
 
         $this->_view->customerId = $customer_id;
 
@@ -4318,12 +4910,13 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                                  //ユーザーID
+        $customer_id           = $this->getRequest()->getPost('customer_id');                                  //ユーザーID
         $childfour_family_name = $this->getRequest()->getPost('childfour_family_name');                   //お名前
         $childfour_sex         = $this->getRequest()->getPost('childfour_sex');                           //性別
         $childfour_spouse_name = $this->getRequest()->getPost('childfour_spouse_name');                   //配偶者名
         $childfour_birthday    = $this->getRequest()->getPost('childfour_birthday');                      //生年月日
         $childfour_deathday    = $this->getRequest()->getPost('childfour_deathday');                      //没年月日
+        $childfour_img_name    = $this->getRequest()->getPost('childfour_img_name');                     //画像名
         $childfour_profession  = $this->getRequest()->getPost('childfour_profession');                    //職業
         $childfour_memo        = $this->getRequest()->getPost('childfour_memo');                          //メモ
 
@@ -4331,18 +4924,16 @@ class OrderpageController extends Zend_Controller_Action {
         $childfour_family_name_r = str_replace(array(" ", "　"), "", $childfour_family_name);
 
         //子供４データをインサート
-        $orderpageModel->insertchildfourdata(  $customer_id,
-                                            $childfour_family_name_r,
-                                            $childfour_sex,
-                                            $childfour_spouse_name,
-                                            $childfour_birthday,
-                                            $childfour_deathday,
-                                            $childfour_profession,
-                                            $childfour_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childfour_family_name);
+        $orderpageModel->insertchildfourdeceaseddata(  $customer_id,
+                                                    $childfour_family_name_r,
+                                                    $childfour_sex,
+                                                    $childfour_spouse_name,
+                                                    $childfour_birthday,
+                                                    $childfour_deathday,
+                                                    $childfour_img_name,
+                                                    $childfour_profession,
+                                                    $childfour_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -4550,11 +5141,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                     = $this->getRequest()->getPost('customer_id');                                       //ユーザーID
         $childonegrandsonone_family_name = $this->getRequest()->getPost('childonegrandsonone_family_name');                   //お名前
         $childonegrandsonone_sex         = $this->getRequest()->getPost('childonegrandsonone_sex');                           //性別
         $childonegrandsonone_birthday    = $this->getRequest()->getPost('childonegrandsonone_birthday');                      //生年月日
         $childonegrandsonone_deathday    = $this->getRequest()->getPost('childonegrandsonone_deathday');                      //没年月日
+        $childonegrandsonone_img_name    = $this->getRequest()->getPost('childonegrandsonone_img_name');                      //画像名
         $childonegrandsonone_profession  = $this->getRequest()->getPost('childonegrandsonone_profession');                    //職業
         $childonegrandsonone_memo        = $this->getRequest()->getPost('childonegrandsonone_memo');                          //メモ
 
@@ -4562,14 +5154,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childonegrandsonone_family_name_r = str_replace(array(" ", "　"), "", $childonegrandsonone_family_name);
 
         //子供１孫１データをインサート
-        $orderpageModel->insertchildonegrandsononedata(  $customer_id,
-                                            $childonegrandsonone_family_name_r,
-                                            $childonegrandsonone_sex,
-                                            $childonegrandsonone_birthday,
-                                            $childonegrandsonone_deathday,
-                                            $childonegrandsonone_profession,
-                                            $childonegrandsonone_memo
-                                        );
+        $orderpageModel->insertchildonegrandsononedeceaseddata(  $customer_id,
+                                                    $childonegrandsonone_family_name_r,
+                                                    $childonegrandsonone_sex,
+                                                    $childonegrandsonone_birthday,
+                                                    $childonegrandsonone_deathday,
+                                                    $childonegrandsonone_img_name,
+                                                    $childonegrandsonone_profession,
+                                                    $childonegrandsonone_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -4772,11 +5365,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                     = $this->getRequest()->getPost('customer_id');                                       //ユーザーID
         $childonegrandsontwo_family_name = $this->getRequest()->getPost('childonegrandsontwo_family_name');                   //お名前
         $childonegrandsontwo_sex         = $this->getRequest()->getPost('childonegrandsontwo_sex');                           //性別
         $childonegrandsontwo_birthday    = $this->getRequest()->getPost('childonegrandsontwo_birthday');                      //生年月日
         $childonegrandsontwo_deathday    = $this->getRequest()->getPost('childonegrandsontwo_deathday');                      //没年月日
+        $childonegrandsontwo_img_name     = $this->getRequest()->getPost('childonegrandsontwo_img_name');                     //画像名
         $childonegrandsontwo_profession  = $this->getRequest()->getPost('childonegrandsontwo_profession');                    //職業
         $childonegrandsontwo_memo        = $this->getRequest()->getPost('childonegrandsontwo_memo');                          //メモ
 
@@ -4784,17 +5378,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childonegrandsontwo_family_name_r = str_replace(array(" ", "　"), "", $childonegrandsontwo_family_name);
 
         //子供１孫２データをインサート
-        $orderpageModel->insertchildonegrandsontwodata(  $customer_id,
-                                            $childonegrandsontwo_family_name_r,
-                                            $childonegrandsontwo_sex,
-                                            $childonegrandsontwo_birthday,
-                                            $childonegrandsontwo_deathday,
-                                            $childonegrandsontwo_profession,
-                                            $childonegrandsontwo_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childonegrandsontwo_family_name);
+        $orderpageModel->insertchildonegrandsontwodeceaseddata(  $customer_id,
+                                                    $childonegrandsontwo_family_name_r,
+                                                    $childonegrandsontwo_sex,
+                                                    $childonegrandsontwo_birthday,
+                                                    $childonegrandsontwo_deathday,
+                                                    $childonegrandsontwo_img_name,
+                                                    $childonegrandsontwo_profession,
+                                                    $childonegrandsontwo_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -5000,11 +5592,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                       = $this->getRequest()->getPost('customer_id');                                         //ユーザーID
         $childonegrandsonthree_family_name = $this->getRequest()->getPost('childonegrandsonthree_family_name');                   //お名前
         $childonegrandsonthree_sex         = $this->getRequest()->getPost('childonegrandsonthree_sex');                           //性別
         $childonegrandsonthree_birthday    = $this->getRequest()->getPost('childonegrandsonthree_birthday');                      //生年月日
         $childonegrandsonthree_deathday    = $this->getRequest()->getPost('childonegrandsonthree_deathday');                      //没年月日
+        $childonegrandsonthree_img_name    = $this->getRequest()->getPost('childonegrandsonthree_img_name');                      //画像名
         $childonegrandsonthree_profession  = $this->getRequest()->getPost('childonegrandsonthree_profession');                    //職業
         $childonegrandsonthree_memo        = $this->getRequest()->getPost('childonegrandsonthree_memo');                          //メモ
 
@@ -5012,17 +5605,16 @@ class OrderpageController extends Zend_Controller_Action {
         $childonegrandsonthree_family_name_r = str_replace(array(" ", "　"), "", $childonegrandsonthree_family_name);
 
         //子供１孫３データをインサート
-        $orderpageModel->insertchildonegrandsonthreedata(  $customer_id,
-                                            $childonegrandsonthree_family_name_r,
-                                            $childonegrandsonthree_sex,
-                                            $childonegrandsonthree_birthday,
-                                            $childonegrandsonthree_deathday,
-                                            $childonegrandsonthree_profession,
-                                            $childonegrandsonthree_memo
-                                        );
+        $orderpageModel->insertchildonegrandsonthreedeceaseddata(  $customer_id,
+                                                    $childonegrandsonthree_family_name_r,
+                                                    $childonegrandsonthree_sex,
+                                                    $childonegrandsonthree_birthday,
+                                                    $childonegrandsonthree_deathday,
+                                                    $childonegrandsonthree_img_name,
+                                                    $childonegrandsonthree_profession,
+                                                    $childonegrandsonthree_memo
+                                                );
 
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childonegrandsonthree_family_name);
 
         $this->_view->customerId = $customer_id;
 
@@ -5229,11 +5821,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                     = $this->getRequest()->getPost('customer_id');                                       //ユーザーID
         $childtwograndsonone_family_name = $this->getRequest()->getPost('childtwograndsonone_family_name');                   //お名前
         $childtwograndsonone_sex         = $this->getRequest()->getPost('childtwograndsonone_sex');                           //性別
         $childtwograndsonone_birthday    = $this->getRequest()->getPost('childtwograndsonone_birthday');                      //生年月日
         $childtwograndsonone_deathday    = $this->getRequest()->getPost('childtwograndsonone_deathday');                      //没年月日
+        $childtwograndsonone_img_name    = $this->getRequest()->getPost('childtwograndsonone_img_name');                      //画像名
         $childtwograndsonone_profession  = $this->getRequest()->getPost('childtwograndsonone_profession');                    //職業
         $childtwograndsonone_memo        = $this->getRequest()->getPost('childtwograndsonone_memo');                          //メモ
 
@@ -5241,17 +5834,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childtwograndsonone_family_name_r = str_replace(array(" ", "　"), "", $childtwograndsonone_family_name);
 
         //子供２孫１データをインサート
-        $orderpageModel->insertchildtwograndsononedata(  $customer_id,
-                                            $childtwograndsonone_family_name_r,
-                                            $childtwograndsonone_sex,
-                                            $childtwograndsonone_birthday,
-                                            $childtwograndsonone_deathday,
-                                            $childtwograndsonone_profession,
-                                            $childtwograndsonone_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childtwograndsonone_family_name);
+        $orderpageModel->insertchildtwograndsononedeceaseddata(  $customer_id,
+                                                    $childtwograndsonone_family_name_r,
+                                                    $childtwograndsonone_sex,
+                                                    $childtwograndsonone_birthday,
+                                                    $childtwograndsonone_deathday,
+                                                    $childtwograndsonone_img_name,
+                                                    $childtwograndsonone_profession,
+                                                    $childtwograndsonone_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -5278,7 +5869,6 @@ class OrderpageController extends Zend_Controller_Action {
       }
 
     }
-
 
 
     //子供２孫１データ挿入（個人追加より）
@@ -5457,11 +6047,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                     = $this->getRequest()->getPost('customer_id');                                       //ユーザーID
         $childtwograndsontwo_family_name = $this->getRequest()->getPost('childtwograndsontwo_family_name');                   //お名前
         $childtwograndsontwo_sex         = $this->getRequest()->getPost('childtwograndsontwo_sex');                           //性別
         $childtwograndsontwo_birthday    = $this->getRequest()->getPost('childtwograndsontwo_birthday');                      //生年月日
         $childtwograndsontwo_deathday    = $this->getRequest()->getPost('childtwograndsontwo_deathday');                      //没年月日
+        $childtwograndsontwo_img_name    = $this->getRequest()->getPost('childtwograndsontwo_img_name');                      //画像名
         $childtwograndsontwo_profession  = $this->getRequest()->getPost('childtwograndsontwo_profession');                    //職業
         $childtwograndsontwo_memo        = $this->getRequest()->getPost('childtwograndsontwo_memo');                          //メモ
 
@@ -5469,17 +6060,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childtwograndsontwo_family_name_r = str_replace(array(" ", "　"), "", $childtwograndsontwo_family_name);
 
         //子供２孫２データをインサート
-        $orderpageModel->insertchildtwograndsontwodata(  $customer_id,
-                                            $childtwograndsontwo_family_name_r,
-                                            $childtwograndsontwo_sex,
-                                            $childtwograndsontwo_birthday,
-                                            $childtwograndsontwo_deathday,
-                                            $childtwograndsontwo_profession,
-                                            $childtwograndsontwo_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childtwograndsontwo_family_name);
+        $orderpageModel->insertchildtwograndsontwodeceaseddata(  $customer_id,
+                                                    $childtwograndsontwo_family_name_r,
+                                                    $childtwograndsontwo_sex,
+                                                    $childtwograndsontwo_birthday,
+                                                    $childtwograndsontwo_deathday,
+                                                    $childtwograndsontwo_img_name,
+                                                    $childtwograndsontwo_profession,
+                                                    $childtwograndsontwo_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -5685,11 +6274,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id                        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                        = $this->getRequest()->getPost('customer_id');                                         //ユーザーID
         $childtwograndsonthree_family_name  = $this->getRequest()->getPost('childtwograndsonthree_family_name');                   //お名前
         $childtwograndsonthree_sex          = $this->getRequest()->getPost('childtwograndsonthree_sex');                           //性別
         $childtwograndsonthree_birthday     = $this->getRequest()->getPost('childtwograndsonthree_birthday');                      //生年月日
         $childtwograndsonthree_deathday     = $this->getRequest()->getPost('childtwograndsonthree_deathday');                      //没年月日
+        $childtwograndsonthree_img_name     = $this->getRequest()->getPost('childtwograndsonthree_img_name');                      //画像名
         $childtwograndsonthree_profession   = $this->getRequest()->getPost('childtwograndsonthree_profession');                    //職業
         $childtwograndsonthree_memo         = $this->getRequest()->getPost('childtwograndsonthree_memo');                          //メモ
 
@@ -5697,17 +6287,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childtwograndsonthree_family_name_r = str_replace(array(" ", "　"), "", $childtwograndsonthree_family_name);
 
         //子供２孫３データをインサート
-        $orderpageModel->insertchildtwograndsonthreedata(  $customer_id,
-                                            $childtwograndsonthree_family_name_r,
-                                            $childtwograndsonthree_sex,
-                                            $childtwograndsonthree_birthday,
-                                            $childtwograndsonthree_deathday,
-                                            $childtwograndsonthree_profession,
-                                            $childtwograndsonthree_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childtwograndsonthree_family_name);
+        $orderpageModel->insertchildtwograndsonthreedeceaseddata(  $customer_id,
+                                                    $childtwograndsonthree_family_name_r,
+                                                    $childtwograndsonthree_sex,
+                                                    $childtwograndsonthree_birthday,
+                                                    $childtwograndsonthree_deathday,
+                                                    $childtwograndsonthree_img_name,
+                                                    $childtwograndsonthree_profession,
+                                                    $childtwograndsonthree_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -5913,11 +6501,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                       = $this->getRequest()->getPost('customer_id');                                         //ユーザーID
         $childthreegrandsonone_family_name = $this->getRequest()->getPost('childthreegrandsonone_family_name');                   //お名前
         $childthreegrandsonone_sex         = $this->getRequest()->getPost('childthreegrandsonone_sex');                           //性別
         $childthreegrandsonone_birthday    = $this->getRequest()->getPost('childthreegrandsonone_birthday');                      //生年月日
         $childthreegrandsonone_deathday    = $this->getRequest()->getPost('childthreegrandsonone_deathday');                      //没年月日
+        $childthreegrandsonone_img_name    = $this->getRequest()->getPost('childthreegrandsonone_img_name');                      //画像名
         $childthreegrandsonone_profession  = $this->getRequest()->getPost('childthreegrandsonone_profession');                    //職業
         $childthreegrandsonone_memo        = $this->getRequest()->getPost('childthreegrandsonone_memo');                          //メモ
 
@@ -5925,17 +6514,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childthreegrandsonone_family_name_r = str_replace(array(" ", "　"), "", $childthreegrandsonone_family_name);
 
         //子供３孫１データをインサート
-        $orderpageModel->insertchildthreegrandsononedata(  $customer_id,
-                                            $childthreegrandsonone_family_name_r,
-                                            $childthreegrandsonone_sex,
-                                            $childthreegrandsonone_birthday,
-                                            $childthreegrandsonone_deathday,
-                                            $childthreegrandsonone_profession,
-                                            $childthreegrandsonone_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childthreegrandsonone_family_name);
+        $orderpageModel->insertchildthreegrandsononedeceaseddata(  $customer_id,
+                                                    $childthreegrandsonone_family_name_r,
+                                                    $childthreegrandsonone_sex,
+                                                    $childthreegrandsonone_birthday,
+                                                    $childthreegrandsonone_deathday,
+                                                    $childthreegrandsonone_img_name,
+                                                    $childthreegrandsonone_profession,
+                                                    $childthreegrandsonone_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -6142,11 +6729,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                       = $this->getRequest()->getPost('customer_id');                                         //ユーザーID
         $childthreegrandsontwo_family_name = $this->getRequest()->getPost('childthreegrandsontwo_family_name');                   //お名前
         $childthreegrandsontwo_sex         = $this->getRequest()->getPost('childthreegrandsontwo_sex');                           //性別
         $childthreegrandsontwo_birthday    = $this->getRequest()->getPost('childthreegrandsontwo_birthday');                      //生年月日
         $childthreegrandsontwo_deathday    = $this->getRequest()->getPost('childthreegrandsontwo_deathday');                      //没年月日
+        $childthreegrandsontwo_img_name    = $this->getRequest()->getPost('childthreegrandsontwo_img_name');                      //画像名
         $childthreegrandsontwo_profession  = $this->getRequest()->getPost('childthreegrandsontwo_profession');                    //職業
         $childthreegrandsontwo_memo        = $this->getRequest()->getPost('childthreegrandsontwo_memo');                          //メモ
 
@@ -6154,17 +6742,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childthreegrandsontwo_family_name_r = str_replace(array(" ", "　"), "", $childthreegrandsontwo_family_name);
 
         //子供３孫２データをインサート
-        $orderpageModel->insertchildthreegrandsontwodata(  $customer_id,
-                                            $childthreegrandsontwo_family_name_r,
-                                            $childthreegrandsontwo_sex,
-                                            $childthreegrandsontwo_birthday,
-                                            $childthreegrandsontwo_deathday,
-                                            $childthreegrandsontwo_profession,
-                                            $childthreegrandsontwo_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childthreegrandsontwo_family_name);
+        $orderpageModel->insertchildthreegrandsontwodeceaseddata(  $customer_id,
+                                                    $childthreegrandsontwo_family_name_r,
+                                                    $childthreegrandsontwo_sex,
+                                                    $childthreegrandsontwo_birthday,
+                                                    $childthreegrandsontwo_deathday,
+                                                    $childthreegrandsontwo_img_name,
+                                                    $childthreegrandsontwo_profession,
+                                                    $childthreegrandsontwo_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -6375,6 +6961,7 @@ class OrderpageController extends Zend_Controller_Action {
         $childthreegrandsonthree_sex            = $this->getRequest()->getPost('childthreegrandsonthree_sex');                          //性別
         $childthreegrandsonthree_birthday       = $this->getRequest()->getPost('childthreegrandsonthree_birthday');                     //生年月日
         $childthreegrandsonthree_deathday       = $this->getRequest()->getPost('childthreegrandsonthree_deathday');                     //没年月日
+        $childthreegrandsonthree_img_name       = $this->getRequest()->getPost('childthreegrandsonthree_img_name');                     //画像名
         $childthreegrandsonthree_profession     = $this->getRequest()->getPost('childthreegrandsonthree_profession');                   //職業
         $childthreegrandsonthree_memo           = $this->getRequest()->getPost('childthreegrandsonthree_memo');                         //メモ
 
@@ -6382,14 +6969,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childthreegrandsonthree_family_name_r = str_replace(array(" ", "　"), "", $childthreegrandsonthree_family_name);
 
         //子供３孫３データをインサート
-        $orderpageModel->insertchildthreegrandsonthreedata(  $customer_id,
-                                            $childthreegrandsonthree_family_name_r,
-                                            $childthreegrandsonthree_sex,
-                                            $childthreegrandsonthree_birthday,
-                                            $childthreegrandsonthree_deathday,
-                                            $childthreegrandsonthree_profession,
-                                            $childthreegrandsonthree_memo
-                                        );
+        $orderpageModel->insertchildthreegrandsonthreedeceaseddata(  $customer_id,
+                                                    $childthreegrandsonthree_family_name_r,
+                                                    $childthreegrandsonthree_sex,
+                                                    $childthreegrandsonthree_birthday,
+                                                    $childthreegrandsonthree_deathday,
+                                                    $childthreegrandsonthree_img_name,
+                                                    $childthreegrandsonthree_profession,
+                                                    $childthreegrandsonthree_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -6594,11 +7182,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                      = $this->getRequest()->getPost('customer_id');                                        //ユーザーID
         $childfourgrandsonone_family_name = $this->getRequest()->getPost('childfourgrandsonone_family_name');                   //お名前
         $childfourgrandsonone_sex         = $this->getRequest()->getPost('childfourgrandsonone_sex');                           //性別
         $childfourgrandsonone_birthday    = $this->getRequest()->getPost('childfourgrandsonone_birthday');                      //生年月日
         $childfourgrandsonone_deathday    = $this->getRequest()->getPost('childfourgrandsonone_deathday');                      //没年月日
+        $childfourgrandsonone_img_name    = $this->getRequest()->getPost('childfourgrandsonone_img_name');                      //画像名
         $childfourgrandsonone_profession  = $this->getRequest()->getPost('childfourgrandsonone_profession');                    //職業
         $childfourgrandsonone_memo        = $this->getRequest()->getPost('childfourgrandsonone_memo');                          //メモ
 
@@ -6606,14 +7195,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childfourgrandsonone_family_name_r = str_replace(array(" ", "　"), "", $childfourgrandsonone_family_name);
 
         //子供４孫１データをインサート
-        $orderpageModel->insertchildfourgrandsononedata(  $customer_id,
-                                            $childfourgrandsonone_family_name_r,
-                                            $childfourgrandsonone_sex,
-                                            $childfourgrandsonone_birthday,
-                                            $childfourgrandsonone_deathday,
-                                            $childfourgrandsonone_profession,
-                                            $childfourgrandsonone_memo
-                                        );
+        $orderpageModel->insertchildfourgrandsononedeceaseddata(  $customer_id,
+                                                    $childfourgrandsonone_family_name_r,
+                                                    $childfourgrandsonone_sex,
+                                                    $childfourgrandsonone_birthday,
+                                                    $childfourgrandsonone_deathday,
+                                                    $childfourgrandsonone_img_name,
+                                                    $childfourgrandsonone_profession,
+                                                    $childfourgrandsonone_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -6820,11 +7410,12 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id        = $this->getRequest()->getPost('customer_id');                          //ユーザーID
+        $customer_id                      = $this->getRequest()->getPost('customer_id');                                        //ユーザーID
         $childfourgrandsontwo_family_name = $this->getRequest()->getPost('childfourgrandsontwo_family_name');                   //お名前
         $childfourgrandsontwo_sex         = $this->getRequest()->getPost('childfourgrandsontwo_sex');                           //性別
         $childfourgrandsontwo_birthday    = $this->getRequest()->getPost('childfourgrandsontwo_birthday');                      //生年月日
         $childfourgrandsontwo_deathday    = $this->getRequest()->getPost('childfourgrandsontwo_deathday');                      //没年月日
+        $childfourgrandsontwo_img_name    = $this->getRequest()->getPost('childfourgrandsontwo_img_name');                      //画像名
         $childfourgrandsontwo_profession  = $this->getRequest()->getPost('childfourgrandsontwo_profession');                    //職業
         $childfourgrandsontwo_memo        = $this->getRequest()->getPost('childfourgrandsontwo_memo');                          //メモ
 
@@ -6832,17 +7423,15 @@ class OrderpageController extends Zend_Controller_Action {
         $childfourgrandsontwo_family_name_r = str_replace(array(" ", "　"), "", $childfourgrandsontwo_family_name);
 
         //子供４孫２データをインサート
-        $orderpageModel->insertchildfourgrandsontwodata(  $customer_id,
-                                            $childfourgrandsontwo_family_name_r,
-                                            $childfourgrandsontwo_sex,
-                                            $childfourgrandsontwo_birthday,
-                                            $childfourgrandsontwo_deathday,
-                                            $childfourgrandsontwo_profession,
-                                            $childfourgrandsontwo_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childfourgrandsontwo_family_name);
+        $orderpageModel->insertchildfourgrandsontwodeceaseddata(  $customer_id,
+                                                    $childfourgrandsontwo_family_name_r,
+                                                    $childfourgrandsontwo_sex,
+                                                    $childfourgrandsontwo_birthday,
+                                                    $childfourgrandsontwo_deathday,
+                                                    $childfourgrandsontwo_img_name,
+                                                    $childfourgrandsontwo_profession,
+                                                    $childfourgrandsontwo_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -7047,29 +7636,28 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id                            = $this->getRequest()->getPost('customer_id');                                          //ユーザーID
-        $childfourgrandsonthree_family_name    = $this->getRequest()->getPost('childfourgrandsonthree_family_name');                  //お名前
-        $childfourgrandsonthree_sex            = $this->getRequest()->getPost('childfourgrandsonthree_sex');                          //性別
-        $childfourgrandsonthree_birthday       = $this->getRequest()->getPost('childfourgrandsonthree_birthday');                     //生年月日
-        $childfourgrandsonthree_deathday       = $this->getRequest()->getPost('childfourgrandsonthree_deathday');                     //没年月日
-        $childfourgrandsonthree_profession     = $this->getRequest()->getPost('childfourgrandsonthree_profession');                   //職業
-        $childfourgrandsonthree_memo           = $this->getRequest()->getPost('childfourgrandsonthree_memo');                         //メモ
+        $customer_id                            = $this->getRequest()->getPost('customer_id');                                      //ユーザーID
+        $childfourgrandsonthree_family_name     = $this->getRequest()->getPost('childfourgrandsonthree_family_name');               //お名前
+        $childfourgrandsonthree_sex             = $this->getRequest()->getPost('childfourgrandsonthree_sex');                       //性別
+        $childfourgrandsonthree_birthday        = $this->getRequest()->getPost('childfourgrandsonthree_birthday');                  //生年月日
+        $childfourgrandsonthree_deathday        = $this->getRequest()->getPost('childfourgrandsonthree_deathday');                  //没年月日
+        $childfourgrandsonthree_img_name        = $this->getRequest()->getPost('childfourgrandsonthree_img_name');                  //画像名
+        $childfourgrandsonthree_profession      = $this->getRequest()->getPost('childfourgrandsonthree_profession');                //職業
+        $childfourgrandsonthree_memo            = $this->getRequest()->getPost('childfourgrandsonthree_memo');                      //メモ
 
         //文字中の半角・全角空白を削除
         $childfourgrandsonthree_family_name_r = str_replace(array(" ", "　"), "", $childfourgrandsonthree_family_name);
 
         //子供４孫３データをインサート
-        $orderpageModel->insertchildfourgrandsonthreedata(  $customer_id,
-                                            $childfourgrandsonthree_family_name_r,
-                                            $childfourgrandsonthree_sex,
-                                            $childfourgrandsonthree_birthday,
-                                            $childfourgrandsonthree_deathday,
-                                            $childfourgrandsonthree_profession,
-                                            $childfourgrandsonthree_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$childfourgrandsonthree_family_name);
+        $orderpageModel->insertchildfourgrandsonthreedeceaseddata(  $customer_id,
+                                                    $childfourgrandsonthree_family_name_r,
+                                                    $childfourgrandsonthree_sex,
+                                                    $childfourgrandsonthree_birthday,
+                                                    $childfourgrandsonthree_deathday,
+                                                    $childfourgrandsonthree_img_name,
+                                                    $childfourgrandsonthree_profession,
+                                                    $childfourgrandsonthree_memo
+                                                );
 
         $this->_view->customerId = $customer_id;
 
@@ -7273,10 +7861,11 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id                            = $this->getRequest()->getPost('customer_id');                                          //ユーザーID
+        $customer_id                      = $this->getRequest()->getPost('customer_id');                                    //ユーザーID
         $grandfatherfather_family_name    = $this->getRequest()->getPost('grandfatherfather_family_name');                  //お名前
         $grandfatherfather_birthday       = $this->getRequest()->getPost('grandfatherfather_birthday');                     //生年月日
         $grandfatherfather_deathday       = $this->getRequest()->getPost('grandfatherfather_deathday');                     //没年月日
+        $grandfatherfather_img_name       = $this->getRequest()->getPost('grandfatherfather_img_name');                     //画像名
         $grandfatherfather_profession     = $this->getRequest()->getPost('grandfatherfather_profession');                   //職業
         $grandfatherfather_memo           = $this->getRequest()->getPost('grandfatherfather_memo');                         //メモ
 
@@ -7284,13 +7873,14 @@ class OrderpageController extends Zend_Controller_Action {
         $grandfatherfather_family_name_r = str_replace(array(" ", "　"), "", $grandfatherfather_family_name);
 
         //祖父父方データをインサート
-        $orderpageModel->insertgrandfatherfatherdata(  $customer_id,
-                                            $grandfatherfather_family_name_r,
-                                            $grandfatherfather_birthday,
-                                            $grandfatherfather_deathday,
-                                            $grandfatherfather_profession,
-                                            $grandfatherfather_memo
-                                        );
+        $orderpageModel->insertgrandfatherfatherdeceaseddata(   $customer_id,
+                                                                $grandfatherfather_family_name_r,
+                                                                $grandfatherfather_birthday,
+                                                                $grandfatherfather_deathday,
+                                                                $grandfatherfather_img_name,
+                                                                $grandfatherfather_profession,
+                                                                $grandfatherfather_memo
+                                                            );
 
          $this->_view->customerId = $customer_id;
 
@@ -7487,27 +8077,26 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id                      = $this->getRequest()->getPost('customer_id');                                          //ユーザーID
+        $customer_id                      = $this->getRequest()->getPost('customer_id');                                    //ユーザーID
         $grandfathermather_family_name    = $this->getRequest()->getPost('grandfathermather_family_name');                  //お名前
         $grandfathermather_birthday       = $this->getRequest()->getPost('grandfathermather_birthday');                     //生年月日
         $grandfathermather_deathday       = $this->getRequest()->getPost('grandfathermather_deathday');                     //没年月日
+        $grandfathermather_img_name       = $this->getRequest()->getPost('grandfathermather_img_name');                     //画像名
         $grandfathermather_profession     = $this->getRequest()->getPost('grandfathermather_profession');                   //職業
         $grandfathermather_memo           = $this->getRequest()->getPost('grandfathermather_memo');                         //メモ
 
         //文字中の半角・全角空白を削除
         $grandfathermather_family_name_r = str_replace(array(" ", "　"), "", $grandfathermather_family_name);
 
-        //祖父母方データをインサート
-        $orderpageModel->insertgrandfathermatherdata(  $customer_id,
-                                            $grandfathermather_family_name_r,
-                                            $grandfathermather_birthday,
-                                            $grandfathermather_deathday,
-                                            $grandfathermather_profession,
-                                            $grandfathermather_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$grandfathermather_family_name);
+        //祖母父方データをインサート
+        $orderpageModel->insertgrandfathermatherdeceaseddata(   $customer_id,
+                                                                $grandfathermather_family_name_r,
+                                                                $grandfathermather_birthday,
+                                                                $grandfathermather_deathday,
+                                                                $grandfathermather_img_name,
+                                                                $grandfathermather_profession,
+                                                                $grandfathermather_memo
+                                                            );
 
         $this->_view->customerId = $customer_id;
 
@@ -7710,10 +8299,11 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id                            = $this->getRequest()->getPost('customer_id');                                          //ユーザーID
+        $customer_id                      = $this->getRequest()->getPost('customer_id');                                   //ユーザーID
         $grandmatherfather_family_name    = $this->getRequest()->getPost('grandmatherfather_family_name');                  //お名前
         $grandmatherfather_birthday       = $this->getRequest()->getPost('grandmatherfather_birthday');                     //生年月日
-        $grandmatherfather_deathday       = $this->getRequest()->getPost('grandmatherfather_deathday');                     //没年月日
+        $grandmatherfather_deathday       = $this->getRequest()->getPost('grandmatherfather_deathday');                    //没年月日
+        $grandmatherfather_img_name       = $this->getRequest()->getPost('grandmatherfather_img_name');                     //画像名
         $grandmatherfather_profession     = $this->getRequest()->getPost('grandmatherfather_profession');                   //職業
         $grandmatherfather_memo           = $this->getRequest()->getPost('grandmatherfather_memo');                         //メモ
 
@@ -7721,16 +8311,14 @@ class OrderpageController extends Zend_Controller_Action {
         $grandmatherfather_family_name_r = str_replace(array(" ", "　"), "", $grandmatherfather_family_name);
 
         //祖父母方データをインサート
-        $orderpageModel->insertgrandmatherfatherdata(  $customer_id,
-                                            $grandmatherfather_family_name_r,
-                                            $grandmatherfather_birthday,
-                                            $grandmatherfather_deathday,
-                                            $grandmatherfather_profession,
-                                            $grandmatherfather_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$grandmatherfather_family_name);
+        $orderpageModel->insertgrandmatherfatherdeceaseddata(   $customer_id,
+                                                                $grandmatherfather_family_name_r,
+                                                                $grandmatherfather_birthday,
+                                                                $grandmatherfather_deathday,
+                                                                $grandmatherfather_img_name,
+                                                                $grandmatherfather_profession,
+                                                                $grandmatherfather_memo
+                                                            );
 
         $this->_view->customerId = $customer_id;
 
@@ -7931,10 +8519,11 @@ class OrderpageController extends Zend_Controller_Action {
         $orderpageModel = new orderpageModel();
 
         //post受信
-        $customer_id                            = $this->getRequest()->getPost('customer_id');                                          //ユーザーID
+        $customer_id                      = $this->getRequest()->getPost('customer_id');                                    //ユーザーID
         $grandmathermather_family_name    = $this->getRequest()->getPost('grandmathermather_family_name');                  //お名前
         $grandmathermather_birthday       = $this->getRequest()->getPost('grandmathermather_birthday');                     //生年月日
         $grandmathermather_deathday       = $this->getRequest()->getPost('grandmathermather_deathday');                     //没年月日
+        $grandmathermather_img_name       = $this->getRequest()->getPost('grandmathermather_img_name');                     //画像名
         $grandmathermather_profession     = $this->getRequest()->getPost('grandmathermather_profession');                   //職業
         $grandmathermather_memo           = $this->getRequest()->getPost('grandmathermather_memo');                         //メモ
 
@@ -7942,16 +8531,14 @@ class OrderpageController extends Zend_Controller_Action {
         $grandmathermather_family_name_r = str_replace(array(" ", "　"), "", $grandmathermather_family_name);
 
         //祖母母方データをインサート
-        $orderpageModel->insertgrandmathermatherdata(  $customer_id,
-                                            $grandmathermather_family_name_r,
-                                            $grandmathermather_birthday,
-                                            $grandmathermather_deathday,
-                                            $grandmathermather_profession,
-                                            $grandmathermather_memo
-                                        );
-
-        //フラグを１にする
-        // $orderpageModel->updateflag($customer_id,$grandmathermather_family_name);
+        $orderpageModel->insertgrandmathermatherdeceaseddata(   $customer_id,
+                                                                $grandmathermather_family_name_r,
+                                                                $grandmathermather_birthday,
+                                                                $grandmathermather_deathday,
+                                                                $grandmathermather_img_name,
+                                                                $grandmathermather_profession,
+                                                                $grandmathermather_memo
+                                                            );
 
         $this->_view->customerId = $customer_id;
 

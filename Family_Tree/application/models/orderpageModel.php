@@ -1256,6 +1256,70 @@ class orderpageModel {
             return $customer_id;
     }
 
+    /**
+     * 配偶者データ挿入（大切な故人）
+     *
+     * @param spouse_family_name        名前
+     * @param spouse_birthday           生年月日
+     * @param spouse_deathday           没年月日
+     * @param $spouse_img_name          画像名
+     * @param spouse_profession         職業
+     * @param spouse_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertspousedeceaseddata(   $customer_id,
+                                                $spouse_family_name,
+                                                $spouse_birthday,
+                                                $spouse_deathday,
+                                                $spouse_img_name,
+                                                $spouse_profession,
+                                                $spouse_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_spouse
+                    (
+                    customer_id ,
+                    spouse_family_name ,
+                    spouse_birthday ,
+                    spouse_deathday ,
+                    spouse_img_name ,
+                    spouse_profession ,
+                    spouse_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :spouse_family_name,
+                    :spouse_birthday,
+                    :spouse_deathday,
+                    :spouse_img_name,
+                    :spouse_profession,
+                    :spouse_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'spouse_family_name'    => $spouse_family_name,
+                                        'spouse_birthday'       => $spouse_birthday,
+                                        'spouse_deathday'       => $spouse_deathday,
+                                        'spouse_img_name'       => $spouse_img_name,
+                                        'spouse_profession'     => $spouse_profession,
+                                        'spouse_memo'           => $spouse_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================兄弟姉妹１================================//
 
     /**
      * 兄弟姉妹１データ挿入
@@ -1369,6 +1433,71 @@ class orderpageModel {
 
 
     /**
+     * 兄弟姉妹１データ挿入（大切な故人）
+     *
+     * @param brotherone_family_name        名前
+     * @param brotherone_birthday           生年月日
+     * @param brotherone_deathday           没年月日
+     * @param brotherone_img_name          画像名
+     * @param brotherone_profession         職業
+     * @param brotherone_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertbrotheronedeceaseddata(   $customer_id,
+                                                $brotherone_family_name,
+                                                $brotherone_birthday,
+                                                $brotherone_deathday,
+                                                $brotherone_img_name,
+                                                $brotherone_profession,
+                                                $brotherone_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_brother_one
+                    (
+                    customer_id ,
+                    brother_one_family_name ,
+                    brother_one_birthday ,
+                    brother_one_deathday ,
+                    brother_one_img_name ,
+                    brother_one_profession ,
+                    brother_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :brotherone_family_name,
+                    :brotherone_birthday,
+                    :brotherone_deathday,
+                    :brotherone_img_name,
+                    :brotherone_profession,
+                    :brotherone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'brotherone_family_name'    => $brotherone_family_name,
+                                        'brotherone_birthday'       => $brotherone_birthday,
+                                        'brotherone_deathday'       => $brotherone_deathday,
+                                        'brotherone_img_name'       => $brotherone_img_name,
+                                        'brotherone_profession'     => $brotherone_profession,
+                                        'brotherone_memo'           => $brotherone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================兄弟姉妹２================================//
+
+    /**
      * 兄弟姉妹２データ挿入
      *
      * @param brothertwo_family_name        名前
@@ -1478,6 +1607,71 @@ class orderpageModel {
             return $customer_id;
     }
 
+
+    /**
+     * 兄弟姉妹２データ挿入（大切な故人）
+     *
+     * @param brothertwo_family_name        名前
+     * @param brothertwo_birthday           生年月日
+     * @param brothertwo_deathday           没年月日
+     * @param brothertwo_img_name           画像名
+     * @param brothertwo_profession         職業
+     * @param brothertwo_memo               メモ
+     * @param customer_id                   ユーザーID
+     * @return array                        修正データ
+     */
+    public function insertbrothertwodeceaseddata(   $customer_id,
+                                                    $brothertwo_family_name,
+                                                    $brothertwo_birthday,
+                                                    $brothertwo_deathday,
+                                                    $brothertwo_img_name,
+                                                    $brothertwo_profession,
+                                                    $brothertwo_memo
+                                                )
+    {
+        try {
+        $sql = "    INSERT INTO  t_brother_two
+                    (
+                    customer_id ,
+                    brother_two_family_name ,
+                    brother_two_birthday ,
+                    brother_two_deathday ,
+                    brother_two_img_name ,
+                    brother_two_profession ,
+                    brother_two_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :brothertwo_family_name,
+                    :brothertwo_birthday,
+                    :brothertwo_deathday,
+                    :brothertwo_img_name,
+                    :brothertwo_profession,
+                    :brothertwo_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'brothertwo_family_name'    => $brothertwo_family_name,
+                                        'brothertwo_birthday'       => $brothertwo_birthday,
+                                        'brothertwo_deathday'       => $brothertwo_deathday,
+                                        'brothertwo_img_name'       => $brothertwo_img_name,
+                                        'brothertwo_profession'     => $brothertwo_profession,
+                                        'brothertwo_memo'           => $brothertwo_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================兄弟姉妹３================================//
 
     /**
      * 兄弟姉妹３データ挿入
@@ -1590,12 +1784,77 @@ class orderpageModel {
     }
 
 
+    /**
+     * 兄弟姉妹３データ挿入（大切な故人）
+     *
+     * @param brotherthree_family_name        名前
+     * @param brotherthree_birthday           生年月日
+     * @param brotherthree_deathday           没年月日
+     * @param brotherthree_img_name          画像名
+     * @param brotherthree_profession         職業
+     * @param brotherthree_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertbrotherthreedeceaseddata(   $customer_id,
+                                                $brotherthree_family_name,
+                                                $brotherthree_birthday,
+                                                $brotherthree_deathday,
+                                                $brotherthree_img_name,
+                                                $brotherthree_profession,
+                                                $brotherthree_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_brother_three
+                    (
+                    customer_id ,
+                    brother_three_family_name ,
+                    brother_three_birthday ,
+                    brother_three_deathday ,
+                    brother_three_img_name ,
+                    brother_three_profession ,
+                    brother_three_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :brotherthree_family_name,
+                    :brotherthree_birthday,
+                    :brotherthree_deathday,
+                    :brotherthree_img_name,
+                    :brotherthree_profession,
+                    :brotherthree_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'brotherthree_family_name'    => $brotherthree_family_name,
+                                        'brotherthree_birthday'       => $brotherthree_birthday,
+                                        'brotherthree_deathday'       => $brotherthree_deathday,
+                                        'brotherthree_img_name'       => $brotherthree_img_name,
+                                        'brotherthree_profession'     => $brotherthree_profession,
+                                        'brotherthree_memo'           => $brotherthree_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================子供１================================//
 
     /**
      * 子供１データ挿入
      *
      * @param childone_family_name        名前
      * @param childone_sex                性別
+     * @param childone_spouse_name        配偶者名
      * @param childone_birthday           生年月日
      * @param childone_deathday           没年月日
      * @param childone_profession         職業
@@ -1662,6 +1921,7 @@ class orderpageModel {
      *
      * @param childone_family_name        名前
      * @param childone_sex                性別
+     * @param childone_spouse_name        配偶者名
      * @param childone_birthday           生年月日
      * @param childone_deathday           没年月日
      * @param childone_profession         職業
@@ -1708,12 +1968,87 @@ class orderpageModel {
             return $customer_id;
     }
 
+    /**
+     * 子供１データ挿入（大切な故人）
+     *
+     * @param childone_family_name        名前
+     * @param childone_sex                性別
+     * @param childone_birthday           生年月日
+     * @param childone_deathday           没年月日
+     * @param childone_img_name           画像名
+     * @param childone_profession         職業
+     * @param childone_memo               メモ
+     * @param customer_id                 ユーザーID
+     * @return array                      修正データ
+     */
+    public function insertchildonedeceaseddata(   $customer_id,
+                                        $childone_family_name,
+                                        $childone_sex,
+                                        $childone_spouse_name,
+                                        $childone_birthday,
+                                        $childone_deathday,
+                                        $childone_img_name,
+                                        $childone_profession,
+                                        $childone_memo
+                                    )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_one
+                    (
+                    customer_id ,
+                    child_one_family_name ,
+                    child_one_sex ,
+                    child_one_spouse_name ,
+                    child_one_birthday ,
+                    child_one_deathday ,
+                    child_one_img_name ,
+                    child_one_profession ,
+                    child_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childone_family_name,
+                    :childone_sex,
+                    :childone_spouse_name,
+                    :childone_birthday,
+                    :childone_deathday,
+                    :childone_img_name,
+                    :childone_profession,
+                    :childone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'             => $customer_id,
+                                        'childone_family_name'    => $childone_family_name,
+                                        'childone_sex'            => $childone_sex,
+                                        'childone_spouse_name'    => $childone_spouse_name,
+                                        'childone_birthday'       => $childone_birthday,
+                                        'childone_deathday'       => $childone_deathday,
+                                        'childone_img_name'       => $childone_img_name,
+                                        'childone_profession'     => $childone_profession,
+                                        'childone_memo'           => $childone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+
+//=========================子供２================================//
 
     /**
      * 子供２データ挿入
      *
      * @param childtwo_family_name        名前
      * @param childtwo_sex                性別
+     * @param childtwo_spouse_name        配偶者名
      * @param childtwo_birthday           生年月日
      * @param childtwo_deathday           没年月日
      * @param childtwo_profession         職業
@@ -1780,6 +2115,7 @@ class orderpageModel {
      *
      * @param childtwo_family_name        名前
      * @param childtwo_sex                性別
+     * @param childtwo_spouse_name        配偶者名
      * @param childtwo_birthday           生年月日
      * @param childtwo_deathday           没年月日
      * @param childtwo_profession         職業
@@ -1826,12 +2162,85 @@ class orderpageModel {
             return $customer_id;
     }
 
+   /**
+     * 子供２データ挿入（大切な故人）
+     *
+     * @param childtwo_family_name        名前
+     * @param childtwo_sex                性別
+     * @param childtwo_birthday           生年月日
+     * @param childtwo_deathday           没年月日
+     * @param childtwo_img_name           画像名
+     * @param childtwo_profession         職業
+     * @param childtwo_memo               メモ
+     * @param customer_id                 ユーザーID
+     * @return array                      修正データ
+     */
+    public function insertchildtwodeceaseddata(   $customer_id,
+                                        $childtwo_family_name,
+                                        $childtwo_sex,
+                                        $childtwo_spouse_name,
+                                        $childtwo_birthday,
+                                        $childtwo_deathday,
+                                        $childtwo_img_name,
+                                        $childtwo_profession,
+                                        $childtwo_memo
+                                    )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_two
+                    (
+                    customer_id ,
+                    child_two_family_name ,
+                    child_two_sex ,
+                    child_two_spouse_name ,
+                    child_two_birthday ,
+                    child_two_deathday ,
+                    child_two_img_name ,
+                    child_two_profession ,
+                    child_two_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childtwo_family_name,
+                    :childtwo_sex,
+                    :childtwo_spouse_name,
+                    :childtwo_birthday,
+                    :childtwo_deathday,
+                    :childtwo_img_name,
+                    :childtwo_profession,
+                    :childtwo_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'             => $customer_id,
+                                        'childtwo_family_name'    => $childtwo_family_name,
+                                        'childtwo_sex'            => $childtwo_sex,
+                                        'childtwo_spouse_name'    => $childtwo_spouse_name,
+                                        'childtwo_birthday'       => $childtwo_birthday,
+                                        'childtwo_deathday'       => $childtwo_deathday,
+                                        'childtwo_img_name'       => $childtwo_img_name,
+                                        'childtwo_profession'     => $childtwo_profession,
+                                        'childtwo_memo'           => $childtwo_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+//=========================子供３================================//
 
     /**
      * 子供３データ挿入
      *
      * @param childthree_family_name        名前
      * @param childthree_sex                性別
+     * @param childthree_spouse_name        配偶者名
      * @param childthree_birthday           生年月日
      * @param childthree_deathday           没年月日
      * @param childthree_profession         職業
@@ -1898,6 +2307,7 @@ class orderpageModel {
      *
      * @param childthree_family_name        名前
      * @param childthree_sex                性別
+     * @param childthree_spouse_name        配偶者名
      * @param childthree_birthday           生年月日
      * @param childthree_deathday           没年月日
      * @param childthree_profession         職業
@@ -1945,59 +2355,68 @@ class orderpageModel {
     }
 
     /**
-     * 子供１孫１データ挿入
+     * 子供３データ挿入（大切な故人）
      *
-     * @param childonegrandsonone_family_name        名前
-     * @param childonegrandsonone_sex                性別
-     * @param childonegrandsonone_birthday           生年月日
-     * @param childonegrandsonone_deathday           没年月日
-     * @param childonegrandsonone_profession         職業
-     * @param childonegrandsonone_memo               メモ
+     * @param childthree_family_name        名前
+     * @param childthree_sex                性別
+     * @param childthree_birthday           生年月日
+     * @param childthree_deathday           没年月日
+     * @param childthree_img_name           画像名
+     * @param childthree_profession         職業
+     * @param childthree_memo               メモ
      * @param customer_id                 ユーザーID
      * @return array                      修正データ
      */
-    public function insertchildonegrandsononedata(   $customer_id,
-                                        $childonegrandsonone_family_name,
-                                        $childonegrandsonone_sex,
-                                        $childonegrandsonone_birthday,
-                                        $childonegrandsonone_deathday,
-                                        $childonegrandsonone_profession,
-                                        $childonegrandsonone_memo
+    public function insertchildthreedeceaseddata(   $customer_id,
+                                        $childthree_family_name,
+                                        $childthree_sex,
+                                        $childthree_spouse_name,
+                                        $childthree_birthday,
+                                        $childthree_deathday,
+                                        $childthree_img_name,
+                                        $childthree_profession,
+                                        $childthree_memo
                                     )
     {
         try {
-        $sql = "    INSERT INTO  t_child_one_grandson_one
+        $sql = "    INSERT INTO  t_child_three
                     (
                     customer_id ,
-                    child_one_grandson_one_family_name ,
-                    child_one_grandson_one_sex ,
-                    child_one_grandson_one_birthday ,
-                    child_one_grandson_one_deathday ,
-                    child_one_grandson_one_profession ,
-                    child_one_grandson_one_memo ,
+                    child_three_family_name ,
+                    child_three_sex ,
+                    child_three_spouse_name ,
+                    child_three_birthday ,
+                    child_three_deathday ,
+                    child_three_img_name ,
+                    child_three_profession ,
+                    child_three_memo ,
                     entry_datetime ,
                     timestamp
                     )
                     VALUES
                     (
                     :customer_id ,
-                    :childonegrandsonone_family_name,
-                    :childonegrandsonone_sex,
-                    :childonegrandsonone_birthday,
-                    :childonegrandsonone_deathday,
-                    :childonegrandsonone_profession,
-                    :childonegrandsonone_memo,
+                    :childthree_family_name,
+                    :childthree_sex,
+                    :childthree_spouse_name,
+                    :childthree_birthday,
+                    :childthree_deathday,
+                    :childthree_img_name,
+                    :childthree_profession,
+                    :childthree_memo,
                     NOW( ),
                     NOW( )
                     );";
 
         $this->_db->query($sql, array(  'customer_id'             => $customer_id,
-                                        'childonegrandsonone_family_name'    => $childonegrandsonone_family_name,
-                                        'childonegrandsonone_sex'            => $childonegrandsonone_sex,
-                                        'childonegrandsonone_birthday'       => $childonegrandsonone_birthday,
-                                        'childonegrandsonone_deathday'       => $childonegrandsonone_deathday,
-                                        'childonegrandsonone_profession'     => $childonegrandsonone_profession,
-                                        'childonegrandsonone_memo'           => $childonegrandsonone_memo
+                                        'childthree_family_name'    => $childthree_family_name,
+                                        'childthree_sex'            => $childthree_sex,
+                                        'childthree_spouse_name'    => $childthree_spouse_name,
+                                        'childthree_birthday'       => $childthree_birthday,
+                                        'childthree_deathday'       => $childthree_deathday,
+                                        'childthree_img_name'       => $childthree_img_name,
+                                        'childthree_profession'     => $childthree_profession,
+                                        'childthree_memo'           => $childthree_memo
                                     ));
         } catch(Exception $e) {
 
@@ -2007,11 +2426,15 @@ class orderpageModel {
     }
 
 
+
+//=========================子供４================================//
+
     /**
      * 子供４データ挿入
      *
      * @param childfour_family_name        名前
      * @param childfour_sex                性別
+     * @param childfour_spouse_name        配偶者名
      * @param childfour_birthday           生年月日
      * @param childfour_deathday           没年月日
      * @param childfour_profession         職業
@@ -2078,6 +2501,7 @@ class orderpageModel {
      *
      * @param childfour_family_name        名前
      * @param childfour_sex                性別
+     * @param childfour_spouse_name        配偶者名
      * @param childfour_birthday           生年月日
      * @param childfour_deathday           没年月日
      * @param childfour_profession         職業
@@ -2123,6 +2547,144 @@ class orderpageModel {
         }
             return $customer_id;
     }
+
+    /**
+     * 子供４データ挿入（大切な故人）
+     *
+     * @param childfour_family_name        名前
+     * @param childfour_sex                性別
+     * @param childfour_birthday           生年月日
+     * @param childfour_deathday           没年月日
+     * @param childfour_img_name           画像名
+     * @param childfour_profession         職業
+     * @param childfour_memo               メモ
+     * @param customer_id                 ユーザーID
+     * @return array                      修正データ
+     */
+    public function insertchildfourdeceaseddata(   $customer_id,
+                                        $childfour_family_name,
+                                        $childfour_sex,
+                                        $childfour_spouse_name,
+                                        $childfour_birthday,
+                                        $childfour_deathday,
+                                        $childfour_img_name,
+                                        $childfour_profession,
+                                        $childfour_memo
+                                    )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_four
+                    (
+                    customer_id ,
+                    child_four_family_name ,
+                    child_four_sex ,
+                    child_four_spouse_name ,
+                    child_four_birthday ,
+                    child_four_deathday ,
+                    child_four_img_name ,
+                    child_four_profession ,
+                    child_four_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childfour_family_name,
+                    :childfour_sex,
+                    :childfour_spouse_name,
+                    :childfour_birthday,
+                    :childfour_deathday,
+                    :childfour_img_name,
+                    :childfour_profession,
+                    :childfour_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'             => $customer_id,
+                                        'childfour_family_name'    => $childfour_family_name,
+                                        'childfour_sex'            => $childfour_sex,
+                                        'childfour_spouse_name'    => $childfour_spouse_name,
+                                        'childfour_birthday'       => $childfour_birthday,
+                                        'childfour_deathday'       => $childfour_deathday,
+                                        'childfour_img_name'       => $childfour_img_name,
+                                        'childfour_profession'     => $childfour_profession,
+                                        'childfour_memo'           => $childfour_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+
+
+//=========================子供１孫１================================//
+    /**
+     * 子供１孫１データ挿入
+     *
+     * @param childonegrandsonone_family_name        名前
+     * @param childonegrandsonone_sex                性別
+     * @param childonegrandsonone_birthday           生年月日
+     * @param childonegrandsonone_deathday           没年月日
+     * @param childonegrandsonone_profession         職業
+     * @param childonegrandsonone_memo               メモ
+     * @param customer_id                 ユーザーID
+     * @return array                      修正データ
+     */
+    public function insertchildonegrandsononedata(   $customer_id,
+                                        $childonegrandsonone_family_name,
+                                        $childonegrandsonone_sex,
+                                        $childonegrandsonone_birthday,
+                                        $childonegrandsonone_deathday,
+                                        $childonegrandsonone_profession,
+                                        $childonegrandsonone_memo
+                                    )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_one_grandson_one
+                    (
+                    customer_id ,
+                    child_one_grandson_one_family_name ,
+                    child_one_grandson_one_sex ,
+                    child_one_grandson_one_birthday ,
+                    child_one_grandson_one_deathday ,
+                    child_one_grandson_one_profession ,
+                    child_one_grandson_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childonegrandsonone_family_name,
+                    :childonegrandsonone_sex,
+                    :childonegrandsonone_birthday,
+                    :childonegrandsonone_deathday,
+                    :childonegrandsonone_profession,
+                    :childonegrandsonone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'             => $customer_id,
+                                        'childonegrandsonone_family_name'    => $childonegrandsonone_family_name,
+                                        'childonegrandsonone_sex'            => $childonegrandsonone_sex,
+                                        'childonegrandsonone_birthday'       => $childonegrandsonone_birthday,
+                                        'childonegrandsonone_deathday'       => $childonegrandsonone_deathday,
+                                        'childonegrandsonone_profession'     => $childonegrandsonone_profession,
+                                        'childonegrandsonone_memo'           => $childonegrandsonone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
 
 
     /**
@@ -2172,6 +2734,77 @@ class orderpageModel {
         }
             return $customer_id;
     }
+
+
+    /**
+     * 子供１孫１データ挿入（大切な故人）
+     *
+     * @param childonegrandsonone_family_name        名前
+     * @param childonegrandsonone_sex                性別
+     * @param childonegrandsonone_birthday           生年月日
+     * @param childonegrandsonone_deathday           没年月日
+     * @param childonegrandsonone_img_name           画像名
+     * @param childonegrandsonone_profession         職業
+     * @param childonegrandsonone_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildonegrandsononedeceaseddata(   $customer_id,
+                                                $childonegrandsonone_family_name,
+                                                $childonegrandsonone_sex,
+                                                $childonegrandsonone_birthday,
+                                                $childonegrandsonone_deathday,
+                                                $childonegrandsonone_img_name,
+                                                $childonegrandsonone_profession,
+                                                $childonegrandsonone_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_one_grandson_one
+                    (
+                    customer_id ,
+                    child_one_grandson_one_family_name ,
+                    child_one_grandson_one_sex ,
+                    child_one_grandson_one_birthday ,
+                    child_one_grandson_one_deathday ,
+                    child_one_grandson_one_img_name ,
+                    child_one_grandson_one_profession ,
+                    child_one_grandson_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childonegrandsonone_family_name,
+                    :childonegrandsonone_sex,
+                    :childonegrandsonone_birthday,
+                    :childonegrandsonone_deathday,
+                    :childonegrandsonone_img_name,
+                    :childonegrandsonone_profession,
+                    :childonegrandsonone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'                        => $customer_id,
+                                        'childonegrandsonone_family_name'    => $childonegrandsonone_family_name,
+                                        'childonegrandsonone_sex'            => $childonegrandsonone_sex,
+                                        'childonegrandsonone_birthday'       => $childonegrandsonone_birthday,
+                                        'childonegrandsonone_deathday'       => $childonegrandsonone_deathday,
+                                        'childonegrandsonone_img_name'       => $childonegrandsonone_img_name,
+                                        'childonegrandsonone_profession'     => $childonegrandsonone_profession,
+                                        'childonegrandsonone_memo'           => $childonegrandsonone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================子供１孫２================================//
 
     /**
      * 子供１孫２データ挿入
@@ -2284,6 +2917,77 @@ class orderpageModel {
     }
 
 
+/**
+     * 子供１孫２データ挿入（大切な故人）
+     *
+     * @param childonegrandsontwo_family_name        名前
+     * @param childonegrandsontwo_sex                性別
+     * @param childonegrandsontwo_birthday           生年月日
+     * @param childonegrandsontwo_deathday           没年月日
+     * @param childonegrandsontwo_img_name           画像名
+     * @param childonegrandsontwo_profession         職業
+     * @param childonegrandsontwo_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildonegrandsontwodeceaseddata(   $customer_id,
+                                                $childonegrandsontwo_family_name,
+                                                $childonegrandsontwo_sex,
+                                                $childonegrandsontwo_birthday,
+                                                $childonegrandsontwo_deathday,
+                                                $childonegrandsontwo_img_name,
+                                                $childonegrandsontwo_profession,
+                                                $childonegrandsontwo_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_one_grandson_two
+                    (
+                    customer_id ,
+                    child_one_grandson_two_family_name ,
+                    child_one_grandson_two_sex ,
+                    child_one_grandson_two_birthday ,
+                    child_one_grandson_two_deathday ,
+                    child_one_grandson_two_img_name ,
+                    child_one_grandson_two_profession ,
+                    child_one_grandson_two_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childonegrandsontwo_family_name,
+                    :childonegrandsontwo_sex,
+                    :childonegrandsontwo_birthday,
+                    :childonegrandsontwo_deathday,
+                    :childonegrandsontwo_img_name,
+                    :childonegrandsontwo_profession,
+                    :childonegrandsontwo_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childonegrandsontwo_family_name'    => $childonegrandsontwo_family_name,
+                                        'childonegrandsontwo_sex'            => $childonegrandsontwo_sex,
+                                        'childonegrandsontwo_birthday'       => $childonegrandsontwo_birthday,
+                                        'childonegrandsontwo_deathday'       => $childonegrandsontwo_deathday,
+                                        'childonegrandsontwo_img_name'       => $childonegrandsontwo_img_name,
+                                        'childonegrandsontwo_profession'     => $childonegrandsontwo_profession,
+                                        'childonegrandsontwo_memo'           => $childonegrandsontwo_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+
+//=========================子供１孫３================================//
+
     /**
      * 子供１孫３データ挿入
      *
@@ -2393,6 +3097,75 @@ class orderpageModel {
         }
             return $customer_id;
     }
+
+/**
+     * 子供１孫３データ挿入（大切な故人）
+     *
+     * @param childonegrandsonthree_family_name        名前
+     * @param childonegrandsonthree_sex                性別
+     * @param childonegrandsonthree_birthday           生年月日
+     * @param childonegrandsonthree_deathday           没年月日
+     * @param childonegrandsonthree_img_name           画像名
+     * @param childonegrandsonthree_profession         職業
+     * @param childonegrandsonthree_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildonegrandsonthreedeceaseddata(   $customer_id,
+                                                $childonegrandsonthree_family_name,
+                                                $childonegrandsonthree_sex,
+                                                $childonegrandsonthree_birthday,
+                                                $childonegrandsonthree_deathday,
+                                                $childonegrandsonthree_img_name,
+                                                $childonegrandsonthree_profession,
+                                                $childonegrandsonthree_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_one_grandson_three
+                    (
+                    customer_id ,
+                    child_one_grandson_three_family_name ,
+                    child_one_grandson_three_sex ,
+                    child_one_grandson_three_birthday ,
+                    child_one_grandson_three_deathday ,
+                    child_one_grandson_three_img_name ,
+                    child_one_grandson_three_profession ,
+                    child_one_grandson_three_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childonegrandsonthree_family_name,
+                    :childonegrandsonthree_sex,
+                    :childonegrandsonthree_birthday,
+                    :childonegrandsonthree_deathday,
+                    :childonegrandsonthree_img_name,
+                    :childonegrandsonthree_profession,
+                    :childonegrandsonthree_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childonegrandsonthree_family_name'    => $childonegrandsonthree_family_name,
+                                        'childonegrandsonthree_sex'            => $childonegrandsonthree_sex,
+                                        'childonegrandsonthree_birthday'       => $childonegrandsonthree_birthday,
+                                        'childonegrandsonthree_deathday'       => $childonegrandsonthree_deathday,
+                                        'childonegrandsonthree_img_name'       => $childonegrandsonthree_img_name,
+                                        'childonegrandsonthree_profession'     => $childonegrandsonthree_profession,
+                                        'childonegrandsonthree_memo'           => $childonegrandsonthree_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+//=========================子供２孫１================================//
 
     /**
      * 子供２孫１データ挿入
@@ -2505,6 +3278,75 @@ class orderpageModel {
     }
 
     /**
+     * 子供２孫１データ挿入（大切な故人）
+     *
+     * @param childtwograndsonone_family_name        名前
+     * @param childtwograndsonone_sex                性別
+     * @param childtwograndsonone_birthday           生年月日
+     * @param childtwograndsonone_deathday           没年月日
+     * @param childtwograndsonone_img_name           画像名
+     * @param childtwograndsonone_profession         職業
+     * @param childtwograndsonone_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildtwograndsononedeceaseddata(   $customer_id,
+                                                $childtwograndsonone_family_name,
+                                                $childtwograndsonone_sex,
+                                                $childtwograndsonone_birthday,
+                                                $childtwograndsonone_deathday,
+                                                $childtwograndsonone_img_name,
+                                                $childtwograndsonone_profession,
+                                                $childtwograndsonone_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_two_grandson_one
+                    (
+                    customer_id ,
+                    child_two_grandson_one_family_name ,
+                    child_two_grandson_one_sex ,
+                    child_two_grandson_one_birthday ,
+                    child_two_grandson_one_deathday ,
+                    child_two_grandson_one_img_name ,
+                    child_two_grandson_one_profession ,
+                    child_two_grandson_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childtwograndsonone_family_name,
+                    :childtwograndsonone_sex,
+                    :childtwograndsonone_birthday,
+                    :childtwograndsonone_deathday,
+                    :childtwograndsonone_img_name,
+                    :childtwograndsonone_profession,
+                    :childtwograndsonone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'               => $customer_id,
+                                        'childtwograndsonone_family_name'    => $childtwograndsonone_family_name,
+                                        'childtwograndsonone_sex'            => $childtwograndsonone_sex,
+                                        'childtwograndsonone_birthday'       => $childtwograndsonone_birthday,
+                                        'childtwograndsonone_deathday'       => $childtwograndsonone_deathday,
+                                        'childtwograndsonone_img_name'       => $childtwograndsonone_img_name,
+                                        'childtwograndsonone_profession'     => $childtwograndsonone_profession,
+                                        'childtwograndsonone_memo'           => $childtwograndsonone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================子供２孫２================================//
+    /**
      * 子供２孫２データ挿入
      *
      * @param childtwograndsontwo_family_name        名前
@@ -2614,6 +3456,75 @@ class orderpageModel {
             return $customer_id;
     }
 
+    /**
+     * 子供２孫２データ挿入（大切な故人）
+     *
+     * @param childtwograndsontwo_family_name        名前
+     * @param childtwograndsontwo_sex                性別
+     * @param childtwograndsontwo_birthday           生年月日
+     * @param childtwograndsontwo_deathday           没年月日
+     * @param childtwograndsontwo_img_name           画像名
+     * @param childtwograndsontwo_profession         職業
+     * @param childtwograndsontwo_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildtwograndsontwodeceaseddata(   $customer_id,
+                                                $childtwograndsontwo_family_name,
+                                                $childtwograndsontwo_sex,
+                                                $childtwograndsontwo_birthday,
+                                                $childtwograndsontwo_deathday,
+                                                $childtwograndsontwo_img_name,
+                                                $childtwograndsontwo_profession,
+                                                $childtwograndsontwo_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_two_grandson_two
+                    (
+                    customer_id ,
+                    child_two_grandson_two_family_name ,
+                    child_two_grandson_two_sex ,
+                    child_two_grandson_two_birthday ,
+                    child_two_grandson_two_deathday ,
+                    child_two_grandson_two_img_name ,
+                    child_two_grandson_two_profession ,
+                    child_two_grandson_two_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childtwograndsontwo_family_name,
+                    :childtwograndsontwo_sex,
+                    :childtwograndsontwo_birthday,
+                    :childtwograndsontwo_deathday,
+                    :childtwograndsontwo_img_name,
+                    :childtwograndsontwo_profession,
+                    :childtwograndsontwo_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childtwograndsontwo_family_name'    => $childtwograndsontwo_family_name,
+                                        'childtwograndsontwo_sex'            => $childtwograndsontwo_sex,
+                                        'childtwograndsontwo_birthday'       => $childtwograndsontwo_birthday,
+                                        'childtwograndsontwo_deathday'       => $childtwograndsontwo_deathday,
+                                        'childtwograndsontwo_img_name'       => $childtwograndsontwo_img_name,
+                                        'childtwograndsontwo_profession'     => $childtwograndsontwo_profession,
+                                        'childtwograndsontwo_memo'           => $childtwograndsontwo_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================子供２孫３================================//
 
     /**
      * 子供２孫３データ挿入
@@ -2725,6 +3636,75 @@ class orderpageModel {
             return $customer_id;
     }
 
+    /**
+     * 子供２孫３データ挿入（大切な故人）
+     *
+     * @param childtwograndsonthree_family_name        名前
+     * @param childtwograndsonthree_sex                性別
+     * @param childtwograndsonthree_birthday           生年月日
+     * @param childtwograndsonthree_deathday           没年月日
+     * @param childtwograndsonthree_img_name           画像名
+     * @param childtwograndsonthree_profession         職業
+     * @param childtwograndsonthree_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    
+    public function insertchildtwograndsonthreedeceaseddata(   $customer_id,
+                                                $childtwograndsonthree_family_name,
+                                                $childtwograndsonthree_sex,
+                                                $childtwograndsonthree_birthday,
+                                                $childtwograndsonthree_deathday,
+                                                $childtwograndsonthree_img_name,
+                                                $childtwograndsonthree_profession,
+                                                $childtwograndsonthree_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_two_grandson_three
+                    (
+                    customer_id ,
+                    child_two_grandson_three_family_name ,
+                    child_two_grandson_three_sex ,
+                    child_two_grandson_three_birthday ,
+                    child_two_grandson_three_deathday ,
+                    child_two_grandson_three_img_name ,
+                    child_two_grandson_three_profession ,
+                    child_two_grandson_three_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childtwograndsonthree_family_name,
+                    :childtwograndsonthree_sex,
+                    :childtwograndsonthree_birthday,
+                    :childtwograndsonthree_deathday,
+                    :childtwograndsonthree_img_name,
+                    :childtwograndsonthree_profession,
+                    :childtwograndsonthree_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childtwograndsonthree_family_name'    => $childtwograndsonthree_family_name,
+                                        'childtwograndsonthree_sex'            => $childtwograndsonthree_sex,
+                                        'childtwograndsonthree_birthday'       => $childtwograndsonthree_birthday,
+                                        'childtwograndsonthree_deathday'       => $childtwograndsonthree_deathday,
+                                        'childtwograndsonthree_img_name'       => $childtwograndsonthree_img_name,
+                                        'childtwograndsonthree_profession'     => $childtwograndsonthree_profession,
+                                        'childtwograndsonthree_memo'           => $childtwograndsonthree_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+//=========================子供３孫１================================//
 
     /**
      * 子供３孫１データ挿入
@@ -2836,6 +3816,76 @@ class orderpageModel {
             return $customer_id;
     }
 
+
+    /**
+     * 子供３孫１データ挿入（大切な故人）
+     *
+     * @param childthreegrandsonone_family_name        名前
+     * @param childthreegrandsonone_sex                性別
+     * @param childthreegrandsonone_birthday           生年月日
+     * @param childthreegrandsonone_deathday           没年月日
+     * @param childthreegrandsonone_img_name           画像名
+     * @param childthreegrandsonone_profession         職業
+     * @param childthreegrandsonone_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildthreegrandsononedeceaseddata(   $customer_id,
+                                                $childthreegrandsonone_family_name,
+                                                $childthreegrandsonone_sex,
+                                                $childthreegrandsonone_birthday,
+                                                $childthreegrandsonone_deathday,
+                                                $childthreegrandsonone_img_name,
+                                                $childthreegrandsonone_profession,
+                                                $childthreegrandsonone_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_three_grandson_one
+                    (
+                    customer_id ,
+                    child_three_grandson_one_family_name ,
+                    child_three_grandson_one_sex ,
+                    child_three_grandson_one_birthday ,
+                    child_three_grandson_one_deathday ,
+                    child_three_grandson_one_img_name ,
+                    child_three_grandson_one_profession ,
+                    child_three_grandson_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childthreegrandsonone_family_name,
+                    :childthreegrandsonone_sex,
+                    :childthreegrandsonone_birthday,
+                    :childthreegrandsonone_deathday,
+                    :childthreegrandsonone_img_name,
+                    :childthreegrandsonone_profession,
+                    :childthreegrandsonone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childthreegrandsonone_family_name'    => $childthreegrandsonone_family_name,
+                                        'childthreegrandsonone_sex'            => $childthreegrandsonone_sex,
+                                        'childthreegrandsonone_birthday'       => $childthreegrandsonone_birthday,
+                                        'childthreegrandsonone_deathday'       => $childthreegrandsonone_deathday,
+                                        'childthreegrandsonone_img_name'       => $childthreegrandsonone_img_name,
+                                        'childthreegrandsonone_profession'     => $childthreegrandsonone_profession,
+                                        'childthreegrandsonone_memo'           => $childthreegrandsonone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//=========================子供３孫２================================//
     /**
      * 子供３孫２データ挿入
      *
@@ -2947,6 +3997,76 @@ class orderpageModel {
     }
 
     /**
+     * 子供３孫２データ挿入（大切な故人）
+     *
+     * @param childthreegrandsontwo_family_name        名前
+     * @param childthreegrandsontwo_sex                性別
+     * @param childthreegrandsontwo_birthday           生年月日
+     * @param childthreegrandsontwo_deathday           没年月日
+     * @param childthreegrandsontwo_img_name           画像名
+     * @param childthreegrandsontwo_profession         職業
+     * @param childthreegrandsontwo_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildthreegrandsontwodeceaseddata(   $customer_id,
+                                                $childthreegrandsontwo_family_name,
+                                                $childthreegrandsontwo_sex,
+                                                $childthreegrandsontwo_birthday,
+                                                $childthreegrandsontwo_deathday,
+                                                $childthreegrandsontwo_img_name,
+                                                $childthreegrandsontwo_profession,
+                                                $childthreegrandsontwo_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_three_grandson_two
+                    (
+                    customer_id ,
+                    child_three_grandson_two_family_name ,
+                    child_three_grandson_two_sex ,
+                    child_three_grandson_two_birthday ,
+                    child_three_grandson_two_deathday ,
+                    child_three_grandson_two_img_name ,
+                    child_three_grandson_two_profession ,
+                    child_three_grandson_two_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childthreegrandsontwo_family_name,
+                    :childthreegrandsontwo_sex,
+                    :childthreegrandsontwo_birthday,
+                    :childthreegrandsontwo_deathday,
+                    :childthreegrandsontwo_img_name,
+                    :childthreegrandsontwo_profession,
+                    :childthreegrandsontwo_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childthreegrandsontwo_family_name'    => $childthreegrandsontwo_family_name,
+                                        'childthreegrandsontwo_sex'            => $childthreegrandsontwo_sex,
+                                        'childthreegrandsontwo_birthday'       => $childthreegrandsontwo_birthday,
+                                        'childthreegrandsontwo_deathday'       => $childthreegrandsontwo_deathday,
+                                        'childthreegrandsontwo_img_name'       => $childthreegrandsontwo_img_name,
+                                        'childthreegrandsontwo_profession'     => $childthreegrandsontwo_profession,
+                                        'childthreegrandsontwo_memo'           => $childthreegrandsontwo_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+
+//=========================子供３孫３================================//
+    /**
      * 子供３孫３データ挿入
      *
      * @param childthreegrandsonthree_family_name        名前
@@ -3056,6 +4176,75 @@ class orderpageModel {
             return $customer_id;
     }
 
+
+    /**
+     * 子供３孫３データ挿入（大切な故人）
+     *
+     * @param childthreegrandsonthree_family_name        名前
+     * @param childthreegrandsonthree_sex                性別
+     * @param childthreegrandsonthree_birthday           生年月日
+     * @param childthreegrandsonthree_deathday           没年月日
+     * @param childthreegrandsonthree_img_name           画像名
+     * @param childthreegrandsonthree_profession         職業
+     * @param childthreegrandsonthree_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildthreegrandsonthreedeceaseddata(   $customer_id,
+                                                $childthreegrandsonthree_family_name,
+                                                $childthreegrandsonthree_sex,
+                                                $childthreegrandsonthree_birthday,
+                                                $childthreegrandsonthree_deathday,
+                                                $childthreegrandsonthree_img_name,
+                                                $childthreegrandsonthree_profession,
+                                                $childthreegrandsonthree_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_three_grandson_three
+                    (
+                    customer_id ,
+                    child_three_grandson_three_family_name ,
+                    child_three_grandson_three_sex ,
+                    child_three_grandson_three_birthday ,
+                    child_three_grandson_three_deathday ,
+                    child_three_grandson_three_img_name ,
+                    child_three_grandson_three_profession ,
+                    child_three_grandson_three_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childthreegrandsonthree_family_name,
+                    :childthreegrandsonthree_sex,
+                    :childthreegrandsonthree_birthday,
+                    :childthreegrandsonthree_deathday,
+                    :childthreegrandsonthree_img_name,
+                    :childthreegrandsonthree_profession,
+                    :childthreegrandsonthree_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childthreegrandsonthree_family_name'    => $childthreegrandsonthree_family_name,
+                                        'childthreegrandsonthree_sex'            => $childthreegrandsonthree_sex,
+                                        'childthreegrandsonthree_birthday'       => $childthreegrandsonthree_birthday,
+                                        'childthreegrandsonthree_deathday'       => $childthreegrandsonthree_deathday,
+                                        'childthreegrandsonthree_img_name'       => $childthreegrandsonthree_img_name,
+                                        'childthreegrandsonthree_profession'     => $childthreegrandsonthree_profession,
+                                        'childthreegrandsonthree_memo'           => $childthreegrandsonthree_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+//=========================子供４孫１================================//
     /**
      * 子供４孫１データ挿入
      *
@@ -3167,6 +4356,74 @@ class orderpageModel {
     }
 
     /**
+     * 子供４孫１データ挿入（大切な故人）
+     *
+     * @param childfourgrandsonone_family_name        名前
+     * @param childfourgrandsonone_sex                性別
+     * @param childfourgrandsonone_birthday           生年月日
+     * @param childfourgrandsonone_deathday           没年月日
+     * @param childfourgrandsonone_img_name           画像名
+     * @param childfourgrandsonone_profession         職業
+     * @param childfourgrandsonone_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildfourgrandsononedeceaseddata(   $customer_id,
+                                                $childfourgrandsonone_family_name,
+                                                $childfourgrandsonone_sex,
+                                                $childfourgrandsonone_birthday,
+                                                $childfourgrandsonone_deathday,
+                                                $childfourgrandsonone_img_name,
+                                                $childfourgrandsonone_profession,
+                                                $childfourgrandsonone_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_four_grandson_one
+                    (
+                    customer_id ,
+                    child_four_grandson_one_family_name ,
+                    child_four_grandson_one_sex ,
+                    child_four_grandson_one_birthday ,
+                    child_four_grandson_one_deathday ,
+                    child_four_grandson_one_img_name ,
+                    child_four_grandson_one_profession ,
+                    child_four_grandson_one_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childfourgrandsonone_family_name,
+                    :childfourgrandsonone_sex,
+                    :childfourgrandsonone_birthday,
+                    :childfourgrandsonone_deathday,
+                    :childfourgrandsonone_img_name,
+                    :childfourgrandsonone_profession,
+                    :childfourgrandsonone_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childfourgrandsonone_family_name'    => $childfourgrandsonone_family_name,
+                                        'childfourgrandsonone_sex'            => $childfourgrandsonone_sex,
+                                        'childfourgrandsonone_birthday'       => $childfourgrandsonone_birthday,
+                                        'childfourgrandsonone_deathday'       => $childfourgrandsonone_deathday,
+                                        'childfourgrandsonone_img_name'       => $childfourgrandsonone_img_name,
+                                        'childfourgrandsonone_profession'     => $childfourgrandsonone_profession,
+                                        'childfourgrandsonone_memo'           => $childfourgrandsonone_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+//=========================子供４孫２================================//
+    /**
      * 子供４孫２データ挿入
      *
      * @param childfourgrandsontwo_family_name        名前
@@ -3276,6 +4533,76 @@ class orderpageModel {
             return $customer_id;
     }
 
+    /**
+     * 子供４孫２データ挿入（大切な故人）
+     *
+     * @param childfourgrandsontwo_family_name        名前
+     * @param childfourgrandsontwo_sex                性別
+     * @param childfourgrandsontwo_birthday           生年月日
+     * @param childfourgrandsontwo_deathday           没年月日
+     * @param childfourgrandsontwo_img_name           画像名
+     * @param childfourgrandsontwo_profession         職業
+     * @param childfourgrandsontwo_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildfourgrandsontwodeceaseddata(   $customer_id,
+                                                $childfourgrandsontwo_family_name,
+                                                $childfourgrandsontwo_sex,
+                                                $childfourgrandsontwo_birthday,
+                                                $childfourgrandsontwo_deathday,
+                                                $childfourgrandsontwo_img_name,
+                                                $childfourgrandsontwo_profession,
+                                                $childfourgrandsontwo_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_four_grandson_two
+                    (
+                    customer_id ,
+                    child_four_grandson_two_family_name ,
+                    child_four_grandson_two_sex ,
+                    child_four_grandson_two_birthday ,
+                    child_four_grandson_two_deathday ,
+                    child_four_grandson_two_img_name ,
+                    child_four_grandson_two_profession ,
+                    child_four_grandson_two_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childfourgrandsontwo_family_name,
+                    :childfourgrandsontwo_sex,
+                    :childfourgrandsontwo_birthday,
+                    :childfourgrandsontwo_deathday,
+                    :childfourgrandsontwo_img_name,
+                    :childfourgrandsontwo_profession,
+                    :childfourgrandsontwo_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childfourgrandsontwo_family_name'    => $childfourgrandsontwo_family_name,
+                                        'childfourgrandsontwo_sex'            => $childfourgrandsontwo_sex,
+                                        'childfourgrandsontwo_birthday'       => $childfourgrandsontwo_birthday,
+                                        'childfourgrandsontwo_deathday'       => $childfourgrandsontwo_deathday,
+                                        'childfourgrandsontwo_img_name'       => $childfourgrandsontwo_img_name,
+                                        'childfourgrandsontwo_profession'     => $childfourgrandsontwo_profession,
+                                        'childfourgrandsontwo_memo'           => $childfourgrandsontwo_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+
+//=========================子供４孫３================================//
     /**
      * 子供４孫３データ挿入
      *
@@ -3387,6 +4714,76 @@ class orderpageModel {
     }
 
     /**
+     * 子供４孫３データ挿入（大切な故人）
+     *
+     * @param childfourgrandsonthree_family_name        名前
+     * @param childfourgrandsonthree_sex                性別
+     * @param childfourgrandsonthree_birthday           生年月日
+     * @param childfourgrandsonthree_deathday           没年月日
+     * @param childfourgrandsonthree_img_name           画像名
+     * @param childfourgrandsonthree_profession         職業
+     * @param childfourgrandsonthree_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertchildfourgrandsonthreedeceaseddata(   $customer_id,
+                                                $childfourgrandsonthree_family_name,
+                                                $childfourgrandsonthree_sex,
+                                                $childfourgrandsonthree_birthday,
+                                                $childfourgrandsonthree_deathday,
+                                                $childfourgrandsonthree_img_name,
+                                                $childfourgrandsonthree_profession,
+                                                $childfourgrandsonthree_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_child_four_grandson_three
+                    (
+                    customer_id ,
+                    child_four_grandson_three_family_name ,
+                    child_four_grandson_three_sex ,
+                    child_four_grandson_three_birthday ,
+                    child_four_grandson_three_deathday ,
+                    child_four_grandson_three_img_name ,
+                    child_four_grandson_three_profession ,
+                    child_four_grandson_three_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :childfourgrandsonthree_family_name,
+                    :childfourgrandsonthree_sex,
+                    :childfourgrandsonthree_birthday,
+                    :childfourgrandsonthree_deathday,
+                    :childfourgrandsonthree_img_name,
+                    :childfourgrandsonthree_profession,
+                    :childfourgrandsonthree_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'childfourgrandsonthree_family_name'    => $childfourgrandsonthree_family_name,
+                                        'childfourgrandsonthree_sex'            => $childfourgrandsonthree_sex,
+                                        'childfourgrandsonthree_birthday'       => $childfourgrandsonthree_birthday,
+                                        'childfourgrandsonthree_deathday'       => $childfourgrandsonthree_deathday,
+                                        'childfourgrandsonthree_img_name'       => $childfourgrandsonthree_img_name,
+                                        'childfourgrandsonthree_profession'     => $childfourgrandsonthree_profession,
+                                        'childfourgrandsonthree_memo'           => $childfourgrandsonthree_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//==============================祖父父方==========================================//
+
+    /**
      * 祖父父方データ挿入
      *
      * @param grandfatherfather_family_name        名前
@@ -3486,6 +4883,73 @@ class orderpageModel {
         }
             return $customer_id;
     }
+
+
+    /**
+     * 祖父父方データ挿入（大切な故人）
+     *
+     * @param grandfatherfather_family_name        名前
+     * @param grandfatherfather_birthday           生年月日
+     * @param grandfatherfather_deathday           没年月日
+     * @param grandfatherfather_img_name          画像名
+     * @param grandfatherfather_profession         職業
+     * @param grandfatherfather_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertgrandfatherfatherdeceaseddata(   $customer_id,
+                                                $grandfatherfather_family_name,
+                                                $grandfatherfather_birthday,
+                                                $grandfatherfather_deathday,
+                                                $grandfatherfather_img_name,
+                                                $grandfatherfather_profession,
+                                                $grandfatherfather_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_grandfather_father
+                    (
+                    customer_id ,
+                    grandfather_father_family_name ,
+                    grandfather_father_birthday ,
+                    grandfather_father_deathday ,
+                    grandfather_father_img_name ,
+                    grandfather_father_profession ,
+                    grandfather_father_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :grandfatherfather_family_name,
+                    :grandfatherfather_birthday,
+                    :grandfatherfather_deathday,
+                    :grandfatherfather_img_name,
+                    :grandfatherfather_profession,
+                    :grandfatherfather_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'                      => $customer_id,
+                                        'grandfatherfather_family_name'    => $grandfatherfather_family_name,
+                                        'grandfatherfather_birthday'       => $grandfatherfather_birthday,
+                                        'grandfatherfather_deathday'       => $grandfatherfather_deathday,
+                                        'grandfatherfather_img_name'       => $grandfatherfather_img_name,
+                                        'grandfatherfather_profession'     => $grandfatherfather_profession,
+                                        'grandfatherfather_memo'           => $grandfatherfather_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+
+//==============================祖母父方==========================================//
 
     /**
      * 祖母父方データ挿入
@@ -3588,7 +5052,70 @@ class orderpageModel {
             return $customer_id;
     }
 
+    /**
+     * 祖母父方データ挿入（大切な故人）
+     *
+     * @param grandfathermather_family_name        名前
+     * @param grandfathermather_birthday           生年月日
+     * @param grandfathermather_deathday           没年月日
+     * @param grandfathermather_img_name          画像名
+     * @param grandfathermather_profession         職業
+     * @param grandfathermather_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertgrandfathermatherdeceaseddata(   $customer_id,
+                                                $grandfathermather_family_name,
+                                                $grandfathermather_birthday,
+                                                $grandfathermather_deathday,
+                                                $grandfathermather_img_name,
+                                                $grandfathermather_profession,
+                                                $grandfathermather_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_grandfather_mather
+                    (
+                    customer_id ,
+                    grandfather_mather_family_name ,
+                    grandfather_mather_birthday ,
+                    grandfather_mather_deathday ,
+                    grandfather_mather_img_name ,
+                    grandfather_mather_profession ,
+                    grandfather_mather_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :grandfathermather_family_name,
+                    :grandfathermather_birthday,
+                    :grandfathermather_deathday,
+                    :grandfathermather_img_name,
+                    :grandfathermather_profession,
+                    :grandfathermather_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
 
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'grandfathermather_family_name'    => $grandfathermather_family_name,
+                                        'grandfathermather_birthday'       => $grandfathermather_birthday,
+                                        'grandfathermather_deathday'       => $grandfathermather_deathday,
+                                        'grandfathermather_img_name'       => $grandfathermather_img_name,
+                                        'grandfathermather_profession'     => $grandfathermather_profession,
+                                        'grandfathermather_memo'           => $grandfathermather_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//==============================祖父母方==========================================//
     /**
      * 祖父母方データ挿入
      *
@@ -3692,6 +5219,71 @@ class orderpageModel {
 
 
     /**
+     * 祖母父方データ挿入（大切な故人）
+     *
+     * @param grandmatherfather_family_name        名前
+     * @param grandmatherfather_birthday           生年月日
+     * @param grandmatherfather_deathday           没年月日
+     * @param grandmatherfather_img_name          画像名
+     * @param grandmatherfather_profession         職業
+     * @param grandmatherfather_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertgrandmatherfatherdeceaseddata(   $customer_id,
+                                                $grandmatherfather_family_name,
+                                                $grandmatherfather_birthday,
+                                                $grandmatherfather_deathday,
+                                                $grandmatherfather_img_name,
+                                                $grandmatherfather_profession,
+                                                $grandmatherfather_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_grandmather_father
+                    (
+                    customer_id ,
+                    grandmather_father_family_name ,
+                    grandmather_father_birthday ,
+                    grandmather_father_deathday ,
+                    grandmather_father_img_name ,
+                    grandmather_father_profession ,
+                    grandmather_father_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :grandmatherfather_family_name,
+                    :grandmatherfather_birthday,
+                    :grandmatherfather_deathday,
+                    :grandmatherfather_img_name,
+                    :grandmatherfather_profession,
+                    :grandmatherfather_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'grandmatherfather_family_name'    => $grandmatherfather_family_name,
+                                        'grandmatherfather_birthday'       => $grandmatherfather_birthday,
+                                        'grandmatherfather_deathday'       => $grandmatherfather_deathday,
+                                        'grandmatherfather_img_name'       => $grandmatherfather_img_name,
+                                        'grandmatherfather_profession'     => $grandmatherfather_profession,
+                                        'grandmatherfather_memo'           => $grandmatherfather_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
+
+//==============================祖母母方==========================================//
+
+    /**
      * 祖母母方データ挿入
      *
      * @param grandmathermather_family_name        名前
@@ -3791,6 +5383,69 @@ class orderpageModel {
         }
             return $customer_id;
     }
+
+    /**
+     * 祖母母方データ挿入（大切な故人）
+     *
+     * @param grandmathermather_family_name        名前
+     * @param grandmathermather_birthday           生年月日
+     * @param grandmathermather_deathday           没年月日
+     * @param grandmathermather_img_name          画像名
+     * @param grandmathermather_profession         職業
+     * @param grandmathermather_memo               メモ
+     * @param customer_id               ユーザーID
+     * @return array                    修正データ
+     */
+    public function insertgrandmathermatherdeceaseddata(   $customer_id,
+                                                $grandmathermather_family_name,
+                                                $grandmathermather_birthday,
+                                                $grandmathermather_deathday,
+                                                $grandmathermather_img_name,
+                                                $grandmathermather_profession,
+                                                $grandmathermather_memo
+                                            )
+    {
+        try {
+        $sql = "    INSERT INTO  t_grandmather_mather
+                    (
+                    customer_id ,
+                    grandmather_mather_family_name ,
+                    grandmather_mather_birthday ,
+                    grandmather_mather_deathday ,
+                    grandmather_mather_img_name ,
+                    grandmather_mather_profession ,
+                    grandmather_mather_memo ,
+                    entry_datetime ,
+                    timestamp
+                    )
+                    VALUES
+                    (
+                    :customer_id ,
+                    :grandmathermather_family_name,
+                    :grandmathermather_birthday,
+                    :grandmathermather_deathday,
+                    :grandmathermather_img_name,
+                    :grandmathermather_profession,
+                    :grandmathermather_memo,
+                    NOW( ),
+                    NOW( )
+                    );";
+
+        $this->_db->query($sql, array(  'customer_id'           => $customer_id,
+                                        'grandmathermather_family_name'    => $grandmathermather_family_name,
+                                        'grandmathermather_birthday'       => $grandmathermather_birthday,
+                                        'grandmathermather_deathday'       => $grandmathermather_deathday,
+                                        'grandmathermather_img_name'       => $grandmathermather_img_name,
+                                        'grandmathermather_profession'     => $grandmathermather_profession,
+                                        'grandmathermather_memo'           => $grandmathermather_memo
+                                    ));
+        } catch(Exception $e) {
+
+            return false;
+        }
+            return true;
+    }
+
 
 /** ================ デ  ー  タ  削　　除 ====================== */
 

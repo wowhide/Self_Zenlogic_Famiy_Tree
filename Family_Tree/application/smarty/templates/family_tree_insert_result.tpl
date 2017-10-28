@@ -15,7 +15,7 @@
     <script src="http://www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
     <script src="http://www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
     <script src="http://code.htmlhifive.com/h5.dev.js"></script>
-    <script src="../js/form.js"></script>
+    <script src="../../../../Family_Tree/js/form.js"></script>
 
     <style type="text/css">
 

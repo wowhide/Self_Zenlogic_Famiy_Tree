@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css?var=20120829" />
-    <link href="../css/jquery.mobile.datepicker.css" rel="stylesheet">
-    <link href="../css/jquery.mobile.datepicker.theme.css" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/jquery.mobile.datepicker.css" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/jquery.mobile.datepicker.theme.css" rel="stylesheet">
     <link href="http://www.htmlhifive.com/ja/res/lib/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://code.htmlhifive.com/h5.css" rel="stylesheet" >
-    <link href="../css/style.css?var=20120829" rel="stylesheet">
-    <link href="../css/sweetalert.css" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/style.css?var=20120829" rel="stylesheet">
+    <link href="../../../../Family_Tree/css/sweetalert.css" rel="stylesheet">
     <title>家系図_血族関係</title>
 
     <meta http-equiv="Pragma" content="no-cache">
@@ -19,18 +19,19 @@
 
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
-    <script src="../js/jquery.mobile.datepicker.js"></script>
+    <script src="../../../../Family_Tree/js/jquery.mobile.datepicker.js"></script>
     <script src="http://www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
     <script src="http://www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
     <script src="http://code.htmlhifive.com/h5.dev.js"></script>
-    <script src="../js/jquery.validate.min.js"></script>
-    <script src="../js/form.js"></script>
-    <script src="../js/sweetalert.min.js"></script>
+    <script src="../../../../Family_Tree/js/jquery.validate.min.js"></script>
+    <script src="../../../../Family_Tree/js/form.js"></script>
+    <script src="../../../../Family_Tree/js/sweetalert.min.js"></script>
 
 
     <style type="text/css">
 
 body{
+    background-color: #E8E8E8;
 }
 
 div.Box {
@@ -47,12 +48,29 @@ border: 1px #ccc solid;
 background-repeat: no-repeat;
 background-position: right bottom;
 background-size:auto 40px;
+position: relative;
 
 /*影*/
 -webkit-box-shadow: 0 10px 6px -6px #777;
 -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
+
+
+div.Box div.ios {
+width: 48px;
+height: 40px;
+position: absolute;
+text-align:right;
+border: 0px #ccc solid;
+background-color: rgba(0, 0, 255, 0);
+margin-top: 3.5px;
+/*影*/
+-webkit-box-shadow: 0 0 0 0 #777;
+-moz-box-shadow: 0 0 0 0 #777;
+    box-shadow: 0 0 0 0 #777;
+}
+
 
 .clearLeft {
 clear: left;
@@ -492,10 +510,16 @@ $(function() {
 {if $grandfatherfather_img == 0}
 <div class="grandfatherfather" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $grandfatherfather_img == 2}
+<div>
+{/if}
+{if $grandfatherfather_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         祖父父方<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$grandfatherfatherFontSize}px;">
 {if !empty($grandfatherfatherFamilyId) == false}
         <a href="#grandfatherfather_insert">情報登録</a>
 {/if}
@@ -509,6 +533,16 @@ $(function() {
         <a href="#grandfatherfather_change">{$grandfatherfatherFamilyName}</a>
 {/if}
     </span>
+{if $grandfatherfather_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfatherfatherFamilyId}&deceasedlist_img_name={$grandfatherfatherImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $grandfatherfather_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfatherfatherFamilyId}&deceasedlist_img_name={$grandfatherfatherImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 
 <!-- 祖父（父方）ー＞　祖母（父方）線  -->
@@ -521,10 +555,16 @@ $(function() {
 {if $grandfathermather_img == 0}
 <div class="grandfathermather" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $grandfathermather_img == 2}
+<div>
+{/if}
+{if $grandfathermather_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         祖母父方<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$grandfathermatherFontSize}px;">
 {if !empty($grandfathermatherFamilyId) == false}
         <a href="#grandfathermather_insert">情報登録</a>
 {/if}
@@ -538,6 +578,16 @@ $(function() {
         <a href="#grandfathermather_change">{$grandfathermatherFamilyName}</a>
 {/if}
     </span>
+{if $grandfathermather_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfathermatherFamilyId}&deceasedlist_img_name={$grandfathermatherImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $grandfathermather_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfathermatherFamilyId}&deceasedlist_img_name={$grandfathermatherImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 
 <!-- 祖父母方 -->
@@ -547,10 +597,16 @@ $(function() {
 {if $grandmatherfather_img == 0}
 <div class="grandmatherfather" style="margin-left:20px; background-image: url(../imges/Entypo.png);">
 {/if}
+{if $grandmatherfather_img == 2}
+<div style="margin-left:20px;">
+{/if}
+{if $grandmatherfather_img == 3}
+<div style="margin-left:20px;">
+{/if}
     <span style="font-size:10px;">
         祖父母方<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$grandmatherfatherFontSize}px;">
 {if !empty($grandmatherfatherFamilyId) == false}
         <a href="#grandmatherfather_insert">情報登録</a>
 {/if}
@@ -564,6 +620,16 @@ $(function() {
         <a href="#grandmatherfather_change">{$grandmatherfatherFamilyName}</a>
 {/if}
     </span>
+{if $grandmatherfather_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmatherfatherFamilyId}&deceasedlist_img_name={$grandmatherfatherImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $grandmatherfather_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmatherfatherFamilyId}&deceasedlist_img_name={$grandmatherfatherImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 
 <!--     祖父（母方）ー＞　祖母（母方）線  -->
@@ -578,10 +644,16 @@ $(function() {
 {if $grandmathermather_img == 0}
 <div class="grandmathermather" style="margin-right:50px; background-image: url(../imges/Entypo.png);">
 {/if}
+{if $grandmathermather_img == 2}
+<div style="margin-right:50px;">
+{/if}
+{if $grandmathermather_img == 3}
+<div style="margin-right:50px;">
+{/if}
     <span style="font-size:10px;">
         祖母母方<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$grandmathermatherFontSize}px;">
 {if !empty($grandmathermatherFamilyId) == false}
         <a href="#grandmathermather_insert">情報登録</a>
 {/if}
@@ -595,6 +667,17 @@ $(function() {
         <a href="#grandmathermather_change">{$grandmathermatherFamilyName}</a>
 {/if}
     </span>
+{if $grandmathermather_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmathermatherFamilyId}&deceasedlist_img_name={$grandmathermatherImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $grandmathermather_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmathermatherFamilyId}&deceasedlist_img_name={$grandmathermatherImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 </div>
 <div>
@@ -636,13 +719,15 @@ $(function() {
 <div class="father" style="background-image: url(../imges/Entypo.png);">
 {/if}
 {if $father_img == 2}
-<div class="father" style="background-image: url(http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$fatherFamilyId}&deceasedlist_img_name={$fatherImgName}">
+<div>
 {/if}
-
+{if $father_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         父親<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$fatherFontSize}px;">
 {if !empty($fatherFamilyId) == false}
         <a href="#father_insert">情報登録</a>
 {/if}
@@ -656,6 +741,19 @@ $(function() {
         <a href="#father_change">{$fatherFamilyName}</a>
 {/if}
     </span>
+
+{if $father_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$fatherFamilyId}&deceasedlist_img_name={$fatherImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $father_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$fatherFamilyId}&deceasedlist_img_name={$fatherImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 
         <!-- ライン -->
@@ -670,13 +768,17 @@ $(function() {
 <div class="mather" style="background-image: url(../imges/Entypo.png);">
 {/if}
 {if $mather_img == 2}
-<div class="mather" style="background-image: url(http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$matherFamilyId}&deceasedlist_img_name={$matherImgName}">
+<div>
 {/if}
+{if $mather_img == 3}
+<div>
+{/if}
+
 
     <span style="font-size:10px;">
         母親<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$matherFontSize}px;">
 {if !empty($matherFamilyId) == false}
         <a href="#mather_insert">情報登録</a>
 {/if}
@@ -690,6 +792,16 @@ $(function() {
         <a href="#mather_change">{$matherFamilyName}</a>
 {/if}
     </span>
+{if $mather_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$matherFamilyId}&deceasedlist_img_name={$matherImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $mather_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$matherFamilyId}&deceasedlist_img_name={$matherImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 
 </div>
@@ -727,10 +839,16 @@ $(function() {
 {if $spouse_img == 0}
 <div class="spouse" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $spouse_img == 2}
+<div>
+{/if}
+{if $spouse_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         配偶者<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$spouseFontSize}px;">
 {if !empty($spouseFamilyId) == false}
         <a href="#spouse_insert">情報登録</a>
 {/if}
@@ -744,6 +862,19 @@ $(function() {
         <a href="#spouse_change">{$spouseFamilyName}</a>
 {/if}
     </span>
+
+{if $spouse_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$spouseFamilyId}&deceasedlist_img_name={$spouseImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $spouse_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$spouseFamilyId}&deceasedlist_img_name={$spouseImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -782,10 +913,16 @@ $(function() {
 {if $brotherone_img == 0}
 <div class="brotherone" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $brotherone_img == 2}
+<div>
+{/if}
+{if $brotherone_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         兄弟姉妹<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$brotheroneFontSize}px;">
 {if !empty($brotheroneFamilyId) == false}
         <a href="#brotherone_insert">情報登録</a>
 {/if}
@@ -799,7 +936,19 @@ $(function() {
         <a href="#brotherone_change">{$brotheroneFamilyName}</a>
 {/if}
     </span>
+
+{if $brotherone_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotheroneFamilyId}&deceasedlist_img_name={$brotheroneImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $brotherone_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotheroneFamilyId}&deceasedlist_img_name={$brotheroneImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
+
 {/if}
 
 
@@ -812,10 +961,17 @@ $(function() {
 {if $brothertwo_img == 0}
 <div class="brothertwo" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $brothertwo_img == 2}
+<div>
+{/if}
+{if $brothertwo_img == 3}
+<div>
+{/if}
+
     <span style="font-size:10px;">
         兄弟姉妹<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$brothertwoFontSize}px;">
 {if !empty($brothertwoFamilyId) == false}
         <a href="#brothertwo_insert">情報登録</a>
 {/if}
@@ -829,6 +985,19 @@ $(function() {
         <a href="#brothertwo_change">{$brothertwoFamilyName}</a>
 {/if}
     </span>
+
+{if $brothertwo_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brothertwoFamilyId}&deceasedlist_img_name={$brothertwoImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $brothertwo_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brothertwoFamilyId}&deceasedlist_img_name={$brothertwoImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -841,10 +1010,16 @@ $(function() {
 {if $brotherthree_img == 0}
 <div class="brotherthree" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $brotherthree_img == 2}
+<div>
+{/if}
+{if $brotherthree_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         兄弟姉妹<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$brotherthreeFontSize}px;">
 {if !empty($brotherthreeFamilyId) == false}
         <a href="#brotherthree_insert">情報登録</a>
 {/if}
@@ -858,6 +1033,19 @@ $(function() {
         <a href="#brotherthree_change">{$brotherthreeFamilyName}</a>
 {/if}
     </span>
+
+{if $brotherthree_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotherthreeFamilyId}&deceasedlist_img_name={$brotherthreeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $brotherthree_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotherthreeFamilyId}&deceasedlist_img_name={$brotherthreeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -902,10 +1090,16 @@ $(function() {
 {if $childone_img == 0}
 <div class="childone" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childone_img == 2}
+<div>
+{/if}
+{if $childone_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         子供<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childoneFontSize}px;">
 {if !empty($childoneFamilyId) == false}
         <a href="#childone_insert">情報登録</a>
 {/if}
@@ -919,6 +1113,19 @@ $(function() {
         <a href="#childone_change">{$childoneFamilyName}</a>
 {/if}
     </span>
+
+{if $childone_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childoneFamilyId}&deceasedlist_img_name={$childoneImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childone_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childoneFamilyId}&deceasedlist_img_name={$childoneImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -935,10 +1142,16 @@ $(function() {
 {if $childtwo_img == 0}
 <div class="childtwo" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childtwo_img == 2}
+<div>
+{/if}
+{if $childtwo_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         子供<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childtwoFontSize}px;">
 {if !empty($childtwoFamilyId) == false}
         <a href="#childtwo_insert">情報登録</a>
 {/if}
@@ -952,6 +1165,16 @@ $(function() {
         <a href="#childtwo_change">{$childtwoFamilyName}</a>
 {/if}
     </span>
+{if $childtwo_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwoFamilyId}&deceasedlist_img_name={$childtwoImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $childtwo_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwoFamilyId}&deceasedlist_img_name={$childtwoImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 {/if}
 
@@ -968,10 +1191,16 @@ $(function() {
 {if $childthree_img == 0}
 <div class="childthree" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childthree_img == 2}
+<div>
+{/if}
+{if $childthree_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         子供<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childthreeFontSize}px;">
 {if !empty($childthreeFamilyId) == false}
         <a href="#childthree_insert">情報登録</a>
 {/if}
@@ -985,6 +1214,16 @@ $(function() {
         <a href="#childthree_change">{$childthreeFamilyName}</a>
 {/if}
     </span>
+{if $childthree_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreeFamilyId}&deceasedlist_img_name={$childthreeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $childthree_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreeFamilyId}&deceasedlist_img_name={$childthreeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 {/if}
 
@@ -1001,10 +1240,17 @@ $(function() {
 {if $childfour_img == 0}
 <div class="childfour" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childfour_img == 2}
+<div>
+{/if}
+{if $childfour_img == 3}
+<div>
+{/if}
+
     <span style="font-size:10px;">
         子供<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childfourFontSize}px;">
 {if !empty($childfourFamilyId) == false}
         <a href="#childfour_insert">情報登録</a>
 {/if}
@@ -1018,6 +1264,17 @@ $(function() {
         <a href="#childfour_change">{$childfourFamilyName}</a>
 {/if}
     </span>
+
+{if $childfour_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourFamilyId}&deceasedlist_img_name={$childfourImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $childfour_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourFamilyId}&deceasedlist_img_name={$childfourImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 {/if}
 
@@ -1109,10 +1366,17 @@ $(function() {
 {if $childonegrandsonone_img == 0}
 <div class="childonegrandsonone" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childonegrandsonone_img == 2}
+<div>
+{/if}
+{if $childonegrandsonone_img == 3}
+<div>
+{/if}
+
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childonegrandsononeFontSize}px;">
 {if !empty($childonegrandsononeFamilyId) == false}
         <a href="#childonegrandsonone_insert">情報登録</a>
 {/if}
@@ -1126,6 +1390,18 @@ $(function() {
         <a href="#childonegrandsonone_change">{$childonegrandsononeFamilyName}</a>
 {/if}
     </span>
+
+{if $childonegrandsonone_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsononeFamilyId}&deceasedlist_img_name={$childonegrandsononeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $childonegrandsonone_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsononeFamilyId}&deceasedlist_img_name={$childonegrandsononeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1158,10 +1434,16 @@ $(function() {
 {if $childtwograndsonone_img == 0}
 <div class="childtwograndsonone" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childtwograndsonone_img == 2}
+<div>
+{/if}
+{if $childtwograndsonone_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childtwograndsononeFontSize}px;">
 {if !empty($childtwograndsononeFamilyId) == false}
         <a href="#childtwograndsonone_insert">情報登録</a>
 {/if}
@@ -1175,6 +1457,18 @@ $(function() {
         <a href="#childtwograndsonone_change">{$childtwograndsononeFamilyName}</a>
 {/if}
     </span>
+
+{if $childtwograndsonone_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsononeFamilyId}&deceasedlist_img_name={$childtwograndsononeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+{if $childtwograndsonone_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsononeFamilyId}&deceasedlist_img_name={$childtwograndsononeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1205,10 +1499,16 @@ $(function() {
 {if $childthreegrandsonone_img == 0}
 <div class="childthreegrandsonone" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childthreegrandsonone_img == 2}
+<div>
+{/if}
+{if $childthreegrandsonone_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childthreegrandsononeFontSize}px;">
 {if !empty($childthreegrandsononeFamilyId) == false}
         <a href="#childthreegrandsonone_insert">情報登録</a>
 {/if}
@@ -1222,6 +1522,19 @@ $(function() {
         <a href="#childthreegrandsonone_change">{$childthreegrandsononeFamilyName}</a>
 {/if}
     </span>
+
+{if $childthreegrandsonone_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsononeFamilyId}&deceasedlist_img_name={$childthreegrandsononeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childthreegrandsonone_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsononeFamilyId}&deceasedlist_img_name={$childthreegrandsononeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1253,10 +1566,16 @@ $(function() {
 {if $childfourgrandsonone_img == 0}
 <div class="childfourgrandsonone" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childfourgrandsonone_img == 2}
+<div>
+{/if}
+{if $childfourgrandsonone_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childfourgrandsononeFontSize}px;">
 {if !empty($childfourgrandsononeFamilyId) == false}
         <a href="#childfourgrandsonone_insert">情報登録</a>
 {/if}
@@ -1270,6 +1589,19 @@ $(function() {
         <a href="#childfourgrandsonone_change">{$childfourgrandsononeFamilyName}</a>
 {/if}
     </span>
+
+{if $childfourgrandsonone_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsononeFamilyId}&deceasedlist_img_name={$childfourgrandsononeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childfourgrandsonone_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsononeFamilyId}&deceasedlist_img_name={$childfourgrandsononeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1377,10 +1709,16 @@ $(function() {
 {if $childonegrandsontwo_img == 0}
 <div class="childonegrandsontwo" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childonegrandsontwo_img == 2}
+<div>
+{/if}
+{if $childonegrandsontwo_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childonegrandsontwoFontSize}px;">
 {if !empty($childonegrandsontwoFamilyId) == false}
         <a href="#childonegrandsontwo_insert">情報登録</a>
 {/if}
@@ -1394,6 +1732,19 @@ $(function() {
         <a href="#childonegrandsontwo_change">{$childonegrandsontwoFamilyName}</a>
 {/if}
     </span>
+
+{if $childonegrandsontwo_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsontwoFamilyId}&deceasedlist_img_name={$childonegrandsontwoImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childonegrandsontwo_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsontwoFamilyId}&deceasedlist_img_name={$childonegrandsontwoImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1425,10 +1776,17 @@ $(function() {
 {if $childtwograndsontwo_img == 0}
 <div class="childtwograndsontwo" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childtwograndsontwo_img == 2}
+<div>
+{/if}
+{if $childtwograndsontwo_img == 3}
+<div>
+{/if}
+
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childtwograndsontwoFontSize}px;">
 {if !empty($childtwograndsontwoFamilyId) == false}
         <a href="#childtwograndsontwo_insert">情報登録</a>
 {/if}
@@ -1442,6 +1800,19 @@ $(function() {
         <a href="#childtwograndsontwo_change">{$childtwograndsontwoFamilyName}</a>
 {/if}
     </span>
+
+{if $childtwograndsontwo_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsontwoFamilyId}&deceasedlist_img_name={$childtwograndsontwoImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childtwograndsontwo_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsontwoFamilyId}&deceasedlist_img_name={$childtwograndsontwoImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1473,10 +1844,16 @@ $(function() {
 {if $childthreegrandsontwo_img == 0}
 <div class="childthreegrandsontwo" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childthreegrandsontwo_img == 2}
+<div>
+{/if}
+{if $childthreegrandsontwo_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childthreegrandsontwoFontSize}px;">
 {if !empty($childthreegrandsontwoFamilyId) == false}
         <a href="#childthreegrandsontwo_insert">情報登録</a>
 {/if}
@@ -1490,6 +1867,17 @@ $(function() {
         <a href="#childthreegrandsontwo_change">{$childthreegrandsontwoFamilyName}</a>
 {/if}
     </span>
+{if $childthreegrandsontwo_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsontwoFamilyId}&deceasedlist_img_name={$childthreegrandsontwoImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childthreegrandsontwo_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsontwoFamilyId}&deceasedlist_img_name={$childthreegrandsontwoImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 {/if}
 
@@ -1520,10 +1908,16 @@ $(function() {
 {if $childfourgrandsontwo_img == 0}
 <div class="childfourgrandsontwo" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childfourgrandsontwo_img == 2}
+<div>
+{/if}
+{if $childfourgrandsontwo_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childfourgrandsontwoFontSize}px;">
 {if !empty($childfourgrandsontwoFamilyId) == false}
         <a href="#childfourgrandsontwo_insert">情報登録</a>
 {/if}
@@ -1537,6 +1931,18 @@ $(function() {
         <a href="#childfourgrandsontwo_change">{$childfourgrandsontwoFamilyName}</a>
 {/if}
     </span>
+{if $childfourgrandsontwo_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsontwoFamilyId}&deceasedlist_img_name={$childfourgrandsontwoImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childfourgrandsontwo_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsontwoFamilyId}&deceasedlist_img_name={$childfourgrandsontwoImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1643,10 +2049,16 @@ $(function() {
 {if $childonegrandsonthree_img == 0}
 <div class="childonegrandsonthree" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childonegrandsonthree_img == 2}
+<div>
+{/if}
+{if $childonegrandsonthree_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childonegrandsonthreeFontSize}px;">
 {if !empty($childonegrandsonthreeFamilyId) == false}
         <a href="#childonegrandsonthree_insert">情報登録</a>
 {/if}
@@ -1660,6 +2072,19 @@ $(function() {
         <a href="#childonegrandsonthree_change">{$childonegrandsonthreeFamilyName}</a>
 {/if}
     </span>
+
+{if $childonegrandsonthree_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsonthreeFamilyId}&deceasedlist_img_name={$childonegrandsonthreeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childonegrandsonthree_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsonthreeFamilyId}&deceasedlist_img_name={$childonegrandsonthreeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1690,10 +2115,16 @@ $(function() {
 {if $childtwograndsonthree_img == 0}
 <div class="childtwograndsonthree" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childtwograndsonthree_img == 2}
+<div>
+{/if}
+{if $childtwograndsonthree_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childtwograndsonthreeFontSize}px;">
 {if !empty($childtwograndsonthreeFamilyId) == false}
         <a href="#childtwograndsonthree_insert">情報登録</a>
 {/if}
@@ -1707,6 +2138,19 @@ $(function() {
         <a href="#childtwograndsonthree_change">{$childtwograndsonthreeFamilyName}</a>
 {/if}
     </span>
+
+{if $childtwograndsonthree_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsonthreeFamilyId}&deceasedlist_img_name={$childtwograndsonthreeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childtwograndsonthree_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsonthreeFamilyId}&deceasedlist_img_name={$childtwograndsonthreeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1737,10 +2181,17 @@ $(function() {
 {if $childthreegrandsonthree_img == 0}
 <div class="childthreegrandsonthree" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childthreegrandsonthree_img == 2}
+<div>
+{/if}
+{if $childthreegrandsonthree_img == 3}
+<div>
+{/if}
+
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childthreegrandsonthreeFontSize}px;">
 {if !empty($childthreegrandsonthreeFamilyId) == false}
         <a href="#childthreegrandsonthree_insert">情報登録</a>
 {/if}
@@ -1754,6 +2205,19 @@ $(function() {
         <a href="#childthreegrandsonthree_change">{$childthreegrandsonthreeFamilyName}</a>
 {/if}
     </span>
+
+{if $childthreegrandsonthree_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsonthreeFamilyId}&deceasedlist_img_name={$childthreegrandsonthreeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childthreegrandsonthree_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsonthreeFamilyId}&deceasedlist_img_name={$childthreegrandsonthreeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
+
 </div>
 {/if}
 
@@ -1784,10 +2248,16 @@ $(function() {
 {if $childfourgrandsonthree_img == 0}
 <div class="childfourgrandsonthree" style="background-image: url(../imges/Entypo.png);">
 {/if}
+{if $childfourgrandsonthree_img == 2}
+<div>
+{/if}
+{if $childfourgrandsonthree_img == 3}
+<div>
+{/if}
     <span style="font-size:10px;">
         孫<br>
     </span>
-    <span style="font-size:8px;">
+    <span style="font-size:{$childfourgrandsonthreeFontSize}px;">
 {if !empty($childfourgrandsonthreeFamilyId) == false}
         <a href="#childfourgrandsonthree_insert">情報登録</a>
 {/if}
@@ -1801,6 +2271,17 @@ $(function() {
         <a href="#childfourgrandsonthree_change">{$childfourgrandsonthreeFamilyName}</a>
 {/if}
     </span>
+{if $childfourgrandsonthree_img == 2}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsonthreeFamilyId}&deceasedlist_img_name={$childfourgrandsonthreeImgName}" style="width: auto; height: 40px;">
+    </div>
+{/if}
+
+{if $childfourgrandsonthree_img == 3}
+    <div class="ios">
+        <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsonthreeFamilyId}&deceasedlist_img_name={$childfourgrandsonthreeImgName}" style="width: 40px; height: auto;">
+    </div>
+{/if}
 </div>
 {/if}
 
@@ -2786,6 +3267,11 @@ $(function() {
                             <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$fatherFamilyId}&deceasedlist_img_name={$fatherImgName}" style="width: 100%; position:relative;">
                         </div>
                         {/if}
+                        {if $father_img == 3}
+                        <div id="father_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$fatherFamilyId}&deceasedlist_img_name={$fatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -3081,6 +3567,11 @@ $(function() {
                                 <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$matherFamilyId}&deceasedlist_img_name={$matherImgName}" style="width: 100%; position:relative;">
                             </div>
                         {/if}
+                        {if $mather_img == 3}
+                        <div id="mather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$matherFamilyId}&deceasedlist_img_name={$matherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                         </td>
                     </tr>
                     <tr>
@@ -3349,6 +3840,16 @@ $(function() {
                         {/if}
                         {if $spouseDeathday !== "0000-00-00"}
                             <input type="date" name="spouse_deathday" value="{$spouseDeathday}" size="24" data-role="date" data-inline="false">
+                        {/if}
+                        {if $spouse_img == 2}
+                        <div id="spouse_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$spouseFamilyId}&deceasedlist_img_name={$spouseImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $spouse_img == 3}
+                        <div id="spouse_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$spouseFamilyId}&deceasedlist_img_name={$spouseImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -3701,6 +4202,16 @@ $(function() {
                         {if $brotherone_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $brotherone_img == 2}
+                        <div id="brotherone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotheroneFamilyId}&deceasedlist_img_name={$brotheroneImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $brotherone_img == 3}
+                        <div id="brotherone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotheroneFamilyId}&deceasedlist_img_name={$brotheroneImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -4023,6 +4534,16 @@ $(function() {
                         {if $brothertwo_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $brothertwo_img == 2}
+                        <div id="brothertwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brothertwoFamilyId}&deceasedlist_img_name={$brothertwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $brothertwo_img == 3}
+                        <div id="brothertwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brothertwoFamilyId}&deceasedlist_img_name={$brothertwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -4336,7 +4857,6 @@ $(function() {
                     <tr>
                         <th style="margin-top:10px;">
                              顔写真<br>
-
                          </th>
                         <td>
                         {if $brotherthree_img == 1}
@@ -4344,6 +4864,16 @@ $(function() {
                         {/if}
                         {if $brotherthree_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $brotherthree_img == 2}
+                        <div id="brotherthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotherthreeFamilyId}&deceasedlist_img_name={$brotherthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $brotherthree_img == 3}
+                        <div id="brotherthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$brotherthreeFamilyId}&deceasedlist_img_name={$brotherthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -4695,6 +5225,17 @@ $(function() {
                         {if $childone_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childone_img == 2}
+                        <div id="childone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childoneFamilyId}&deceasedlist_img_name={$childoneImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childone_img == 3}
+                        <div id="childone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childoneFamilyId}&deceasedlist_img_name={$childoneImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+
                       </td>
                     </tr>
                     <tr>
@@ -5050,6 +5591,16 @@ $(function() {
                         {/if}
                         {if $childtwo_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $childtwo_img == 2}
+                        <div id="childtwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwoFamilyId}&deceasedlist_img_name={$childtwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childtwo_img == 3}
+                        <div id="childtwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwoFamilyId}&deceasedlist_img_name={$childtwoImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -5408,6 +5959,17 @@ $(function() {
                         {if $childthree_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childthree_img == 2}
+                        <div id="childthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreeFamilyId}&deceasedlist_img_name={$childthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childthree_img == 3}
+                        <div id="childthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreeFamilyId}&deceasedlist_img_name={$childthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+
                       </td>
                     </tr>
                     <tr>
@@ -5762,6 +6324,16 @@ $(function() {
                         {if $childfour_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childfour_img == 2}
+                        <div id="childfour_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourFamilyId}&deceasedlist_img_name={$childfourImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childfour_img == 3}
+                        <div id="childfour_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourFamilyId}&deceasedlist_img_name={$childfourImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -6089,6 +6661,16 @@ $(function() {
                         {/if}
                         {if $childonegrandsonone_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $childonegrandsonone_img == 2}
+                        <div id="childonegrandsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsononeFamilyId}&deceasedlist_img_name={$childonegrandsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childonegrandsonone_img == 3}
+                        <div id="childonegrandsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsononeFamilyId}&deceasedlist_img_name={$childonegrandsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -6418,6 +7000,16 @@ $(function() {
                         {if $childonegrandsontwo_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childonegrandsontwo_img == 2}
+                        <div id="childonegrandsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsontwoFamilyId}&deceasedlist_img_name={$childonegrandsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childonegrandsontwo_img == 3}
+                        <div id="childonegrandsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsontwoFamilyId}&deceasedlist_img_name={$childonegrandsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -6741,6 +7333,16 @@ $(function() {
                         {if $childonegrandsonthree_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childonegrandsonthree_img == 2}
+                        <div id="childonegrandsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsonthreeFamilyId}&deceasedlist_img_name={$childonegrandsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childonegrandsonthree_img == 3}
+                        <div id="childonegrandsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childonegrandsonthreeFamilyId}&deceasedlist_img_name={$childonegrandsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -7062,6 +7664,16 @@ $(function() {
                         {/if}
                         {if $childtwograndsonone_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $childtwograndsonone_img == 2}
+                        <div id="childtwograndsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsononeFamilyId}&deceasedlist_img_name={$childtwograndsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childtwograndsonone_img == 3}
+                        <div id="childtwograndsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsononeFamilyId}&deceasedlist_img_name={$childtwograndsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -7389,6 +8001,16 @@ $(function() {
                         {if $childtwograndsontwo_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childtwograndsontwo_img == 2}
+                        <div id="childtwograndsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsontwoFamilyId}&deceasedlist_img_name={$childtwograndsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childtwograndsontwo_img == 3}
+                        <div id="childtwograndsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsontwoFamilyId}&deceasedlist_img_name={$childtwograndsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -7713,6 +8335,16 @@ $(function() {
                         {if $childtwograndsonthree_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childtwograndsonthree_img == 2}
+                        <div id="childtwograndsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsonthreeFamilyId}&deceasedlist_img_name={$childtwograndsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childtwograndsonthree_img == 3}
+                        <div id="childtwograndsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childtwograndsonthreeFamilyId}&deceasedlist_img_name={$childtwograndsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -8036,7 +8668,17 @@ $(function() {
                         {if $childthreegrandsonone_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
-                      </td>
+                        {if $childthreegrandsonone_img == 2}
+                        <div id="childthreegrandsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsononeFamilyId}&deceasedlist_img_name={$childthreegrandsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childthreegrandsonone_img == 3}
+                        <div id="childthreegrandsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsononeFamilyId}&deceasedlist_img_name={$childthreegrandsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        </td>
                     </tr>
                     <tr>
                         <th style="margin-top:20px;">
@@ -8342,6 +8984,16 @@ $(function() {
                         {/if}
                         {if $childthreegrandsontwoDeathday !== "0000-00-00"}
                             <input type="date" name="childthreegrandsontwo_deathday" value="{$childthreegrandsontwoDeathday}" size="24" data-role="date" data-inline="false">
+                        {/if}
+                        {if $childthreegrandsontwo_img == 2}
+                        <div id="childthreegrandsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsontwoFamilyId}&deceasedlist_img_name={$childthreegrandsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childthreegrandsontwo_img == 3}
+                        <div id="childthreegrandsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsontwoFamilyId}&deceasedlist_img_name={$childthreegrandsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                         </td>
                     </tr>
@@ -8685,6 +9337,16 @@ $(function() {
                         {if $childthreegrandsonthree_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childthreegrandsonthree_img == 2}
+                        <div id="childthreegrandsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsonthreeFamilyId}&deceasedlist_img_name={$childthreegrandsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childthreegrandsonthree_img == 3}
+                        <div id="childthreegrandsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childthreegrandsonthreeFamilyId}&deceasedlist_img_name={$childthreegrandsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -9007,6 +9669,16 @@ $(function() {
                         {if $childfourgrandsonone_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childfourgrandsonone_img == 2}
+                        <div id="childfourgrandsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsononeFamilyId}&deceasedlist_img_name={$childfourgrandsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childfourgrandsonone_img == 3}
+                        <div id="childfourgrandsonone_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsononeFamilyId}&deceasedlist_img_name={$childfourgrandsononeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -9018,6 +9690,7 @@ $(function() {
                     </tr>
                 </div>
             </div>
+
 
             <div style="margin-top:20px;">
                 <div data-role="ui-field-contain">
@@ -9331,6 +10004,16 @@ $(function() {
                         {/if}
                         {if $childfourgrandsontwo_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $childfourgrandsontwo_img == 2}
+                        <div id="childfourgrandsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsontwoFamilyId}&deceasedlist_img_name={$childfourgrandsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childfourgrandsontwo_img == 3}
+                        <div id="childfourgrandsontwo_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsontwoFamilyId}&deceasedlist_img_name={$childfourgrandsontwoImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -9655,6 +10338,16 @@ $(function() {
                         {if $childfourgrandsonthree_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $childfourgrandsonthree_img == 2}
+                        <div id="childfourgrandsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsonthreeFamilyId}&deceasedlist_img_name={$childfourgrandsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $childfourgrandsonthree_img == 3}
+                        <div id="childfourgrandsonthree_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsonthreeFamilyId}&deceasedlist_img_name={$childfourgrandsonthreeImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}                      
                       </td>
                     </tr>
                     <tr>
@@ -9946,6 +10639,16 @@ $(function() {
                         {/if}
                         {if $grandfatherfather_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $grandfatherfather_img == 2}
+                        <div id="grandfatherfather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfatherfatherFamilyId}&deceasedlist_img_name={$grandfatherfatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $grandfatherfather_img == 3}
+                        <div id="grandfatherfather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfatherfatherFamilyId}&deceasedlist_img_name={$grandfatherfatherImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -10240,6 +10943,16 @@ $(function() {
                         {if $grandfathermather_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $grandfathermather_img == 2}
+                        <div id="grandfathermather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfathermatherFamilyId}&deceasedlist_img_name={$grandfathermatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $grandfathermather_img == 3}
+                        <div id="grandfathermather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandfathermatherFamilyId}&deceasedlist_img_name={$grandfathermatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -10532,6 +11245,16 @@ $(function() {
                         {if $grandmatherfather_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
                         {/if}
+                        {if $grandmatherfather_img == 2}
+                        <div id="grandmatherfather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmatherfatherFamilyId}&deceasedlist_img_name={$grandmatherfatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $grandmatherfather_img == 3}
+                        <div id="grandmatherfather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmatherfatherFamilyId}&deceasedlist_img_name={$grandmatherfatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
                       </td>
                     </tr>
                     <tr>
@@ -10823,6 +11546,16 @@ $(function() {
                         {/if}
                         {if $grandmathermather_img == 0}
                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                        {/if}
+                        {if $grandmathermather_img == 2}
+                        <div id="grandmathermather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmathermatherFamilyId}&deceasedlist_img_name={$grandmathermatherImgName}" style="width: 100%; position:relative;">
+                        </div>
+                        {/if}
+                        {if $grandmathermather_img == 3}
+                        <div id="grandmathermather_deceasedlist_change_img">
+                            <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$grandmathermatherFamilyId}&deceasedlist_img_name={$grandmathermatherImgName}" style="width: 100%; position:relative;">
+                        </div>
                         {/if}
                       </td>
                     </tr>
@@ -12448,7 +13181,7 @@ $(function() {
                             <img src="{$urlocalspouse}?{$urlquery_img_thumb_spouse}" style="width: 100%; position:relative;">
                         {/if}
                         {if $spouse_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="spouse_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -12460,6 +13193,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="spouse_img_name" value="" size="24" placeholder="" id="spouse_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
             <div style="margin-top:20px;">
@@ -12611,7 +13357,7 @@ $(function() {
                             <img src="{$urlocalbrotherone}?{$urlquery_img_thumb_brotherone}" style="width: 100%; position:relative;">
                         {/if}
                         {if $brotherone_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="brotherone_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -12623,6 +13369,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="brotherone_img_name" value="" size="24" placeholder="" id="brotherone_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -12775,7 +13534,7 @@ $(function() {
                             <img src="{$urlocalbrothertwo}?{$urlquery_img_thumb_brothertwo}" style="width: 100%; position:relative;">
                         {/if}
                         {if $brothertwo_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="brothertwo_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -12787,6 +13546,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="brothertwo_img_name" value="" size="24" placeholder="" id="brothertwo_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -12939,7 +13711,8 @@ $(function() {
                             <img src="{$urlocalbrotherthree}?{$urlquery_img_thumb_brotherthree}" style="width: 100%; position:relative;">
                         {/if}
                         {if $brotherthree_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                             <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="brotherthree_deceasedlist_change">
+
                         {/if}
                       </td>
                     </tr>
@@ -12951,6 +13724,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="brotherthree_img_name" value="" size="24" placeholder="" id="brotherthree_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -13115,7 +13901,7 @@ $(function() {
                             <img src="{$urlocalchildone}?{$urlquery_img_thumb_childone}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childone_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childone_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -13127,6 +13913,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childone_img_name" value="" size="24" placeholder="" id="childone_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -13293,7 +14092,7 @@ $(function() {
                             <img src="{$urlocalchildtwo}?{$urlquery_img_thumb_childtwo}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childtwo_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childtwo_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -13305,6 +14104,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childtwo_img_name" value="" size="24" placeholder="" id="childtwo_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:10px;">
@@ -13470,7 +14282,7 @@ $(function() {
                             <img src="{$urlocalchildthree}?{$urlquery_img_thumb_childthree}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childthree_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childthree_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -13482,6 +14294,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childthree_img_name" value="" size="24" placeholder="" id="childthree_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:10px;">
@@ -13639,14 +14464,13 @@ $(function() {
                     <tr>
                         <th style="margin-top:10px;">
                              顔写真<br>
-
-                         </th>
+                        </th>
                         <td>
                         {if $childfour_img == 1}
                             <img src="{$urlocalchildfour}?{$urlquery_img_thumb_childfour}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childfour_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childfour_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -13658,6 +14482,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childfour_img_name" value="" size="24" placeholder="" id="childfour_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:10px;">
@@ -13810,7 +14647,7 @@ $(function() {
                             <img src="{$urlocalchildonegrandsonone}?{$urlquery_img_thumb_childonegrandsonone}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childonegrandsonone_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childonegrandsonone_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -13822,6 +14659,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childonegrandsonone_img_name" value="" size="24" placeholder="" id="childonegrandsonone_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -13973,7 +14823,7 @@ $(function() {
                             <img src="{$urlocalchildonegrandsontwo}?{$urlquery_img_thumb_childonegrandsontwo}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childonegrandsontwo_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childonegrandsontwo_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -13985,6 +14835,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childonegrandsontwo_img_name" value="" size="24" placeholder="" id="childonegrandsontwo_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -14136,7 +14999,7 @@ $(function() {
                             <img src="{$urlocalchildonegrandsonthree}?{$urlquery_img_thumb_childonegrandsonthree}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childonegrandsonthree_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childonegrandsonthree_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -14148,6 +15011,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childonegrandsonthree_img_name" value="" size="24" placeholder="" id="childonegrandsonthree_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -14299,7 +15175,7 @@ $(function() {
                             <img src="{$urlocalchildtwograndsonone}?{$urlquery_img_thumb_childtwograndsonone}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childtwograndsonone_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childtwograndsonone_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -14311,6 +15187,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childtwograndsonone_img_name" value="" size="24" placeholder="" id="childtwograndsonone_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:10px;">
@@ -14462,7 +15351,7 @@ $(function() {
                             <img src="{$urlocalchildtwograndsontwo}?{$urlquery_img_thumb_childtwograndsontwo}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childtwograndsontwo_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childtwograndsontwo_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -14474,6 +15363,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childtwograndsontwo_img_name" value="" size="24" placeholder="" id="childtwograndsontwo_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -14626,7 +15528,7 @@ $(function() {
                             <img src="{$urlocalchildtwograndsonthree}?{$urlquery_img_thumb_childtwograndsonthree}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childtwograndsonthree_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childtwograndsonthree_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -14638,6 +15540,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childtwograndsonthree_img_name" value="" size="24" placeholder="" id="childtwograndsonthree_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -14789,7 +15704,7 @@ $(function() {
                             <img src="{$urlocalchildthreegrandsonone}?{$urlquery_img_thumb_childthreegrandsonone}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childthreegrandsonone_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childthreegrandsonone_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -14801,6 +15716,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childthreegrandsonone_img_name" value="" size="24" placeholder="" id="childthreegrandsonone_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -14952,7 +15880,7 @@ $(function() {
                             <img src="{$urlocalchildthreegrandsontwo}?{$urlquery_img_thumb_childthreegrandsontwo}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childthreegrandsontwo_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childthreegrandsontwo_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -14964,6 +15892,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childthreegrandsontwo_img_name" value="" size="24" placeholder="" id="childthreegrandsontwo_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -15115,7 +16056,7 @@ $(function() {
                             <img src="{$urlocalchildthreegrandsonthree}?{$urlquery_img_thumb_childthreegrandsonthree}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childthreegrandsonthree_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childthreegrandsonthree_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -15127,6 +16068,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childthreegrandsonthree_img_name" value="" size="24" placeholder="" id="childthreegrandsonthree_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -15278,7 +16232,7 @@ $(function() {
                             <img src="{$urlocalchildfourgrandsonone}?{$urlquery_img_thumb_childfourgrandsonone}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childfourgrandsonone_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childfourgrandsonone_deceasedlist_change">
                         {/if}
                         </td>
                     </tr>
@@ -15290,6 +16244,19 @@ $(function() {
                         </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childfourgrandsonone_img_name" value="" size="24" placeholder="" id="childfourgrandsonone_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -15441,7 +16408,7 @@ $(function() {
                             <img src="{$urlocalchildfourgrandsontwo}?{$urlquery_img_thumb_childfourgrandsontwo}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childfourgrandsontwo_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childfourgrandsontwo_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -15453,6 +16420,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childfourgrandsontwo_img_name" value="" size="24" placeholder="" id="childfourgrandsontwo_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:10px;">
@@ -15604,7 +16584,7 @@ $(function() {
                             <img src="{$urlocalchildfourgrandsonthree}?{$urlquery_img_thumb_childfourgrandsonthree}" style="width: 100%; position:relative;">
                         {/if}
                         {if $childfourgrandsonthree_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="childfourgrandsonthree_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -15616,6 +16596,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="childfourgrandsonthree_img_name" value="" size="24" placeholder="" id="childfourgrandsonthree_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -15751,7 +16744,7 @@ $(function() {
                             <img src="{$urlocalgrandfatherfather}?{$urlquery_img_thumb_grandfatherfather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandfatherfather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandfatherfather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -15763,6 +16756,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandfatherfather_img_name" value="" size="24" placeholder="" id="grandfatherfather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -15897,7 +16903,7 @@ $(function() {
                             <img src="{$urlocalgrandfathermather}?{$urlquery_img_thumb_grandfathermather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandfathermather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandfathermather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -15909,6 +16915,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandfathermather_img_name" value="" size="24" placeholder="" id="grandfathermather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -16045,7 +17064,7 @@ $(function() {
                             <img src="{$urlocalgrandmatherfather}?{$urlquery_img_thumb_grandmatherfather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandmatherfather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandmatherfather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -16057,6 +17076,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandmatherfather_img_name" value="" size="24" placeholder="" id="grandmatherfather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
@@ -16193,7 +17225,7 @@ $(function() {
                             <img src="{$urlocalgrandmathermather}?{$urlquery_img_thumb_grandmathermather}" style="width: 100%; position:relative;">
                         {/if}
                         {if $grandmathermather_img == 0}
-                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;">
+                            <img src="../imges/Entypo.png" style="max-width: 200px; max-height: 200px; position:relative;" id="grandmathermather_deceasedlist_change">
                         {/if}
                       </td>
                     </tr>
@@ -16205,6 +17237,19 @@ $(function() {
                       </td>
                     </tr>
                 </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                    <div data-role="ui-field-contain">
+                         <tr>
+                            <th>
+                                <!-- 大切な個人＿写真 -->
+                             </th>
+                            <td>
+                              <input type="hidden" name="grandmathermather_img_name" value="" size="24" placeholder="" id="grandmathermather_deceasedlist_img_name">
+                          </td>
+                         </tr>
+                    </div>
             </div>
 
                 <div style="margin-top:20px;">
