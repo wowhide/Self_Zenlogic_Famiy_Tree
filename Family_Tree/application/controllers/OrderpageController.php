@@ -63,7 +63,9 @@ class OrderpageController extends Zend_Controller_Action {
 
     //テスト
     public function urlconnecttestAction(){
-        echo "できた";
+        // echo "できた";
+
+        echo $this->_view->render('family_tree_insert_result.tpl');
     }
 
 
