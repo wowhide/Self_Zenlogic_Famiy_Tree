@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
-    <link href="http://www.htmlhifive.com/ja/res/lib/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://code.htmlhifive.com/h5.css" rel="stylesheet" >
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+    <link href="//www.htmlhifive.com/ja/res/lib/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//code.htmlhifive.com/h5.css" rel="stylesheet" >
 
     <title>削除完了</title>
 
-    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
-    <script src="http://www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
-    <script src="http://www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
-    <script src="http://code.htmlhifive.com/h5.dev.js"></script>
+    <script src="//code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    <script src="//www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
+    <script src="//www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
+    <script src="//code.htmlhifive.com/h5.dev.js"></script>
     <script src=".../../../../Family_Tree/js/form.js"></script>
 
     <style type="text/css">

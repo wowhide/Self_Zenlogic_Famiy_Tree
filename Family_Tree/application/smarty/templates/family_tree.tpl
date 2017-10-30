@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css?var=20120829" />
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css?var=20120829" />
     <link href="../../../../Family_Tree/css/jquery.mobile.datepicker.css" rel="stylesheet">
     <link href="../../../../Family_Tree/css/jquery.mobile.datepicker.theme.css" rel="stylesheet">
-    <link href="http://www.htmlhifive.com/ja/res/lib/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://code.htmlhifive.com/h5.css" rel="stylesheet" >
+    <link href="//www.htmlhifive.com/ja/res/lib/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//code.htmlhifive.com/h5.css" rel="stylesheet" >
     <link href="../../../../Family_Tree/css/style.css?var=20120829" rel="stylesheet">
     <link href="../../../../Family_Tree/css/sweetalert.css" rel="stylesheet">
     <title>家系図_血族関係</title>
@@ -17,12 +17,12 @@
     <meta http-equiv="Cache-Control" content="no-cache">
 
 
-    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
     <script src="../../../../Family_Tree/js/jquery.mobile.datepicker.js"></script>
-    <script src="http://www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
-    <script src="http://www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
-    <script src="http://code.htmlhifive.com/h5.dev.js"></script>
+    <script src="//www.htmlhifive.com/ja/res/lib/jquery/jquery-2.js"></script>
+    <script src="//www.htmlhifive.com/ja/res/lib/bootstrap3/js/bootstrap.min.js"></script>
+    <script src="//code.htmlhifive.com/h5.dev.js"></script>
     <script src="../../../../Family_Tree/js/jquery.validate.min.js"></script>
     <script src="../../../../Family_Tree/js/form.js"></script>
     <script src="../../../../Family_Tree/js/sweetalert.min.js"></script>
@@ -10347,7 +10347,7 @@ $(function() {
                         <div id="childfourgrandsonthree_deceasedlist_change_img">
                             <img src="http://ms-dev.wow-d.net/mng/readdeceasedlistimage?customer_id={$childfourgrandsonthreeFamilyId}&deceasedlist_img_name={$childfourgrandsonthreeImgName}" style="width: 100%; position:relative;">
                         </div>
-                        {/if}                      
+                        {/if}
                       </td>
                     </tr>
                     <tr>
